@@ -1,0 +1,4 @@
+<!-- 状态标签组件 -->
+<view class="status-tag {{type}} {{size}} {{plain ? 'plain' : ''}}">
+  {{text}}
+</view>

@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="help-list">
+    <view class="help-item" wx:for="{{helpList}}" wx:key="index">
+      <view class="help-question" bindtap="toggleAnswer" data-index="{{index}}">
+        <view class="question-text">{{item.question}}</view>
+        <view class="question-arrow {{item.expanded ? 'expanded' : ''}}">▼</view>
+      </view>
+      <view class="help-answer {{item.expanded ? 'show' : ''}}">
+        <view class="answer-text">{{item.answer}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="contact-section">
+    <view class="contact-title">联系客服</view>
+    <view class="contact-item" bindtap="contactService">
+      <view class="contact-icon">💬</view>
+      <view class="contact-text">在线客服</view>
+    </view>
+    <view class="contact-item" bindtap="makePhoneCall">
+      <view class="contact-icon">📞</view>
+      <view class="contact-text">电话客服：400-123-4567</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,154 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: youyinda-backend
+
+  # 排除 Redis 自动配置
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/youyinda?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      filters: stat,wall
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: false
+        login-username: admin
+        login-password: admin
+
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    database: 0
+    timeout: 1000ms
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
+
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.youyinda.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: isDelete
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+jwt:
+  secret: youyinda-secret-key-2024-jwt-token
+  expiration: 604800000
+
+wechat:
+  miniapp:
+    appId: your_app_id
+    appSecret: your_app_secret
+  pay:
+    mchId: your_mch_id
+    apiV3Key: your_api_v3_key
+    privateKeyPath: classpath:cert/apiclient_key.pem
+    privateCertPath: classpath:cert/apiclient_cert.pem
+    serialNo: your_serial_no
+    notifyUrl: https://your-domain.com/api/v1/pay/notify
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        register-health-indicator: true
+        sliding-window-type: count_based
+        sliding-window-size: 100
+        minimum-number-of-calls: 10
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 60s
+        failure-rate-threshold: 50
+        event-consumer-buffer-size: 10
+  retry:
+    configs:
+      default:
+        max-attempts: 3
+        wait-duration: 1s
+        retry-exceptions:
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+      idempotent:
+        max-attempts: 3
+        wait-duration: 1s
+        retry-exceptions:
+          - java.io.IOException
+          - java.util.concurrent.TimeoutException
+      non-idempotent:
+        max-attempts: 1
+        wait-duration: 0s
+
+third-party:
+  print:
+    providers:
+      - code: print_provider_001
+        name: 小猴云印
+        api-url: ${PRINT_PROVIDER_URL:https://api.print-provider.com}
+        app-id: ${PRINT_PROVIDER_APP_ID:your_print_app_id}
+        app-secret: ${PRINT_PROVIDER_APP_SECRET:your_print_app_secret}
+        timeout: 3000
+  express:
+    providers:
+      - code: express_provider_001
+        name: 快递100
+        api-url: ${EXPRESS_PROVIDER_URL:https://api.express-provider.com}
+        app-id: ${EXPRESS_PROVIDER_APP_ID:your_express_app_id}
+        app-secret: ${EXPRESS_PROVIDER_APP_SECRET:your_express_app_secret}
+        timeout: 3000
+  sync:
+    enabled: true
+    cron: "0 0 2 * * ?"
+    alert-email: ${SYNC_ALERT_EMAIL:admin@youyinda.com}
+
+logging:
+  level:
+    root: INFO
+    com.youyinda: DEBUG
+    org.springframework: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n"
+  file:
+    name: logs/youyinda-backend.log

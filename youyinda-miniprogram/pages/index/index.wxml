@@ -1,0 +1,69 @@
+<view class="container">
+  <view class="header">
+    <view class="banner">
+      <image class="banner-image" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cloud%20printing%20service%20banner%20blue%20theme&image_size=landscape_16_9" mode="aspectFill"></image>
+    </view>
+  </view>
+
+  <view class="main-entrance">
+    <view class="entrance-item" bindtap="goToPrint">
+      <view class="entrance-icon print-icon">
+        <image src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=printer%20icon%20blue%20white%20simple&image_size=square" mode="aspectFit"></image>
+      </view>
+      <view class="entrance-title">文档打印</view>
+      <view class="entrance-desc">快捷打印，极速送达</view>
+    </view>
+
+    <view class="entrance-item" bindtap="goToExpress">
+      <view class="entrance-icon express-icon">
+        <image src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=express%20delivery%20icon%20orange%20white%20simple&image_size=square" mode="aspectFit"></image>
+      </view>
+      <view class="entrance-title">低价寄快递</view>
+      <view class="entrance-desc">全网最低价，上门取件</view>
+    </view>
+  </view>
+
+  <view class="card quick-service">
+    <view class="section-title">快捷服务</view>
+    <view class="service-grid">
+      <view class="service-item" bindtap="goToOrderList">
+        <view class="service-icon">📋</view>
+        <view class="service-text">我的订单</view>
+      </view>
+      <view class="service-item" bindtap="goToAddress">
+        <view class="service-icon">📍</view>
+        <view class="service-text">地址簿</view>
+      </view>
+      <view class="service-item" bindtap="goToCoupon">
+        <view class="service-icon">🎫</view>
+        <view class="service-text">优惠券</view>
+      </view>
+      <view class="service-item" bindtap="goToHelp">
+        <view class="service-icon">❓</view>
+        <view class="service-text">帮助中心</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="card promotion">
+    <view class="section-title">限时活动</view>
+    <view class="promotion-list">
+      <view class="promotion-item">
+        <view class="promotion-tag">新用户</view>
+        <view class="promotion-content">
+          <view class="promotion-title">首单立减5元</view>
+          <view class="promotion-desc">新用户专享，打印/快递通用</view>
+        </view>
+        <view class="promotion-arrow">></view>
+      </view>
+      <view class="promotion-item">
+        <view class="promotion-tag hot">热门</view>
+        <view class="promotion-content">
+          <view class="promotion-title">邀请好友得现金</view>
+          <view class="promotion-desc">每邀请1位好友，双方各得3元</view>
+        </view>
+        <view class="promotion-arrow">></view>
+      </view>
+    </view>
+  </view>
+</view>

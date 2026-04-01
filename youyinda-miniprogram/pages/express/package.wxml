@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="section">
+    <view class="section-title">物品信息</view>
+    
+    <view class="form-item">
+      <view class="form-label">物品类型</view>
+      <view class="form-value" bindtap="selectItemType">{{itemType || '请选择'}}</view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">物品名称</view>
+      <input class="form-input" placeholder="请输入物品名称" value="{{itemName}}" bindinput="onItemNameInput" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">物品重量（kg）</view>
+      <input class="form-input" type="digit" placeholder="请输入重量" value="{{weight}}" bindinput="onWeightInput" />
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">备注</view>
+      <textarea class="form-textarea" placeholder="选填，如易碎品、加急等" value="{{remark}}" bindinput="onRemarkInput" maxlength="100" />
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="btn-next" bindtap="goToCompany" wx:if="{{itemType && weight}}">下一步</view>
+    <view class="btn-next disabled" wx:else>请完善物品信息</view>
+  </view>
+</view>

@@ -1,0 +1,156 @@
+.container {
+  padding-bottom: 20rpx;
+}
+
+.header {
+  padding: 0;
+}
+
+.banner {
+  width: 100%;
+  height: 360rpx;
+  overflow: hidden;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+}
+
+.main-entrance {
+  display: flex;
+  padding: 30rpx 20rpx;
+  gap: 20rpx;
+}
+
+.entrance-item {
+  flex: 1;
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  border-radius: 24rpx;
+  padding: 40rpx 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8rpx 24rpx rgba(24, 144, 255, 0.3);
+}
+
+.entrance-item:last-child {
+  background: linear-gradient(135deg, #ff7a45 0%, #fa541c 100%);
+  box-shadow: 0 8rpx 24rpx rgba(255, 122, 69, 0.3);
+}
+
+.entrance-icon {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+
+.entrance-icon image {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.entrance-title {
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.entrance-desc {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 22rpx;
+}
+
+.card {
+  margin: 20rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 24rpx;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20rpx;
+}
+
+.service-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16rpx 0;
+}
+
+.service-icon {
+  font-size: 48rpx;
+  margin-bottom: 12rpx;
+}
+
+.service-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.promotion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.promotion-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background: #f8f9fa;
+  border-radius: 16rpx;
+}
+
+.promotion-tag {
+  background: #1890ff;
+  color: #fff;
+  font-size: 20rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.promotion-tag.hot {
+  background: #ff4d4f;
+}
+
+.promotion-content {
+  flex: 1;
+}
+
+.promotion-title {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 6rpx;
+}
+
+.promotion-desc {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.promotion-arrow {
+  color: #ccc;
+  font-size: 32rpx;
+  flex-shrink: 0;
+}

@@ -1,0 +1,65 @@
+<view class="container">
+  <view class="config-section">
+    <view class="section-title">打印参数</view>
+    
+    <view class="config-item">
+      <view class="config-label">黑白/彩色</view>
+      <view class="config-options">
+        <view class="option-item {{colorType === 1 ? 'active' : ''}}" bindtap="selectColor" data-type="1">黑白</view>
+        <view class="option-item {{colorType === 2 ? 'active' : ''}}" bindtap="selectColor" data-type="2">彩色</view>
+      </view>
+    </view>
+
+    <view class="config-item">
+      <view class="config-label">单双面</view>
+      <view class="config-options">
+        <view class="option-item {{duplex === 1 ? 'active' : ''}}" bindtap="selectDuplex" data-type="1">单面</view>
+        <view class="option-item {{duplex === 2 ? 'active' : ''}}" bindtap="selectDuplex" data-type="2">双面</view>
+      </view>
+    </view>
+
+    <view class="config-item">
+      <view class="config-label">纸张规格</view>
+      <view class="config-options">
+        <view class="option-item {{paperSize === 'A4' ? 'active' : ''}}" bindtap="selectPaper" data-size="A4">A4</view>
+        <view class="option-item {{paperSize === 'A3' ? 'active' : ''}}" bindtap="selectPaper" data-size="A3">A3</view>
+      </view>
+    </view>
+
+    <view class="config-item">
+      <view class="config-label">打印份数</view>
+      <view class="quantity-control">
+        <view class="quantity-btn" bindtap="decreaseQuantity">-</view>
+        <view class="quantity-value">{{copies}}</view>
+        <view class="quantity-btn" bindtap="increaseQuantity">+</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="price-section">
+    <view class="section-title">价格预览</view>
+    <view class="price-info">
+      <view class="price-item">
+        <span class="price-label">基础费用</span>
+        <span class="price-value">¥{{basePrice}}</span>
+      </view>
+      <view class="price-item" wx:if="{{colorType === 2}}">
+        <span class="price-label">彩色附加费</span>
+        <span class="price-value">¥{{colorPrice}}</span>
+      </view>
+      <view class="price-divider"></view>
+      <view class="price-total">
+        <span class="total-label">合计</span>
+        <span class="total-value">¥{{totalPrice}}</span>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="price-summary">
+      <span class="summary-label">预计费用</span>
+      <span class="summary-price">¥{{totalPrice}}</span>
+    </view>
+    <view class="btn-confirm" bindtap="goToConfirm">确认下单</view>
+  </view>
+</view>

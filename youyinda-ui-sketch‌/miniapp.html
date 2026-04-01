@@ -1,0 +1,2085 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>优印达 · 微信小程序端 UI 设计稿</title>
+<style>
+/* ==================== 全局设计令牌 ==================== */
+:root {
+  /* 品牌主色 */
+  --primary: #FF7D00;
+  --primary-light: #FFF3E8;
+  --primary-dark: #E06E00;
+  --primary-gradient: linear-gradient(135deg, #FF7D00 0%, #FF9A3C 100%);
+
+  /* 语义色 */
+  --success: #00B42A;
+  --success-light: #E8F7EC;
+  --danger: #F53F3F;
+  --danger-light: #FEE8E8;
+  --info: #165DFF;
+  --info-light: #E8EDFF;
+  --warning: #FF7D00;
+
+  /* 品牌背景 */
+  --bg-cream: #F9F6F0;
+
+  /* 中性色 */
+  --text-title: #1D2129;
+  --text-body: #4E5969;
+  --text-secondary: #86909C;
+  --border: #E5E6EB;
+  --bg-gray: #F2F3F5;
+  --white: #FFFFFF;
+
+  /* 圆角 */
+  --radius-btn: 8px;
+  --radius-card: 12px;
+  --radius-input: 6px;
+  --radius-icon: 4px;
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+
+  /* 字体尺寸 */
+  --fs-xl: 20px;
+  --fs-lg: 18px;
+  --fs-md: 16px;
+  --fs-base: 14px;
+  --fs-sm: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  background: #EAECEF;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+/* ==================== 页面布局 ==================== */
+.design-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.design-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-title);
+  margin-bottom: 8px;
+}
+.design-header .subtitle {
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-gradient);
+  color: white;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.pages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 375px);
+  gap: 40px;
+  justify-content: center;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+/* ==================== 手机外壳 ==================== */
+.phone-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.page-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-body);
+  text-align: center;
+  background: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.phone-shell {
+  width: 375px;
+  background: #1A1A1A;
+  border-radius: 44px;
+  padding: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+  position: relative;
+}
+.phone-shell::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 28px;
+  background: #1A1A1A;
+  border-radius: 0 0 16px 16px;
+  z-index: 10;
+}
+.phone-screen {
+  width: 100%;
+  background: var(--white);
+  border-radius: 36px;
+  overflow: hidden;
+  min-height: 760px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==================== 状态栏 ==================== */
+.status-bar {
+  height: 44px;
+  background: inherit;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 20px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  position: relative;
+  z-index: 5;
+}
+.status-bar .time { color: var(--text-title); }
+.status-bar .icons { display: flex; gap: 5px; align-items: center; color: var(--text-title); font-size: 10px; }
+
+/* ==================== 导航栏 ==================== */
+.nav-bar {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  position: relative;
+  background: white;
+  border-bottom: 1px solid rgba(229,230,235,0.6);
+}
+.nav-back {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--text-title);
+  cursor: pointer;
+}
+.nav-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text-title);
+}
+.nav-right {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* ==================== 底部Tab栏 ==================== */
+.tab-bar {
+  height: 60px;
+  background: white;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding-bottom: 6px;
+  margin-top: auto;
+}
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.tab-item.active { color: var(--primary); }
+.tab-icon { font-size: 22px; }
+
+/* ==================== 通用组件 ==================== */
+.section-title {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-title);
+  padding: 12px 16px 8px;
+}
+.card {
+  background: white;
+  border-radius: var(--radius-card);
+  margin: 0 12px 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.primary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  background: var(--primary-gradient);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  border: none;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(255,125,0,0.35);
+}
+.primary-btn:active { transform: scale(0.98); }
+.bottom-bar {
+  padding: 12px 16px;
+  background: white;
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+.tag-primary { background: var(--primary-light); color: var(--primary); }
+.tag-success { background: var(--success-light); color: var(--success); }
+.tag-danger { background: var(--danger-light); color: var(--danger); }
+.tag-info { background: var(--info-light); color: var(--info); }
+
+/* 分隔线 */
+.divider {
+  height: 8px;
+  background: var(--bg-gray);
+}
+
+/* 标注框 */
+.annotation {
+  background: #FFFBE6;
+  border: 1px solid #FFD666;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 8px 16px;
+  font-size: 11px;
+  color: #875800;
+  line-height: 1.6;
+}
+.annotation strong { color: #D4380D; }
+
+/* ==================== PAGE 1: 首页 ==================== */
+.home-header {
+  background: var(--primary-gradient);
+  padding: 8px 16px 20px;
+  position: relative;
+  overflow: hidden;
+}
+.home-header::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: white;
+  border-radius: 20px 20px 0 0;
+}
+.home-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+}
+.brand-logo .logo-icon {
+  width: 28px;
+  height: 28px;
+  background: white;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.brand-logo .brand-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.home-icons { display: flex; gap: 12px; color: white; font-size: 20px; }
+.location-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.9);
+  font-size: 13px;
+}
+
+.main-actions {
+  display: flex;
+  gap: 10px;
+  padding: 20px 12px 12px;
+}
+.main-action-btn {
+  flex: 1;
+  height: 88px;
+  border-radius: var(--radius-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.main-action-btn.print {
+  flex: 1.3;
+  background: linear-gradient(135deg, #FF7D00, #FF9A3C);
+  box-shadow: 0 6px 20px rgba(255,125,0,0.4);
+}
+.main-action-btn.express {
+  background: linear-gradient(135deg, #1A52FF, #4E79FF);
+  box-shadow: 0 6px 20px rgba(26,82,255,0.35);
+}
+.main-action-btn .btn-icon { font-size: 28px; color: white; }
+.main-action-btn .btn-text { font-size: 15px; font-weight: 700; color: white; }
+.main-action-btn .btn-sub { font-size: 11px; color: rgba(255,255,255,0.85); }
+.main-action-btn .hot-tag {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255,255,255,0.25);
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.grid-menu {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 4px 0 8px;
+  background: white;
+  margin: 0 12px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+}
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 12px 0;
+  cursor: pointer;
+}
+.grid-item .icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.grid-item .icon-label { font-size: 11px; color: var(--text-body); text-align: center; }
+
+.banner-area {
+  margin: 12px 12px 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  height: 96px;
+  background: linear-gradient(135deg, #FFF3E8, #FFE0C2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  position: relative;
+}
+.banner-text h3 { font-size: 16px; font-weight: 700; color: var(--primary-dark); }
+.banner-text p { font-size: 12px; color: var(--text-body); margin-top: 4px; }
+.banner-btn {
+  background: var(--primary);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+.banner-icon { position: absolute; right: 100px; font-size: 48px; opacity: 0.15; }
+
+/* ==================== PAGE 2: 文件上传页 ==================== */
+.upload-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin: 0 16px;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.upload-item {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 8px;
+  cursor: pointer;
+}
+.upload-item:active { background: var(--bg-gray); }
+.upload-item .u-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.upload-item .u-label { font-size: 12px; color: var(--text-body); }
+
+.file-list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.file-icon {
+  width: 40px;
+  height: 48px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  font-size: 11px;
+  color: white;
+  flex-shrink: 0;
+}
+.file-info { flex: 1; min-width: 0; }
+.file-name { font-size: 13px; font-weight: 500; color: var(--text-title); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.file-meta { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
+.file-actions { display: flex; gap: 12px; color: var(--text-secondary); font-size: 18px; }
+
+.progress-bar-wrap {
+  height: 3px;
+  background: var(--bg-gray);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+/* ==================== PAGE 3: 打印设置页 ==================== */
+.print-file-info {
+  background: var(--bg-cream);
+  margin: 8px 12px;
+  border-radius: var(--radius-card);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #EDE8DF;
+}
+.print-file-thumb {
+  width: 40px;
+  height: 50px;
+  background: white;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+.setting-group {
+  background: white;
+  margin: 0 12px 10px;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.setting-group-title {
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding: 10px 14px 6px;
+  font-weight: 500;
+}
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(229,230,235,0.5);
+  cursor: pointer;
+}
+.setting-row:last-child { border-bottom: none; }
+.setting-label { font-size: 13px; color: var(--text-body); display: flex; align-items: center; gap: 6px; }
+.setting-value { font-size: 13px; color: var(--text-title); font-weight: 500; display: flex; align-items: center; gap: 4px; }
+.setting-value .chevron { color: var(--text-secondary); font-size: 12px; }
+.setting-value.active { color: var(--primary); }
+
+.chip-group { display: flex; gap: 6px; flex-wrap: wrap; padding: 4px 14px 12px; }
+.chip {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  color: var(--text-body);
+  cursor: pointer;
+  background: white;
+}
+.chip.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
+  font-weight: 600;
+}
+.chip.recommend { position: relative; }
+.chip.recommend::after {
+  content: '推荐';
+  position: absolute;
+  top: -6px;
+  right: -4px;
+  background: var(--success);
+  color: white;
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.stepper-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1.5px solid var(--primary);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+}
+.stepper-val { font-size: 15px; font-weight: 600; min-width: 24px; text-align: center; }
+
+.price-preview {
+  background: white;
+  margin: 0 12px;
+  border-radius: var(--radius-card);
+  padding: 12px 14px;
+  border: 1.5px solid var(--primary-light);
+}
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.price-row.total {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-title);
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+.price-row.total .val { font-size: 18px; color: var(--primary); }
+
+/* ==================== PAGE 4: 快递首页 ==================== */
+.address-block {
+  background: white;
+  margin: 8px 12px;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.address-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 14px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.address-row:last-child { border-bottom: none; }
+.addr-icon { font-size: 16px; margin-top: 2px; }
+.addr-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 3px; }
+.addr-name { font-size: 14px; font-weight: 600; color: var(--text-title); }
+.addr-detail { font-size: 12px; color: var(--text-body); margin-top: 2px; }
+.addr-action { margin-left: auto; color: var(--primary); font-size: 12px; white-space: nowrap; }
+.swap-btn {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%) translateY(-10px);
+  width: 28px;
+  height: 28px;
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.address-line-connector {
+  position: absolute;
+  left: 26px;
+  top: 50px;
+  bottom: 0;
+  width: 1px;
+  border-left: 1.5px dashed var(--border);
+}
+
+.package-form { padding: 8px 14px 14px; }
+.form-row { margin-bottom: 10px; }
+.form-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 5px; }
+.form-input {
+  width: 100%;
+  height: 38px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-input);
+  padding: 0 10px;
+  font-size: 13px;
+  color: var(--text-title);
+  background: var(--bg-gray);
+}
+
+.express-list { padding: 4px 0; }
+.express-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(229,230,235,0.5);
+  cursor: pointer;
+}
+.express-item.selected { background: var(--primary-light); }
+.express-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+.express-info { flex: 1; }
+.express-name { font-size: 13px; font-weight: 600; color: var(--text-title); }
+.express-time { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+.express-price { font-size: 16px; font-weight: 700; color: var(--primary); }
+.express-item.selected .express-price { color: var(--primary-dark); }
+.best-tag {
+  background: var(--primary);
+  color: white;
+  font-size: 9px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+
+/* ==================== PAGE 5: 订单确认页 ==================== */
+.confirm-section {
+  background: white;
+  margin: 0 12px 10px;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.confirm-section-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 14px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.confirm-section-header .icon { font-size: 15px; }
+.confirm-section-header .title { font-size: 13px; font-weight: 600; color: var(--text-title); }
+.confirm-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 14px;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(229,230,235,0.4);
+}
+.confirm-detail-row .key { color: var(--text-secondary); }
+.confirm-detail-row .val { color: var(--text-title); font-weight: 500; max-width: 180px; text-align: right; }
+.coupon-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+.coupon-row .left { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-body); }
+.coupon-row .right { display: flex; align-items: center; gap: 4px; }
+.coupon-count { color: var(--primary); font-size: 12px; font-weight: 600; }
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: var(--bg-cream);
+}
+.total-label { font-size: 14px; font-weight: 600; color: var(--text-title); }
+.total-amount { font-size: 22px; font-weight: 700; color: var(--primary); }
+.total-amount span { font-size: 14px; }
+.pay-btn {
+  height: 50px;
+  background: var(--primary-gradient);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: var(--radius-btn);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(255,125,0,0.4);
+  cursor: pointer;
+}
+
+/* ==================== PAGE 6: 我的订单页 ==================== */
+.tabs-scroll {
+  display: flex;
+  padding: 8px 12px 0;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  gap: 0;
+}
+.tab-link {
+  padding: 8px 14px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap;
+}
+.tab-link.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+.tab-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.status-filter {
+  display: flex;
+  padding: 8px 12px;
+  gap: 6px;
+  overflow-x: auto;
+  background: white;
+  border-bottom: 1px solid var(--border);
+}
+.status-chip {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.status-chip.active {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.order-card {
+  background: white;
+  margin: 0 0 8px;
+  border-radius: 0;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(229,230,235,0.6);
+}
+.order-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.order-type-tag { display: flex; align-items: center; gap: 6px; }
+.order-no { font-size: 11px; color: var(--text-secondary); }
+.order-status { font-size: 12px; font-weight: 600; }
+.order-status.pending { color: var(--primary); }
+.order-status.processing { color: var(--info); }
+.order-status.done { color: var(--success); }
+.order-card-body {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: var(--bg-gray);
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.order-thumb {
+  width: 48px;
+  height: 56px;
+  background: white;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.order-info { flex: 1; }
+.order-name { font-size: 13px; font-weight: 500; color: var(--text-title); margin-bottom: 4px; }
+.order-desc { font-size: 11px; color: var(--text-secondary); line-height: 1.6; }
+.order-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.order-amount { font-size: 16px; font-weight: 700; color: var(--text-title); }
+.order-amount span { font-size: 12px; color: var(--text-secondary); font-weight: 400; }
+.order-btns { display: flex; gap: 8px; }
+.order-btn {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  border: 1.5px solid var(--border);
+  color: var(--text-body);
+  cursor: pointer;
+  background: white;
+}
+.order-btn.primary-outline {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* ==================== PAGE 7: 订单详情页 ==================== */
+.order-status-banner {
+  background: var(--primary-gradient);
+  padding: 20px 16px 24px;
+  position: relative;
+}
+.order-status-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: var(--bg-gray);
+  border-radius: 20px 20px 0 0;
+}
+.status-main { font-size: 20px; font-weight: 700; color: white; margin-bottom: 6px; }
+.status-sub { font-size: 13px; color: rgba(255,255,255,0.85); }
+.progress-steps {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  position: relative;
+}
+.step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  position: relative;
+  z-index: 2;
+}
+.step-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  border: 2px solid rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-dot.active { background: white; border-color: white; }
+.step-dot.active::after { content: '✓'; font-size: 10px; color: var(--primary); font-weight: 700; }
+.step-label { font-size: 9px; color: rgba(255,255,255,0.8); text-align: center; }
+.step-label.active { color: white; font-weight: 600; }
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.3);
+  position: relative;
+  top: -12px;
+  margin: 0 -2px;
+  z-index: 1;
+}
+.step-line.active { background: white; }
+
+.logistics-timeline { padding: 4px 14px 12px; }
+.timeline-item {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 16px;
+  position: relative;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 16px;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+.timeline-item:last-child::before { display: none; }
+.timeline-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.timeline-dot.active { background: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+.timeline-time { font-size: 11px; color: var(--text-secondary); margin-bottom: 2px; }
+.timeline-text { font-size: 12px; color: var(--text-body); line-height: 1.5; }
+.timeline-text.active { color: var(--text-title); font-weight: 500; }
+
+/* ==================== PAGE 8: 个人中心页 ==================== */
+.profile-header {
+  background: var(--primary-gradient);
+  padding: 20px 16px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.profile-header::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+}
+.profile-header::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: var(--bg-gray);
+  border-radius: 16px 16px 0 0;
+}
+.profile-user {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  z-index: 2;
+}
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  border: 2px solid rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+.user-name { font-size: 18px; font-weight: 700; color: white; }
+.user-phone { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 3px; }
+.order-quick-entry {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: white;
+  margin: 0 12px;
+  border-radius: var(--radius-card);
+  padding: 16px 0;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  z-index: 2;
+}
+.order-entry-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  position: relative;
+}
+.order-entry-icon { font-size: 24px; }
+.order-entry-label { font-size: 12px; color: var(--text-body); }
+.badge {
+  position: absolute;
+  top: -2px;
+  right: 22px;
+  background: var(--danger);
+  color: white;
+  font-size: 9px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.menu-group {
+  background: white;
+  margin: 10px 12px 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.menu-group-title {
+  font-size: 12px;
+  color: var(--text-secondary);
+  padding: 10px 14px 4px;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 13px 14px;
+  border-bottom: 1px solid rgba(229,230,235,0.5);
+  cursor: pointer;
+  gap: 10px;
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-icon { font-size: 18px; width: 24px; text-align: center; }
+.menu-name { flex: 1; font-size: 14px; color: var(--text-title); }
+.menu-arrow { font-size: 12px; color: var(--text-secondary); }
+.menu-badge { background: var(--danger); color: white; font-size: 10px; padding: 1px 6px; border-radius: 8px; }
+.profile-footer {
+  text-align: center;
+  padding: 20px 16px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+</style>
+</head>
+<body>
+
+<div class="design-header">
+  <div class="brand-badge">🎨 UI设计稿</div>
+  <h1>优印达 · 微信小程序端</h1>
+  <p class="subtitle">高保真 UI 设计方案 · 小程序端 8 核心页面 · 375px 适配 · 符合微信小程序官方设计规范</p>
+</div>
+
+<div class="pages-grid">
+
+<!-- ===== PAGE 1: 首页 ===== -->
+<div class="phone-wrapper">
+  <div class="page-label">📱 P1 · 首页（核心流量入口）</div>
+  <div class="phone-shell">
+    <div class="phone-screen" style="background: var(--bg-gray);">
+      <div class="status-bar" style="background: var(--primary);">
+        <span class="time" style="color:white;">11:56</span>
+        <span class="icons" style="color:white;">📶 🔋</span>
+      </div>
+      <!-- 顶部品牌导航 -->
+      <div class="home-header">
+        <div class="home-top-bar">
+          <div class="brand-logo">
+            <div class="logo-icon">🖨️</div>
+            <span class="brand-name">优印达</span>
+          </div>
+          <div class="home-icons">
+            <span>💬</span>
+            <span>📍</span>
+          </div>
+        </div>
+        <div class="location-bar">
+          <span>📍</span>
+          <span>北京市海淀区 中关村大街1号</span>
+          <span style="opacity:0.7;font-size:10px;">▼</span>
+        </div>
+      </div>
+      <!-- 核心功能按钮 -->
+      <div class="main-actions">
+        <div class="main-action-btn print">
+          <div class="hot-tag">🔥 热门</div>
+          <div class="btn-icon">🖨️</div>
+          <div class="btn-text">文档打印</div>
+          <div class="btn-sub">A4黑白 ¥0.12/页起</div>
+        </div>
+        <div class="main-action-btn express">
+          <div class="btn-icon">📦</div>
+          <div class="btn-text">低价寄快递</div>
+          <div class="btn-sub">顺丰¥9.8起</div>
+        </div>
+      </div>
+      <!-- 8宫格入口 -->
+      <div class="grid-menu" style="margin: 0 12px 12px;">
+        <div class="grid-item">
+          <div class="icon-wrap" style="background:#FFF3E8;">📋</div>
+          <span class="icon-label">打印教程</span>
+        </div>
+        <div class="grid-item">
+          <div class="icon-wrap" style="background:#E8EDFF;">💰</div>
+          <span class="icon-label">价格列表</span>
+        </div>
+        <div class="grid-item">
+          <div class="icon-wrap" style="background:#E8F7EC;">❓</div>
+          <span class="icon-label">常见问题</span>
+        </div>
+        <div class="grid-item">
+          <div class="icon-wrap" style="background:#FFF3E8;">✏️</div>
+          <span class="icon-label">AI字帖</span>
+        </div>
+        <div class="grid-item">
+          <div class="icon-wrap" style="background:#E8EDFF;">⏱️</div>
+          <span class="icon-label">时效查询</span>
+        </div>
+        <div class="grid-item">
+          <div class="icon-wrap" style="background:#F3E8FF;">📖</div>
+          <span class="icon-label">地址簿</span>
+        </div>
+        <div class="grid-item">
+          <div class="icon-wrap" style="background:#FFF3E8;">🎫</div>
+          <span class="icon-label">优惠券</span>
+        </div>
+        <div class="grid-item">
+          <div class="icon-wrap" style="background:#E8F7EC;">🎁</div>
+          <span class="icon-label">邀请福利</span>
+        </div>
+      </div>
+      <!-- 新人福利Banner -->
+      <div class="banner-area">
+        <div class="banner-text">
+          <h3>🎉 新人专属福利</h3>
+          <p>注册即领3张免费打印券<br>首单打印8折优惠</p>
+        </div>
+        <div class="banner-icon">🎁</div>
+        <div class="banner-btn">立即领取</div>
+      </div>
+      <!-- 拼团活动 -->
+      <div style="padding: 8px 12px 0;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <span style="font-size:14px;font-weight:700;color:var(--text-title);">🔥 拼团打印</span>
+          <span style="font-size:12px;color:var(--primary);">更多 ›</span>
+        </div>
+        <div style="display:flex;gap:8px;overflow-x:auto;">
+          <div class="card" style="margin:0;min-width:140px;flex-shrink:0;">
+            <div style="background:linear-gradient(135deg,#FFE0C2,#FFC89A);height:60px;display:flex;align-items:center;justify-content:center;font-size:24px;">🖨️</div>
+            <div style="padding:8px 10px;">
+              <div style="font-size:12px;font-weight:600;color:var(--text-title);margin-bottom:4px;">A4彩印拼团</div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span style="font-size:14px;font-weight:700;color:var(--primary);">¥0.35</span>
+                <span style="font-size:10px;color:var(--text-secondary);text-decoration:line-through;">¥0.5</span>
+              </div>
+              <div style="font-size:10px;color:var(--text-secondary);margin-top:3px;">已拼 128人 · 还差2人</div>
+            </div>
+          </div>
+          <div class="card" style="margin:0;min-width:140px;flex-shrink:0;">
+            <div style="background:linear-gradient(135deg,#D4EAFF,#AACFFF);height:60px;display:flex;align-items:center;justify-content:center;font-size:24px;">📦</div>
+            <div style="padding:8px 10px;">
+              <div style="font-size:12px;font-weight:600;color:var(--text-title);margin-bottom:4px;">顺丰寄件拼团</div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span style="font-size:14px;font-weight:700;color:var(--primary);">¥7.8</span>
+                <span style="font-size:10px;color:var(--text-secondary);text-decoration:line-through;">¥12</span>
+              </div>
+              <div style="font-size:10px;color:var(--text-secondary);margin-top:3px;">已拼 89人 · 还差11人</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="height:8px;"></div>
+      <div class="tab-bar">
+        <div class="tab-item active">
+          <span class="tab-icon">🏠</span>
+          <span>首页</span>
+        </div>
+        <div class="tab-item">
+          <span class="tab-icon">📋</span>
+          <span>我的订单</span>
+        </div>
+        <div class="tab-item">
+          <span class="tab-icon">👤</span>
+          <span>个人中心</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>尺寸标注：</strong>顶部品牌区高度 88px，主操作按钮高度 88px，8宫格图标 40px，Banner 96px<br>
+    <strong>交互说明：</strong>运营区支持横向滑动，按钮点击有 scale(0.96) 反馈，下拉刷新
+  </div>
+</div>
+
+<!-- ===== PAGE 2: 文件上传页 ===== -->
+<div class="phone-wrapper">
+  <div class="page-label">📤 P2 · 文件上传页</div>
+  <div class="phone-shell">
+    <div class="phone-screen">
+      <div class="status-bar"><span class="time">11:56</span><span class="icons">📶 🔋</span></div>
+      <div class="nav-bar">
+        <div class="nav-back">‹</div>
+        <div class="nav-title">选择文件</div>
+      </div>
+      <!-- 上传渠道 -->
+      <div style="padding:12px 16px 8px;">
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:10px;">选择文件来源</div>
+        <div class="upload-grid">
+          <div class="upload-item">
+            <div class="u-icon" style="background:#07C160;"><span style="font-size:22px;">💬</span></div>
+            <span class="u-label">微信聊天</span>
+          </div>
+          <div class="upload-item">
+            <div class="u-icon" style="background:#1989FA;"><span style="font-size:22px;">📁</span></div>
+            <span class="u-label">本地文件</span>
+          </div>
+          <div class="upload-item">
+            <div class="u-icon" style="background:#2F5EC4;"><span style="font-size:22px;">☁️</span></div>
+            <span class="u-label">百度网盘</span>
+          </div>
+          <div class="upload-item">
+            <div class="u-icon" style="background:#FF9A3C;"><span style="font-size:22px;">🖼️</span></div>
+            <span class="u-label">图片</span>
+          </div>
+          <div class="upload-item">
+            <div class="u-icon" style="background:#86909C;"><span style="font-size:22px;">🗜️</span></div>
+            <span class="u-label">压缩包</span>
+          </div>
+          <div class="upload-item">
+            <div class="u-icon" style="background:#FF7D00;"><span style="font-size:22px;">📄</span></div>
+            <span class="u-label">腾讯文档</span>
+          </div>
+          <div class="upload-item">
+            <div class="u-icon" style="background:#DF4242;"><span style="font-size:22px;">📝</span></div>
+            <span class="u-label">WPS文档</span>
+          </div>
+          <div class="upload-item">
+            <div class="u-icon" style="background:#1D6FA4;"><span style="font-size:22px;">📑</span></div>
+            <span class="u-label">QQ文档</span>
+          </div>
+          <div class="upload-item">
+            <div class="u-icon" style="background:var(--bg-gray);border:1.5px dashed var(--border);"><span style="font-size:20px;color:var(--text-secondary);">+</span></div>
+            <span class="u-label" style="color:var(--text-secondary);">更多</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- 已上传文件列表 -->
+      <div style="padding:8px 16px 6px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:13px;font-weight:600;color:var(--text-title);">已选文件 (2)</span>
+        <span style="font-size:12px;color:var(--primary);">全选</span>
+      </div>
+      <!-- 上传中文件 -->
+      <div class="file-list-item">
+        <div style="width:4px;height:48px;border-radius:2px;background:var(--primary);margin-right:-8px;flex-shrink:0;"></div>
+        <div class="file-icon" style="background:linear-gradient(135deg,#165DFF,#4E79FF);">PDF</div>
+        <div class="file-info">
+          <div class="file-name">毕业论文答辩稿最终版.pdf</div>
+          <div class="file-meta">128 页 · PDF · 2.3MB</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-fill" style="width:65%"></div>
+          </div>
+          <div style="font-size:10px;color:var(--primary);margin-top:3px;">上传中 65%...</div>
+        </div>
+        <div class="file-actions">
+          <span>🗑️</span>
+        </div>
+      </div>
+      <!-- 已完成文件 -->
+      <div class="file-list-item" style="background:rgba(0,180,42,0.03);">
+        <div style="width:4px;height:48px;border-radius:2px;background:var(--success);margin-right:-8px;flex-shrink:0;"></div>
+        <div class="file-icon" style="background:linear-gradient(135deg,#FF7D00,#FF9A3C);">DOC</div>
+        <div class="file-info">
+          <div class="file-name">实习报告_李明.docx</div>
+          <div class="file-meta">32 页 · Word · 856KB · <span style="color:var(--success);">✓ 已就绪</span></div>
+        </div>
+        <div class="file-actions">
+          <span>👁️</span>
+          <span>🗑️</span>
+        </div>
+      </div>
+
+      <div style="padding:10px 16px;">
+        <div style="background:var(--primary-light);border:1px dashed var(--primary);border-radius:8px;padding:12px;text-align:center;cursor:pointer;">
+          <div style="font-size:20px;margin-bottom:4px;">+</div>
+          <div style="font-size:12px;color:var(--primary);">继续添加文件（最多10个）</div>
+        </div>
+      </div>
+
+      <div style="flex:1;"></div>
+      <div class="bottom-bar">
+        <div class="primary-btn">
+          🖨️ 去打印设置
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>尺寸标注：</strong>上传图标 44×44px，文件卡片高度 72px，进度条高度 3px<br>
+    <strong>交互说明：</strong>上传中实时刷新进度，格式不支持触发底部弹出友好提示
+  </div>
+</div>
+
+<!-- ===== PAGE 3: 打印设置页 ===== -->
+<div class="phone-wrapper">
+  <div class="page-label">⚙️ P3 · 打印设置页</div>
+  <div class="phone-shell">
+    <div class="phone-screen" style="background:var(--bg-gray);">
+      <div class="status-bar"><span class="time">11:56</span><span class="icons">📶 🔋</span></div>
+      <div class="nav-bar" style="background:white;">
+        <div class="nav-back">‹</div>
+        <div class="nav-title">打印设置</div>
+        <div class="nav-right">预览</div>
+      </div>
+      <!-- 文件信息 -->
+      <div class="print-file-info">
+        <div class="print-file-thumb">PDF</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--text-title);margin-bottom:3px;">毕业论文答辩稿最终版.pdf</div>
+          <div style="font-size:12px;color:var(--text-secondary);">128页 · 黑白预计 ¥15.36</div>
+        </div>
+      </div>
+
+      <!-- 基础设置组 -->
+      <div class="setting-group">
+        <div class="setting-group-title">📄 基础设置</div>
+        <div class="setting-row">
+          <span class="setting-label">纸型</span>
+          <span class="setting-value active">A4 <span class="chevron">›</span></span>
+        </div>
+        <div style="padding:0 14px 10px;">
+          <div class="chip-group" style="padding:0;">
+            <div class="chip active">A4</div>
+            <div class="chip">A3</div>
+            <div class="chip">B5</div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <span class="setting-label">色彩模式</span>
+          <span class="setting-value active">激光黑白 <span class="chevron">›</span></span>
+        </div>
+        <div style="padding:0 14px 10px;">
+          <div class="chip-group" style="padding:0;">
+            <div class="chip active">激光黑白</div>
+            <div class="chip">激光彩印</div>
+            <div class="chip">喷墨彩印</div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <span class="setting-label">单双面</span>
+          <div class="chip-group" style="padding:0;margin-left:auto;">
+            <div class="chip active" style="font-size:11px;">双面</div>
+            <div class="chip" style="font-size:11px;">单面</div>
+            <div class="chip" style="font-size:11px;">混排</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 纸张类型 -->
+      <div class="setting-group">
+        <div class="setting-group-title">📜 纸张类型</div>
+        <div style="padding:4px 14px 12px;">
+          <div class="chip-group" style="padding:0;">
+            <div class="chip recommend active">护眼纸</div>
+            <div class="chip">普通纸</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 高级设置 -->
+      <div class="setting-group">
+        <div class="setting-group-title">🔧 高级设置</div>
+        <div class="setting-row">
+          <span class="setting-label">打印份数</span>
+          <div class="stepper">
+            <div class="stepper-btn">−</div>
+            <span class="stepper-val">1</span>
+            <div class="stepper-btn">+</div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <span class="setting-label">多页合一缩印</span>
+          <span class="setting-value">不缩印 <span class="chevron">›</span></span>
+        </div>
+        <div class="setting-row" style="border:none;">
+          <span class="setting-label">装订方式</span>
+          <span class="setting-value">不装订 <span class="chevron">›</span></span>
+        </div>
+      </div>
+
+      <!-- 价格区 -->
+      <div class="price-preview" style="margin-bottom:10px;">
+        <div class="price-row"><span>打印费 (128页×¥0.12)</span><span>¥15.36</span></div>
+        <div class="price-row"><span>预估快递费</span><span>¥7.80</span></div>
+        <div class="price-row"><span>护眼纸加价</span><span>¥2.56</span></div>
+        <div class="price-row total"><span>预估总费用</span><span class="val">¥25.72</span></div>
+      </div>
+
+      <div class="bottom-bar">
+        <div class="primary-btn">✓ 确认，去下单</div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>尺寸标注：</strong>设置项行高 44px，Chip 高度 28px，价格区固定底部<br>
+    <strong>交互说明：</strong>参数修改实时刷新价格，护眼纸推荐标签绿色角标，装订超限禁用下单
+  </div>
+</div>
+
+<!-- ===== PAGE 4: 快递寄件首页 ===== -->
+<div class="phone-wrapper">
+  <div class="page-label">📦 P4 · 快递寄件页</div>
+  <div class="phone-shell">
+    <div class="phone-screen" style="background:var(--bg-gray);">
+      <div class="status-bar"><span class="time">11:56</span><span class="icons">📶 🔋</span></div>
+      <div class="nav-bar" style="background:white;">
+        <div class="nav-back">‹</div>
+        <div class="nav-title">低价寄快递</div>
+      </div>
+
+      <!-- 地址填写 -->
+      <div class="address-block" style="position:relative;">
+        <div class="address-row">
+          <span class="addr-icon" style="color:var(--primary);">●</span>
+          <div style="flex:1;">
+            <div class="addr-label">寄件人</div>
+            <div class="addr-name">李明 <span style="font-size:12px;color:var(--text-secondary);">138****8888</span></div>
+            <div class="addr-detail">北京市海淀区中关村大街1号 2单元301室</div>
+          </div>
+          <span class="addr-action">修改</span>
+        </div>
+        <div style="height:1px;background:var(--border);margin:0 14px;"></div>
+        <div class="address-row">
+          <span class="addr-icon" style="color:var(--info);">▼</span>
+          <div style="flex:1;">
+            <div class="addr-label">收件人</div>
+            <div class="addr-name" style="color:var(--text-secondary);">请填写收件人信息</div>
+          </div>
+          <span class="addr-action">选地址</span>
+        </div>
+        <div class="swap-btn">⇅</div>
+      </div>
+
+      <!-- 包裹信息 -->
+      <div class="card">
+        <div style="padding:10px 14px 4px;font-size:12px;font-weight:600;color:var(--text-body);">📦 包裹信息</div>
+        <div class="package-form">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div class="form-row" style="margin:0;">
+              <div class="form-label">物品名称</div>
+              <div class="form-input" style="display:flex;align-items:center;font-size:12px;color:var(--text-secondary);">文件/资料</div>
+            </div>
+            <div class="form-row" style="margin:0;">
+              <div class="form-label">重量 (kg)</div>
+              <div class="form-input" style="display:flex;align-items:center;font-size:13px;color:var(--text-title);font-weight:500;">1.0 kg</div>
+            </div>
+          </div>
+          <div style="margin-top:8px;display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--border);">
+            <span style="font-size:13px;color:var(--text-body);">📋 保价服务</span>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="font-size:12px;color:var(--text-secondary);">关闭</span>
+              <div style="width:40px;height:22px;border-radius:11px;background:var(--bg-gray);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;padding:2px;">
+                <div style="width:18px;height:18px;border-radius:50%;background:white;box-shadow:0 1px 3px rgba(0,0,0,0.2);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 快递选择 -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px 4px;">
+          <span style="font-size:12px;font-weight:600;color:var(--text-body);">🚚 选择快递</span>
+          <div style="display:flex;gap:8px;">
+            <span style="font-size:11px;color:var(--primary);font-weight:500;">按价格↑</span>
+            <span style="font-size:11px;color:var(--text-secondary);">按时效</span>
+          </div>
+        </div>
+        <div class="express-list">
+          <div class="express-item selected">
+            <div class="express-logo" style="background:#009A4D;">顺<br>丰</div>
+            <div class="express-info">
+              <div class="express-name">顺丰速运 <span class="best-tag">性价比优选</span></div>
+              <div class="express-time">今天取件 · 明天送达</div>
+            </div>
+            <div>
+              <div class="express-price">¥12.80</div>
+              <div style="font-size:10px;color:var(--text-secondary);text-align:right;">到付可选</div>
+            </div>
+            <div style="width:18px;height:18px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;color:white;font-size:10px;margin-left:4px;">✓</div>
+          </div>
+          <div class="express-item">
+            <div class="express-logo" style="background:#2956A3;">圆<br>通</div>
+            <div class="express-info">
+              <div class="express-name">圆通速递</div>
+              <div class="express-time">明天取件 · 后天送达</div>
+            </div>
+            <div class="express-price">¥9.80</div>
+          </div>
+          <div class="express-item">
+            <div class="express-logo" style="background:#E5261F;">申<br>通</div>
+            <div class="express-info">
+              <div class="express-name">申通快递</div>
+              <div class="express-time">明天取件 · 后天送达</div>
+            </div>
+            <div class="express-price">¥8.50</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 费用明细 -->
+      <div class="price-preview" style="margin-bottom:10px;">
+        <div class="price-row"><span>基础运费</span><span>¥11.00</span></div>
+        <div class="price-row"><span>平台服务费</span><span>¥1.80</span></div>
+        <div class="price-row total"><span>应付合计</span><span class="val">¥12.80</span></div>
+      </div>
+
+      <div class="bottom-bar">
+        <div class="primary-btn">📦 提交订单</div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>尺寸标注：</strong>地址卡片行高 68px，快递列表行高 60px，快递logo 36×36px<br>
+    <strong>交互说明：</strong>地址修改实时刷新运费，选中高亮，⇅按钮交换寄收地址
+  </div>
+</div>
+
+<!-- ===== PAGE 5: 订单确认页 ===== -->
+<div class="phone-wrapper">
+  <div class="page-label">✅ P5 · 订单确认页</div>
+  <div class="phone-shell">
+    <div class="phone-screen" style="background:var(--bg-gray);">
+      <div class="status-bar"><span class="time">11:56</span><span class="icons">📶 🔋</span></div>
+      <div class="nav-bar" style="background:white;">
+        <div class="nav-back">‹</div>
+        <div class="nav-title">确认订单</div>
+      </div>
+
+      <!-- 收货地址 -->
+      <div class="confirm-section">
+        <div class="confirm-section-header">
+          <span class="icon">📍</span>
+          <span class="title">收货地址</span>
+        </div>
+        <div style="padding:12px 14px;">
+          <div style="font-size:14px;font-weight:600;color:var(--text-title);">李明 <span style="font-weight:400;color:var(--text-body);">138****8888</span></div>
+          <div style="font-size:13px;color:var(--text-body);margin-top:4px;line-height:1.6;">北京市海淀区中关村大街1号 2单元301室 (邮编: 100080)</div>
+        </div>
+      </div>
+
+      <!-- 打印文件信息 -->
+      <div class="confirm-section">
+        <div class="confirm-section-header">
+          <span class="icon">🖨️</span>
+          <span class="title">打印文件</span>
+        </div>
+        <div class="confirm-detail-row"><span class="key">文件名称</span><span class="val">毕业论文答辩稿最终版.pdf</span></div>
+        <div class="confirm-detail-row"><span class="key">纸型 / 色彩</span><span class="val">A4 · 激光黑白</span></div>
+        <div class="confirm-detail-row"><span class="key">单双面 / 份数</span><span class="val">双面打印 × 1份</span></div>
+        <div class="confirm-detail-row"><span class="key">纸张类型</span><span class="val">护眼纸 ✨推荐</span></div>
+        <div class="confirm-detail-row" style="border:none;"><span class="key">打印页数</span><span class="val">128页</span></div>
+      </div>
+
+      <!-- 快递信息 -->
+      <div class="confirm-section">
+        <div class="confirm-section-header">
+          <span class="icon">🚚</span>
+          <span class="title">配送方式 · 顺丰速运</span>
+        </div>
+        <div class="confirm-detail-row"><span class="key">预计取件</span><span class="val">今天 14:00-20:00</span></div>
+        <div class="confirm-detail-row" style="border:none;"><span class="key">预计送达</span><span class="val">明天</span></div>
+      </div>
+
+      <!-- 费用明细 -->
+      <div class="confirm-section">
+        <div class="confirm-section-header">
+          <span class="icon">💰</span>
+          <span class="title">费用明细</span>
+        </div>
+        <div class="confirm-detail-row"><span class="key">打印费</span><span class="val">¥15.36</span></div>
+        <div class="confirm-detail-row"><span class="key">护眼纸加价</span><span class="val">¥2.56</span></div>
+        <div class="confirm-detail-row"><span class="key">快递费</span><span class="val">¥12.80</span></div>
+        <div class="coupon-row">
+          <div class="left">🎫 <span>优惠券</span></div>
+          <div class="right">
+            <span class="coupon-count">可用2张</span>
+            <span style="font-size:12px;color:var(--text-secondary);">›</span>
+          </div>
+        </div>
+        <div class="confirm-detail-row" style="border:none;"><span class="key" style="color:var(--danger);">新人优惠</span><span class="val" style="color:var(--danger);">-¥5.00</span></div>
+      </div>
+
+      <!-- 总费用 -->
+      <div class="total-row" style="margin:0 12px;border-radius:var(--radius-card);margin-bottom:12px;">
+        <span class="total-label">实付金额</span>
+        <span class="total-amount"><span>¥</span>25.72</span>
+      </div>
+
+      <div class="bottom-bar">
+        <div class="pay-btn">💳 立即支付 ¥25.72</div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>尺寸标注：</strong>地址区行高 68px，详情行高 40px，支付按钮高度 50px<br>
+    <strong>交互说明：</strong>优惠券选择后金额实时刷新，支付唤起微信支付原生组件
+  </div>
+</div>
+
+<!-- ===== PAGE 6: 我的订单 ===== -->
+<div class="phone-wrapper">
+  <div class="page-label">📋 P6 · 我的订单页</div>
+  <div class="phone-shell">
+    <div class="phone-screen" style="background:var(--bg-gray);">
+      <div class="status-bar"><span class="time">11:56</span><span class="icons">📶 🔋</span></div>
+      <div class="nav-bar" style="background:white;">
+        <div class="nav-title" style="position:relative;transform:none;left:auto;font-size:16px;">我的订单</div>
+        <div style="margin-left:auto;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:18px;">🔍</div>
+      </div>
+
+      <div class="tabs-scroll">
+        <div class="tab-link active">全部</div>
+        <div class="tab-link">打印订单</div>
+        <div class="tab-link">快递订单</div>
+      </div>
+      <div class="status-filter">
+        <div class="status-chip active">全部</div>
+        <div class="status-chip">待支付</div>
+        <div class="status-chip">进行中</div>
+        <div class="status-chip">待收货</div>
+        <div class="status-chip">已完成</div>
+        <div class="status-chip">售后中</div>
+      </div>
+
+      <!-- 订单卡片 1 -->
+      <div class="order-card">
+        <div class="order-card-header">
+          <div class="order-type-tag">
+            <span class="tag tag-primary">🖨️ 打印</span>
+            <span class="order-no">NO.2026032801</span>
+          </div>
+          <span class="order-status processing">打印中</span>
+        </div>
+        <div class="order-card-body">
+          <div class="order-thumb">PDF<br>文件</div>
+          <div class="order-info">
+            <div class="order-name">毕业论文答辩稿最终版.pdf</div>
+            <div class="order-desc">A4 · 激光黑白 · 双面 · 护眼纸<br>128页 × 1份 · 顺丰速运</div>
+          </div>
+        </div>
+        <div class="order-card-footer">
+          <div>
+            <div class="order-amount">¥25.72</div>
+            <div style="font-size:10px;color:var(--text-secondary);">2026-03-28 10:22</div>
+          </div>
+          <div class="order-btns">
+            <div class="order-btn">查看物流</div>
+            <div class="order-btn primary-outline">确认收货</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 订单卡片 2 -->
+      <div class="order-card">
+        <div class="order-card-header">
+          <div class="order-type-tag">
+            <span class="tag tag-info">📦 快递</span>
+            <span class="order-no">NO.2026032702</span>
+          </div>
+          <span class="order-status done">已完成</span>
+        </div>
+        <div class="order-card-body">
+          <div class="order-thumb" style="background:linear-gradient(135deg,#E8EDFF,#C6D4FF);font-size:20px;display:flex;align-items:center;justify-content:center;border:none;">📦</div>
+          <div class="order-info">
+            <div class="order-name">顺丰速运 · 文件/资料</div>
+            <div class="order-desc">1kg · 北京→上海<br>已于2026-03-28 15:30送达</div>
+          </div>
+        </div>
+        <div class="order-card-footer">
+          <div>
+            <div class="order-amount">¥12.80</div>
+            <div style="font-size:10px;color:var(--text-secondary);">2026-03-27 09:15</div>
+          </div>
+          <div class="order-btns">
+            <div class="order-btn">查看物流</div>
+            <div class="order-btn">申请售后</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 待支付订单 -->
+      <div class="order-card">
+        <div class="order-card-header">
+          <div class="order-type-tag">
+            <span class="tag tag-primary">🖨️ 打印</span>
+            <span class="order-no">NO.2026032503</span>
+          </div>
+          <span class="order-status pending">待支付</span>
+        </div>
+        <div class="order-card-body">
+          <div class="order-thumb">DOCX</div>
+          <div class="order-info">
+            <div class="order-name">实习报告_李明.docx</div>
+            <div class="order-desc">A4 · 激光彩印 · 单面<br>32页 × 2份</div>
+          </div>
+        </div>
+        <div class="order-card-footer">
+          <div>
+            <div class="order-amount">¥18.40 <span>剩余14:32</span></div>
+          </div>
+          <div class="order-btns">
+            <div class="order-btn">取消</div>
+            <div class="order-btn primary-outline">立即付款</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>尺寸标注：</strong>Tab 高度 40px，状态筛选高度 40px，订单卡片内边距 14px<br>
+    <strong>交互说明：</strong>卡片点击进详情，下拉刷新，上拉加载更多，Tab选中橙色下划线
+  </div>
+</div>
+
+<!-- ===== PAGE 7: 订单详情页 ===== -->
+<div class="phone-wrapper">
+  <div class="page-label">📊 P7 · 订单详情页</div>
+  <div class="phone-shell">
+    <div class="phone-screen" style="background:var(--bg-gray);">
+      <div class="status-bar" style="background:var(--primary);">
+        <span class="time" style="color:white;">11:56</span>
+        <span class="icons" style="color:white;">📶 🔋</span>
+      </div>
+      <div class="nav-bar" style="background:var(--primary);border:none;">
+        <div class="nav-back" style="color:white;">‹</div>
+        <div class="nav-title" style="color:white;">订单详情</div>
+      </div>
+      <!-- 状态Banner -->
+      <div class="order-status-banner">
+        <div class="status-main">🚚 快件运输中</div>
+        <div class="status-sub">预计明天（03月31日）送达</div>
+        <div class="progress-steps">
+          <div class="step-node">
+            <div class="step-dot active"></div>
+            <div class="step-label active">下单</div>
+          </div>
+          <div class="step-line active"></div>
+          <div class="step-node">
+            <div class="step-dot active"></div>
+            <div class="step-label active">打印中</div>
+          </div>
+          <div class="step-line active"></div>
+          <div class="step-node">
+            <div class="step-dot active"></div>
+            <div class="step-label active">已发货</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-node">
+            <div class="step-dot"></div>
+            <div class="step-label">待收货</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-node">
+            <div class="step-dot"></div>
+            <div class="step-label">已完成</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 物流轨迹 -->
+      <div class="card" style="margin-top:20px;">
+        <div style="padding:12px 14px 8px;font-size:13px;font-weight:600;color:var(--text-title);display:flex;justify-content:space-between;">
+          <span>📡 物流轨迹 · SF1234567890</span>
+          <span style="font-size:12px;color:var(--primary);">复制单号</span>
+        </div>
+        <div class="logistics-timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot active"></div>
+            <div>
+              <div class="timeline-time">03-30 10:35</div>
+              <div class="timeline-text active">快件已到达【北京转运中心】，正在分拣</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-time">03-29 22:18</div>
+              <div class="timeline-text">快件已由【优印达打印站】发出，顺丰揽收</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-time">03-29 14:30</div>
+              <div class="timeline-text">打印完成，正在打包发货</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="timeline-time">03-28 10:22</div>
+              <div class="timeline-text">订单支付成功，开始打印处理</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 订单信息 -->
+      <div class="confirm-section" style="margin-top:0;">
+        <div class="confirm-section-header"><span>💰</span><span class="title">费用明细</span></div>
+        <div class="confirm-detail-row"><span class="key">订单编号</span><span class="val" style="font-size:11px;font-family:monospace;">2026032801</span></div>
+        <div class="confirm-detail-row"><span class="key">实付金额</span><span class="val" style="color:var(--primary);font-weight:700;">¥25.72</span></div>
+        <div class="confirm-detail-row"><span class="key">支付方式</span><span class="val">微信支付</span></div>
+        <div class="confirm-detail-row" style="border:none;"><span class="key">支付时间</span><span class="val">2026-03-28 10:22</span></div>
+      </div>
+
+      <!-- 底部操作 -->
+      <div class="bottom-bar" style="display:flex;gap:10px;">
+        <div style="flex:1;height:44px;border:1.5px solid var(--border);border-radius:var(--radius-btn);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-body);cursor:pointer;">申请售后</div>
+        <div style="flex:1;height:44px;background:var(--primary-gradient);border-radius:var(--radius-btn);display:flex;align-items:center;justify-content:center;font-size:13px;color:white;font-weight:600;cursor:pointer;">✓ 确认收货</div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>尺寸标注：</strong>状态Banner高度 120px，进度节点 20×20px，时间线竖线 1px<br>
+    <strong>交互说明：</strong>物流轨迹可展开全部节点，操作按钮有二次确认弹窗
+  </div>
+</div>
+
+<!-- ===== PAGE 8: 个人中心 ===== -->
+<div class="phone-wrapper">
+  <div class="page-label">👤 P8 · 个人中心页</div>
+  <div class="phone-shell">
+    <div class="phone-screen" style="background:var(--bg-gray);">
+      <div class="status-bar" style="background:var(--primary);">
+        <span class="time" style="color:white;">11:56</span>
+        <span class="icons" style="color:white;">📶 🔋</span>
+      </div>
+      <!-- 用户信息头部 -->
+      <div class="profile-header">
+        <div class="profile-user">
+          <div class="avatar">👤</div>
+          <div>
+            <div class="user-name">李明同学</div>
+            <div class="user-phone">📱 138****8888</div>
+            <div style="margin-top:6px;">
+              <span style="background:rgba(255,255,255,0.2);color:white;font-size:10px;padding:2px 8px;border-radius:10px;">✨ 普通会员</span>
+            </div>
+          </div>
+          <div style="margin-left:auto;color:rgba(255,255,255,0.8);font-size:13px;">编辑 ›</div>
+        </div>
+      </div>
+
+      <!-- 订单快捷入口 -->
+      <div class="order-quick-entry" style="margin-top:-16px;">
+        <div class="order-entry-item">
+          <div class="badge">2</div>
+          <span class="order-entry-icon">💳</span>
+          <span class="order-entry-label">待支付</span>
+        </div>
+        <div class="order-entry-item">
+          <span class="order-entry-icon">🖨️</span>
+          <span class="order-entry-label">待发货</span>
+        </div>
+        <div class="order-entry-item">
+          <div class="badge">1</div>
+          <span class="order-entry-icon">🚚</span>
+          <span class="order-entry-label">待收货</span>
+        </div>
+        <div class="order-entry-item">
+          <span class="order-entry-icon">🔄</span>
+          <span class="order-entry-label">售后</span>
+        </div>
+      </div>
+
+      <!-- 优惠资产 -->
+      <div style="margin:10px 12px 0;background:linear-gradient(135deg,#FFF3E8,#FFE0C2);border-radius:var(--radius-card);padding:12px 16px;display:flex;justify-content:space-around;">
+        <div style="text-align:center;">
+          <div style="font-size:20px;font-weight:700;color:var(--primary);">3</div>
+          <div style="font-size:11px;color:var(--text-body);">优惠券</div>
+        </div>
+        <div style="width:1px;background:rgba(255,125,0,0.2);"></div>
+        <div style="text-align:center;">
+          <div style="font-size:20px;font-weight:700;color:var(--primary);">¥12.80</div>
+          <div style="font-size:11px;color:var(--text-body);">累计省钱</div>
+        </div>
+        <div style="width:1px;background:rgba(255,125,0,0.2);"></div>
+        <div style="text-align:center;">
+          <div style="font-size:20px;font-weight:700;color:var(--primary);">5</div>
+          <div style="font-size:11px;color:var(--text-body);">总订单数</div>
+        </div>
+      </div>
+
+      <!-- 功能菜单 -->
+      <div class="menu-group">
+        <div class="menu-group-title">常用功能</div>
+        <div class="menu-item">
+          <span class="menu-icon">📖</span>
+          <span class="menu-name">我的地址簿</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">🎫</span>
+          <span class="menu-name">我的优惠券</span>
+          <span class="menu-badge">3</span>
+          <span class="menu-arrow" style="margin-left:6px;">›</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">🎁</span>
+          <span class="menu-name">邀请好友</span>
+          <span style="font-size:11px;color:var(--primary);margin-right:4px;">送5元券</span>
+          <span class="menu-arrow">›</span>
+        </div>
+      </div>
+
+      <div class="menu-group" style="margin-top:8px;">
+        <div class="menu-group-title">支持与帮助</div>
+        <div class="menu-item">
+          <span class="menu-icon">💬</span>
+          <span class="menu-name">帮助与客服</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">ℹ️</span>
+          <span class="menu-name">关于优印达</span>
+          <span class="menu-arrow">›</span>
+        </div>
+        <div class="menu-item" style="border:none;">
+          <span class="menu-icon">🔒</span>
+          <span class="menu-name">隐私政策</span>
+          <span class="menu-arrow">›</span>
+        </div>
+      </div>
+
+      <div class="profile-footer">优印达 版权所有 © 2026</div>
+
+      <div class="tab-bar">
+        <div class="tab-item">
+          <span class="tab-icon">🏠</span>
+          <span>首页</span>
+        </div>
+        <div class="tab-item">
+          <span class="tab-icon">📋</span>
+          <span>我的订单</span>
+        </div>
+        <div class="tab-item active">
+          <span class="tab-icon">👤</span>
+          <span>个人中心</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="annotation">
+    <strong>尺寸标注：</strong>头部区域高度 120px，头像 60×60px，菜单项高度 48px，角标 16×16px<br>
+    <strong>交互说明：</strong>点击头像可修改资料，菜单入口点击有 ripple 反馈效果
+  </div>
+</div>
+
+</div><!-- end pages-grid -->
+
+<!-- 设计规范说明 -->
+<div style="max-width:1000px;margin:60px auto 0;background:white;border-radius:16px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+  <h2 style="font-size:22px;font-weight:700;color:#1D2129;margin-bottom:24px;display:flex;align-items:center;gap:8px;">🎨 全局设计规范速查</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">
+    <div>
+      <h3 style="font-size:14px;font-weight:700;color:#4E5969;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;">色彩系统</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#FF7D00;"></div><div><div style="font-size:13px;font-weight:600;">活力橙（主色）</div><div style="font-size:11px;color:#86909C;">#FF7D00</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#00B42A;"></div><div><div style="font-size:13px;font-weight:600;">安全绿（成功）</div><div style="font-size:11px;color:#86909C;">#00B42A</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#F53F3F;"></div><div><div style="font-size:13px;font-weight:600;">警示红（错误）</div><div style="font-size:11px;color:#86909C;">#F53F3F</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#165DFF;"></div><div><div style="font-size:13px;font-weight:600;">信息蓝（链接）</div><div style="font-size:11px;color:#86909C;">#165DFF</div></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:6px;background:#F9F6F0;border:1px solid #E5E6EB;"></div><div><div style="font-size:13px;font-weight:600;">护眼米白（背景）</div><div style="font-size:11px;color:#86909C;">#F9F6F0</div></div></div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:14px;font-weight:700;color:#4E5969;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;">字体规范</h3>
+      <div style="display:flex;flex-direction:column;gap:10px;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif;">
+        <div style="font-size:20px;font-weight:700;color:#1D2129;">页面标题 20px/Bold</div>
+        <div style="font-size:16px;font-weight:600;color:#1D2129;">导航标题 16px/SemiBold</div>
+        <div style="font-size:14px;color:#4E5969;">正文内容 14px/Regular</div>
+        <div style="font-size:12px;color:#86909C;">辅助信息 12px/Regular</div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:14px;font-weight:700;color:#4E5969;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;">圆角与阴影</h3>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:12px;"><div style="width:60px;height:32px;background:#FF7D00;border-radius:8px;"></div><div style="font-size:12px;color:#4E5969;">主按钮 8px</div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><div style="width:60px;height:32px;background:#F2F3F5;border-radius:12px;border:1px solid #E5E6EB;"></div><div style="font-size:12px;color:#4E5969;">卡片 12px</div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><div style="width:60px;height:32px;background:white;border-radius:6px;border:1.5px solid #E5E6EB;"></div><div style="font-size:12px;color:#4E5969;">输入框 6px</div></div>
+        <div style="display:flex;align-items:center;gap:12px;"><div style="width:60px;height:32px;background:white;border-radius:4px;box-shadow:0 4px 16px rgba(0,0,0,0.1);border:1px solid #E5E6EB;"></div><div style="font-size:12px;color:#4E5969;">阴影 md</div></div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:14px;font-weight:700;color:#4E5969;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;">间距系统（8pt Grid）</h3>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:4px;height:16px;background:#FF7D00;border-radius:2px;"></div><div style="font-size:12px;color:#4E5969;">4px · 最小间距</div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:8px;height:16px;background:#FF7D00;border-radius:2px;"></div><div style="font-size:12px;color:#4E5969;">8px · 元素内间距</div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:12px;height:16px;background:#FF7D00;border-radius:2px;"></div><div style="font-size:12px;color:#4E5969;">12px · 页面水平边距</div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:16px;height:16px;background:#FF7D00;border-radius:2px;"></div><div style="font-size:12px;color:#4E5969;">16px · 卡片内边距</div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><div style="width:24px;height:16px;background:#FF7D00;border-radius:2px;"></div><div style="font-size:12px;color:#4E5969;">24px · 模块间距</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:40px 20px;color:#86909C;font-size:13px;">
+  🎨 优印达 · 微信小程序端 UI 设计稿 · 8 核心页面 · 375px 规范适配<br>
+  设计规范：微信小程序官方设计规范 + 优印达品牌视觉体系
+</div>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+.container {
+  min-height: 100vh;
+  padding: 30rpx;
+  padding-bottom: 160rpx;
+}
+
+.address-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  position: relative;
+}
+
+.address-type {
+  font-size: 24rpx;
+  color: #1890ff;
+  background: #e6f7ff;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  display: inline-block;
+  margin-bottom: 20rpx;
+}
+
+.address-content {
+  padding: 10rpx 0;
+}
+
+.address-info .address-top {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.address-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-right: 20rpx;
+}
+
+.address-phone {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.address-detail {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.address-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx 0;
+}
+
+.placeholder-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.arrow {
+  font-size: 28rpx;
+  color: #ccc;
+}
+
+.exchange-btn {
+  width: 80rpx;
+  height: 80rpx;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -30rpx auto 10rpx;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.exchange-btn image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 30rpx;
+  background: #fff;
+  box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.06);
+}
+
+.btn-next {
+  width: 100%;
+  padding: 28rpx;
+  text-align: center;
+  background: linear-gradient(135deg, #ff7a45 0%, #fa541c 100%);
+  color: #fff;
+  font-size: 30rpx;
+  border-radius: 48rpx;
+  font-weight: 500;
+}
+
+.btn-next.disabled {
+  background: #d9d9d9;
+  color: #999;
+}

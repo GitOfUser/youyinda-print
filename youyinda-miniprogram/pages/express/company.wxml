@@ -1,0 +1,28 @@
+<view class="container">
+  <view class="section-title">选择快递公司</view>
+  
+  <view class="company-list">
+    <view class="company-item {{selectedCompany && selectedCompany.id === item.id ? 'active' : ''}}" wx:for="{{companyList}}" wx:key="id" bindtap="selectCompany" data-item="{{item}}">
+      <view class="company-left">
+        <image class="company-logo" src="{{item.logo}}" mode="aspectFill"></image>
+        <view class="company-info">
+          <view class="company-name">{{item.name}}</view>
+          <view class="company-desc">{{item.desc}}</view>
+        </view>
+      </view>
+      <view class="company-right">
+        <view class="company-price">¥{{item.price}}</view>
+        <view class="radio {{selectedCompany && selectedCompany.id === item.id ? 'checked' : ''}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="price-info">
+      <view class="price-label">运费</view>
+      <view class="price-value">¥{{selectedCompany ? selectedCompany.price : '--'}}</view>
+    </view>
+    <view class="btn-next" bindtap="goToConfirm" wx:if="{{selectedCompany}}">下一步</view>
+    <view class="btn-next disabled" wx:else>请选择快递公司</view>
+  </view>
+</view>

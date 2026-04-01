@@ -1,0 +1,63 @@
+<view class="container" wx:if="{{orderInfo}}">
+  <view class="status-card">
+    <view class="status-icon">{{orderInfo.statusIcon}}</view>
+    <view class="status-text">{{orderInfo.statusText}}</view>
+    <view class="status-desc" wx:if="{{orderInfo.statusDesc}}">{{orderInfo.statusDesc}}</view>
+  </view>
+
+  <view class="info-card">
+    <view class="info-row">
+      <span class="info-label">订单号</span>
+      <span class="info-value">{{orderInfo.orderNo}}</span>
+    </view>
+    <view class="info-row">
+      <span class="info-label">下单时间</span>
+      <span class="info-value">{{orderInfo.createTime}}</span>
+    </view>
+    <view class="info-row" wx:if="{{orderInfo.payTime}}">
+      <span class="info-label">支付时间</span>
+      <span class="info-value">{{orderInfo.payTime}}</span>
+    </view>
+  </view>
+
+  <view class="address-card" wx:if="{{orderInfo.address}}">
+    <view class="address-label">{{orderInfo.orderType === 1 ? '收货地址' : '收件地址'}}</view>
+    <view class="address-info">
+      <view class="address-top">
+        <span class="address-name">{{orderInfo.address.name}}</span>
+        <span class="address-phone">{{orderInfo.address.phone}}</span>
+      </view>
+      <view class="address-detail">{{orderInfo.address.province}}{{orderInfo.address.city}}{{orderInfo.address.district}}{{orderInfo.address.detail}}</view>
+    </view>
+  </view>
+
+  <view class="content-card">
+    <view class="content-title">{{orderInfo.orderType === 1 ? '打印详情' : '快递详情'}}</view>
+    <view class="content-row" wx:for="{{orderInfo.detailList}}" wx:key="index">
+      <span class="row-label">{{item.label}}</span>
+      <span class="row-value">{{item.value}}</span>
+    </view>
+  </view>
+
+  <view class="price-card">
+    <view class="price-row">
+      <span class="price-label">{{orderInfo.orderType === 1 ? '打印费用' : '运费'}}</span>
+      <span class="price-value">¥{{orderInfo.baseAmount}}</span>
+    </view>
+    <view class="price-row" wx:if="{{orderInfo.couponAmount > 0}}">
+      <span class="price-label">优惠券</span>
+      <span class="price-value discount">-¥{{orderInfo.couponAmount}}</span>
+    </view>
+    <view class="price-divider"></view>
+    <view class="price-total">
+      <span class="total-label">实付金额</span>
+      <span class="total-value">¥{{orderInfo.totalAmount}}</span>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="btn-cancel" wx:if="{{orderInfo.canCancel}}" bindtap="cancelOrder">取消订单</view>
+    <view class="btn-pay" wx:if="{{orderInfo.canPay}}" bindtap="payOrder">去支付</view>
+    <view class="btn-track" wx:if="{{orderInfo.canTrack}}" bindtap="goToTrack">查看物流</view>
+  </view>
+</view>

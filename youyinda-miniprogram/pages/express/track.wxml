@@ -1,0 +1,29 @@
+<view class="container">
+  <view class="status-card">
+    <view class="status-icon">🚚</view>
+    <view class="status-text">{{orderStatusText}}</view>
+    <view class="status-time" wx:if="{{latestTime}}">{{latestTime}}</view>
+  </view>
+
+  <view class="info-card">
+    <view class="info-row">
+      <span class="info-label">快递公司</span>
+      <span class="info-value">{{companyName}}</span>
+    </view>
+    <view class="info-row">
+      <span class="info-label">快递单号</span>
+      <span class="info-value">{{trackingNo}}</span>
+    </view>
+  </view>
+
+  <view class="track-list">
+    <view class="track-item" wx:for="{{trackList}}" wx:key="index">
+      <view class="track-dot {{index === 0 ? 'first' : ''}}"></view>
+      <view class="track-line" wx:if="{{index < trackList.length - 1}}"></view>
+      <view class="track-content">
+        <view class="track-desc">{{item.desc}}</view>
+        <view class="track-time">{{item.time}}</view>
+      </view>
+    </view>
+  </view>
+</view>

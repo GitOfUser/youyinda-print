@@ -1,0 +1,58 @@
+<view class="container">
+  <view class="user-header">
+    <view class="user-avatar" wx:if="{{userInfo}}">
+      <image src="{{userInfo.avatarUrl || ''}}" mode="aspectFill"></image>
+    </view>
+    <view class="user-avatar default" wx:else>
+      <text>👤</text>
+    </view>
+    <view class="user-info">
+      <view class="user-name">{{userInfo ? userInfo.nickName : '点击登录'}}</view>
+      <view class="user-desc" wx:if="{{userInfo}}">欢迎使用优印达</view>
+    </view>
+    <view class="login-btn" wx:if="{{!userInfo}}" bindtap="doLogin">登录</view>
+  </view>
+
+  <view class="menu-section">
+    <view class="menu-item" bindtap="goToOrderList">
+      <view class="menu-left">
+        <view class="menu-icon">📋</view>
+        <view class="menu-text">我的订单</view>
+      </view>
+      <view class="menu-arrow">></view>
+    </view>
+    <view class="menu-item" bindtap="goToAddress">
+      <view class="menu-left">
+        <view class="menu-icon">📍</view>
+        <view class="menu-text">地址簿</view>
+      </view>
+      <view class="menu-arrow">></view>
+    </view>
+    <view class="menu-item" bindtap="goToCoupon">
+      <view class="menu-left">
+        <view class="menu-icon">🎫</view>
+        <view class="menu-text">优惠券</view>
+      </view>
+      <view class="menu-arrow">></view>
+    </view>
+  </view>
+
+  <view class="menu-section">
+    <view class="menu-item" bindtap="goToHelp">
+      <view class="menu-left">
+        <view class="menu-icon">❓</view>
+        <view class="menu-text">帮助与客服</view>
+      </view>
+      <view class="menu-arrow">></view>
+    </view>
+    <view class="menu-item" bindtap="goToAbout">
+      <view class="menu-left">
+        <view class="menu-icon">ℹ️</view>
+        <view class="menu-text">关于我们</view>
+      </view>
+      <view class="menu-arrow">></view>
+    </view>
+  </view>
+
+  <view class="logout-btn" wx:if="{{userInfo}}" bindtap="doLogout">退出登录</view>
+</view>

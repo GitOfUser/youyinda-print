@@ -1,0 +1,96 @@
+/* 状态标签样式 */
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8rpx;
+  font-weight: 500;
+}
+
+/* 尺寸 */
+.status-tag.small {
+  padding: 4rpx 12rpx;
+  font-size: 20rpx;
+}
+
+.status-tag.medium {
+  padding: 6rpx 16rpx;
+  font-size: 22rpx;
+}
+
+.status-tag.large {
+  padding: 8rpx 20rpx;
+  font-size: 24rpx;
+}
+
+/* 类型 - 主色 */
+.status-tag.primary {
+  background: #FFF3E8;
+  color: #FF7D00;
+}
+
+.status-tag.primary.plain {
+  background: transparent;
+  border: 1.5px solid #FF7D00;
+  color: #FF7D00;
+}
+
+/* 类型 - 成功 */
+.status-tag.success {
+  background: #E8F7EC;
+  color: #00B42A;
+}
+
+.status-tag.success.plain {
+  background: transparent;
+  border: 1.5px solid #00B42A;
+  color: #00B42A;
+}
+
+/* 类型 - 警告 */
+.status-tag.warning {
+  background: #FFF3E8;
+  color: #FF7D00;
+}
+
+.status-tag.warning.plain {
+  background: transparent;
+  border: 1.5px solid #FF7D00;
+  color: #FF7D00;
+}
+
+/* 类型 - 危险 */
+.status-tag.danger {
+  background: #FEE8E8;
+  color: #F53F3F;
+}
+
+.status-tag.danger.plain {
+  background: transparent;
+  border: 1.5px solid #F53F3F;
+  color: #F53F3F;
+}
+
+/* 类型 - 信息 */
+.status-tag.info {
+  background: #E8EDFF;
+  color: #165DFF;
+}
+
+.status-tag.info.plain {
+  background: transparent;
+  border: 1.5px solid #165DFF;
+  color: #165DFF;
+}
+
+/* 类型 - 默认 */
+.status-tag.default {
+  background: #F2F3F5;
+  color: #86909C;
+}
+
+.status-tag.default.plain {
+  background: transparent;
+  border: 1.5px solid #86909C;
+  color: #86909C;
+}

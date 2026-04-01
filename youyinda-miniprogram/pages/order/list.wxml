@@ -1,0 +1,45 @@
+<view class="container">
+  <view class="tabs">
+    <view class="tab-item {{currentTab === 0 ? 'active' : ''}}" bindtap="switchTab" data-index="0">全部</view>
+    <view class="tab-item {{currentTab === 1 ? 'active' : ''}}" bindtap="switchTab" data-index="1">打印订单</view>
+    <view class="tab-item {{currentTab === 2 ? 'active' : ''}}" bindtap="switchTab" data-index="2">快递订单</view>
+  </view>
+
+  <view class="status-tabs">
+    <view class="status-item {{currentStatus === -1 ? 'active' : ''}}" bindtap="switchStatus" data-status="-1">全部</view>
+    <view class="status-item {{currentStatus === 0 ? 'active' : ''}}" bindtap="switchStatus" data-status="0">待付款</view>
+    <view class="status-item {{currentStatus === 1 ? 'active' : ''}}" bindtap="switchStatus" data-status="1">待发货</view>
+    <view class="status-item {{currentStatus === 2 ? 'active' : ''}}" bindtap="switchStatus" data-status="2">运输中</view>
+    <view class="status-item {{currentStatus === 3 ? 'active' : ''}}" bindtap="switchStatus" data-status="3">已完成</view>
+  </view>
+
+  <view class="order-list" wx:if="{{orderList.length > 0}}">
+    <view class="order-item" wx:for="{{orderList}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="order-header">
+        <view class="order-no">订单号：{{item.orderNo}}</view>
+        <view class="order-status {{item.statusClass}}">{{item.statusText}}</view>
+      </view>
+      <view class="order-content">
+        <view class="order-icon">{{item.orderType === 1 ? '🖨️' : '📦'}}</view>
+        <view class="order-info">
+          <view class="order-title">{{item.title}}</view>
+          <view class="order-desc">{{item.desc}}</view>
+        </view>
+        <view class="order-price">¥{{item.totalAmount}}</view>
+      </view>
+      <view class="order-footer">
+        <view class="order-time">{{item.createTime}}</view>
+        <view class="order-actions">
+          <view class="action-btn" wx:if="{{item.canPay}}" bindtap="payOrder" data-id="{{item.id}}" catchtap="true">去支付</view>
+          <view class="action-btn" wx:if="{{item.canCancel}}" bindtap="cancelOrder" data-id="{{item.id}}" catchtap="true">取消订单</view>
+          <view class="action-btn primary" wx:if="{{item.canTrack}}" bindtap="goToTrack" data-id="{{item.id}}" catchtap="true">查看物流</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-icon">📋</view>
+    <view class="empty-text">暂无订单</view>
+  </view>
+</view>

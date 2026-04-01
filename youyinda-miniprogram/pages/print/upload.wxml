@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="upload-section">
+    <view class="section-title">选择文件</view>
+    <view class="upload-area" bindtap="chooseFile">
+      <view class="upload-icon">📁</view>
+      <view class="upload-text">点击选择文件</view>
+      <view class="upload-desc">支持Word、Excel、PDF、图片等格式</view>
+    </view>
+  </view>
+
+  <view class="file-list" wx:if="{{fileList.length > 0}}">
+    <view class="section-title">已选文件</view>
+    <view class="file-item" wx:for="{{fileList}}" wx:key="index">
+      <view class="file-icon">📄</view>
+      <view class="file-info">
+        <view class="file-name">{{item.name}}</view>
+        <view class="file-size">{{item.size}}</view>
+      </view>
+      <view class="file-delete" bindtap="deleteFile" data-index="{{index}}">✕</view>
+    </view>
+  </view>
+
+  <view class="bottom-bar" wx:if="{{fileList.length > 0}}">
+    <view class="file-count">共 {{fileList.length}} 个文件</view>
+    <view class="btn-next" bindtap="goToConfig">下一步</view>
+  </view>
+</view>

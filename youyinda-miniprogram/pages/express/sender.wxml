@@ -1,0 +1,44 @@
+<view class="container">
+  <view class="address-card">
+    <view class="address-type">寄件人</view>
+    <view class="address-content" bindtap="selectSender">
+      <view wx:if="{{senderAddress}}" class="address-info">
+        <view class="address-top">
+          <span class="address-name">{{senderAddress.name}}</span>
+          <span class="address-phone">{{senderAddress.phone}}</span>
+        </view>
+        <view class="address-detail">{{senderAddress.province}}{{senderAddress.city}}{{senderAddress.district}}{{senderAddress.detail}}</view>
+      </view>
+      <view wx:else class="address-placeholder">
+        <span class="placeholder-text">请选择寄件地址</span>
+        <span class="arrow">></span>
+      </view>
+    </view>
+  </view>
+
+  <view class="exchange-btn" bindtap="exchangeAddress">
+    <image src="https://img.icons8.com/ios-filled/50/1890ff/exchange.png" mode="aspectFit"></image>
+  </view>
+
+  <view class="address-card">
+    <view class="address-type">收件人</view>
+    <view class="address-content" bindtap="selectReceiver">
+      <view wx:if="{{receiverAddress}}" class="address-info">
+        <view class="address-top">
+          <span class="address-name">{{receiverAddress.name}}</span>
+          <span class="address-phone">{{receiverAddress.phone}}</span>
+        </view>
+        <view class="address-detail">{{receiverAddress.province}}{{receiverAddress.city}}{{receiverAddress.district}}{{receiverAddress.detail}}</view>
+      </view>
+      <view wx:else class="address-placeholder">
+        <span class="placeholder-text">请选择收件地址</span>
+        <span class="arrow">></span>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="btn-next" bindtap="goToPackage" wx:if="{{senderAddress && receiverAddress}}">下一步</view>
+    <view class="btn-next disabled" wx:else>请填写寄件信息</view>
+  </view>
+</view>

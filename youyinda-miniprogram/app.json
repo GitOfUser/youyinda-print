@@ -1,0 +1,59 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/print/upload",
+    "pages/print/config",
+    "pages/print/confirm",
+    "pages/express/sender",
+    "pages/express/package",
+    "pages/express/company",
+    "pages/express/confirm",
+    "pages/express/track",
+    "pages/order/list",
+    "pages/order/detail",
+    "pages/user/index",
+    "pages/user/address/list",
+    "pages/user/address/edit",
+    "pages/user/coupon",
+    "pages/user/help",
+    "pages/login/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FF7D00",
+    "navigationBarTitleText": "优印达",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F9F6F0"
+  },
+  "tabBar": {
+    "color": "#86909C",
+    "selectedColor": "#FF7D00",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/order/list",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的位置信息将用于获取附近服务点"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

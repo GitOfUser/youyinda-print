@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="address-list" wx:if="{{addressList.length > 0}}">
+    <view class="address-item" wx:for="{{addressList}}" wx:key="id" bindtap="selectAddress" data-item="{{item}}">
+      <view class="address-content">
+        <view class="address-top">
+          <span class="address-name">{{item.name}}</span>
+          <span class="address-phone">{{item.phone}}</span>
+          <view class="address-tag" wx:if="{{item.isDefault}}">默认</view>
+        </view>
+        <view class="address-detail">{{item.province}}{{item.city}}{{item.district}}{{item.detail}}</view>
+      </view>
+      <view class="address-actions">
+        <view class="action-btn" bindtap="editAddress" data-id="{{item.id}}" catchtap="true">编辑</view>
+        <view class="action-btn" bindtap="deleteAddress" data-id="{{item.id}}" catchtap="true">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:else>
+    <view class="empty-icon">📍</view>
+    <view class="empty-text">暂无地址</view>
+  </view>
+
+  <view class="add-btn" bindtap="addAddress">新增地址</view>
+</view>

@@ -1,0 +1,20 @@
+<!-- 自定义导航栏组件 -->
+<view class="custom-navbar" style="padding-top: {{statusBarHeight}}px; background: {{bgColor}};">
+  <view class="navbar-content" style="height: {{navBarHeight}}px;">
+    <!-- 返回按钮 -->
+    <view wx:if="{{showBack}}" class="back-btn" bindtap="onBack">
+      <text class="back-icon" style="color: {{textColor}};">←</text>
+    </view>
+    
+    <!-- 标题 -->
+    <view class="title" style="color: {{textColor}};">{{title}}</view>
+    
+    <!-- 右侧插槽 -->
+    <view class="right-slot">
+      <slot name="right"></slot>
+    </view>
+  </view>
+</view>
+
+<!-- 占位元素，防止内容被导航栏遮挡 -->
+<view class="navbar-placeholder" style="height: {{statusBarHeight + navBarHeight}}px;"></view>

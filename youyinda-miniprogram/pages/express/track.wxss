@@ -1,0 +1,125 @@
+.container {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.status-card {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  padding: 60rpx 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.status-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.status-text {
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}
+
+.status-time {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.info-card {
+  background: #fff;
+  margin: 20rpx;
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+}
+
+.info-label {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.info-value {
+  font-size: 26rpx;
+  color: #333;
+}
+
+.track-list {
+  background: #fff;
+  margin: 0 20rpx 20rpx;
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.track-item {
+  display: flex;
+  position: relative;
+  padding-bottom: 40rpx;
+}
+
+.track-item:last-child {
+  padding-bottom: 0;
+}
+
+.track-dot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background: #d9d9d9;
+  margin-right: 24rpx;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  margin-top: 8rpx;
+}
+
+.track-dot.first {
+  background: #1890ff;
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.track-dot.first::after {
+  content: '';
+  position: absolute;
+  width: 12rpx;
+  height: 12rpx;
+  background: #fff;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.track-line {
+  position: absolute;
+  left: 10rpx;
+  top: 36rpx;
+  bottom: 0;
+  width: 2rpx;
+  background: #f0f0f0;
+  z-index: 1;
+}
+
+.track-content {
+  flex: 1;
+}
+
+.track-desc {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+  line-height: 1.5;
+}
+
+.track-time {
+  font-size: 24rpx;
+  color: #999;
+}

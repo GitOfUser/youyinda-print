@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>优印达 · 全套 UI 设计方案</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Source Han Sans CN',sans-serif;background:#0F1117;min-height:100vh;display:flex;flex-direction:column;}
+.hero{background:linear-gradient(135deg,#1D2129 0%,#2A1A00 50%,#1A1D2E 100%);padding:60px 40px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 600px 300px at 50% 100%,rgba(255,125,0,0.15),transparent);}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,125,0,0.15);border:1px solid rgba(255,125,0,0.3);color:#FF9A3C;padding:6px 18px;border-radius:20px;font-size:13px;margin-bottom:24px;}
+.hero h1{font-size:48px;font-weight:800;color:white;margin-bottom:12px;letter-spacing:2px;}
+.hero h1 span{color:#FF7D00;}
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.5);margin-bottom:8px;}
+.hero-slogan{font-size:20px;font-weight:600;color:rgba(255,200,100,0.9);margin-bottom:40px;}
+.hero-stats{display:flex;justify-content:center;gap:48px;}
+.hero-stat{text-align:center;}
+.hero-stat .val{font-size:32px;font-weight:700;color:#FF7D00;}
+.hero-stat .label{font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;}
+
+.main{flex:1;padding:48px 40px;max-width:1280px;margin:0 auto;width:100%;}
+
+.section-title{font-size:22px;font-weight:700;color:white;margin-bottom:24px;display:flex;align-items:center;gap:10px;}
+.section-title span{display:inline-block;width:4px;height:22px;background:#FF7D00;border-radius:2px;}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px;margin-bottom:48px;}
+.card{background:#1A1D25;border:1px solid rgba(255,255,255,0.07);border-radius:16px;overflow:hidden;transition:all 0.2s;cursor:pointer;text-decoration:none;display:flex;flex-direction:column;}
+.card:hover{border-color:rgba(255,125,0,0.4);transform:translateY(-4px);box-shadow:0 12px 40px rgba(255,125,0,0.15);}
+.card-preview{height:180px;display:flex;align-items:center;justify-content:center;font-size:64px;position:relative;overflow:hidden;}
+.card-preview.orange{background:linear-gradient(135deg,#2A1200,#3D1F00);}
+.card-preview.blue{background:linear-gradient(135deg,#0A1128,#0D1B3E);}
+.card-preview.dark{background:linear-gradient(135deg,#111520,#1A1F2E);}
+.card-body{padding:20px 22px;flex:1;display:flex;flex-direction:column;}
+.card-type{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px;}
+.card-type.mp{color:#FF7D00;}
+.card-type.pc{color:#4E79FF;}
+.card-title{font-size:17px;font-weight:700;color:white;margin-bottom:8px;}
+.card-desc{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;flex:1;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.07);}
+.card-pages{font-size:12px;color:rgba(255,255,255,0.3);}
+.card-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;background:rgba(255,125,0,0.12);border:1px solid rgba(255,125,0,0.25);color:#FF9A3C;border-radius:8px;font-size:13px;font-weight:500;}
+.card-btn.blue{background:rgba(78,121,255,0.12);border-color:rgba(78,121,255,0.25);color:#7B9BFF;}
+
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:48px;}
+.spec-item{background:#1A1D25;border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px;}
+.spec-label{font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;}
+.spec-colors{display:flex;gap:6px;flex-wrap:wrap;}
+.spec-color{width:28px;height:28px;border-radius:6px;cursor:pointer;position:relative;}
+.spec-color::after{content:attr(data-hex);position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:9px;color:rgba(255,255,255,0.4);white-space:nowrap;opacity:0;transition:opacity 0.15s;}
+.spec-color:hover::after{opacity:1;}
+.spec-value{font-size:20px;font-weight:700;color:white;}
+.spec-sub{font-size:12px;color:rgba(255,255,255,0.35);margin-top:4px;}
+
+.footer{text-align:center;padding:32px;color:rgba(255,255,255,0.2);font-size:12px;border-top:1px solid rgba(255,255,255,0.05);}
+.footer strong{color:rgba(255,125,0,0.6);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🎨 高保真 UI 设计稿</div>
+  <h1>优<span>印</span>达</h1>
+  <div class="hero-sub">YouYinDa · 全套 UI 设计方案</div>
+  <div class="hero-slogan">优印达，打印寄件一站达</div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="val">8</div><div class="label">小程序页面</div></div>
+    <div class="hero-stat"><div class="val">7</div><div class="label">后台页面</div></div>
+    <div class="hero-stat"><div class="val">1</div><div class="label">设计系统</div></div>
+    <div class="hero-stat"><div class="val">5</div><div class="label">色彩令牌</div></div>
+  </div>
+</div>
+
+<div class="main">
+
+  <h2 class="section-title"><span></span>📱 微信小程序端</h2>
+  <div class="cards">
+    <a class="card" href="miniapp.html" target="_blank">
+      <div class="card-preview orange">🏠🖨️📦</div>
+      <div class="card-body">
+        <div class="card-type mp">微信小程序端</div>
+        <div class="card-title">首页 · 文件上传 · 打印设置</div>
+        <div class="card-desc">核心业务入口页面，包含品牌首页、8宫格功能入口、营销运营区；文件上传9宫格选择渠道；打印参数配置与实时价格预览。</div>
+        <div class="card-footer">
+          <span class="card-pages">3 页 · 375px</span>
+          <span class="card-btn">查看设计稿 →</span>
+        </div>
+      </div>
+    </a>
+    <a class="card" href="miniapp.html" target="_blank">
+      <div class="card-preview orange">📦🛒✅</div>
+      <div class="card-body">
+        <div class="card-type mp">微信小程序端</div>
+        <div class="card-title">快递寄件 · 订单确认 · 支付</div>
+        <div class="card-desc">快递地址填写与公司比价选择，支持按价格/时效排序；订单确认页汇总所有费用，优惠券选择，唤起微信支付。</div>
+        <div class="card-footer">
+          <span class="card-pages">2 页 · 375px</span>
+          <span class="card-btn">查看设计稿 →</span>
+        </div>
+      </div>
+    </a>
+    <a class="card" href="miniapp.html" target="_blank">
+      <div class="card-preview orange">📋🔍👤</div>
+      <div class="card-body">
+        <div class="card-type mp">微信小程序端</div>
+        <div class="card-title">我的订单 · 订单详情 · 个人中心</div>
+        <div class="card-desc">全量订单管理与状态筛选，卡片式展示；订单详情含完整物流轨迹与进度节点；个人中心展示用户资产与快捷入口。</div>
+        <div class="card-footer">
+          <span class="card-pages">3 页 · 375px</span>
+          <span class="card-btn">查看设计稿 →</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <h2 class="section-title"><span></span>🖥️ PC端运营管理后台</h2>
+  <div class="cards">
+    <a class="card" href="admin.html" target="_blank">
+      <div class="card-preview dark">🔐💼</div>
+      <div class="card-body">
+        <div class="card-type pc">PC后台</div>
+        <div class="card-title">登录页</div>
+        <div class="card-desc">双栏布局：左侧品牌区展示核心运营数据装饰卡，右侧登录表单含账号/密码/验证码，回车可登录，错误提示内嵌展示。</div>
+        <div class="card-footer">
+          <span class="card-pages">1920×1080</span>
+          <span class="card-btn blue">查看设计稿 →</span>
+        </div>
+      </div>
+    </a>
+    <a class="card" href="admin.html" target="_blank">
+      <div class="card-preview dark">📊📈🥧</div>
+      <div class="card-body">
+        <div class="card-type pc">PC后台</div>
+        <div class="card-title">数据看板</div>
+        <div class="card-desc">4核心指标卡带环比数据；订单营收趋势柱状图（7天/30天切换）；业务占比环形图；实时待处理异常工单列表。</div>
+        <div class="card-footer">
+          <span class="card-pages">1920×1080</span>
+          <span class="card-btn blue">查看设计稿 →</span>
+        </div>
+      </div>
+    </a>
+    <a class="card" href="admin.html" target="_blank">
+      <div class="card-preview dark">📋🔍📥</div>
+      <div class="card-body">
+        <div class="card-type pc">PC后台</div>
+        <div class="card-title">订单管理</div>
+        <div class="card-desc">多条件筛选+全量订单表格，支持批量操作；右侧抽屉展示完整订单详情、费用明细、操作日志；高危退款操作二次确认。</div>
+        <div class="card-footer">
+          <span class="card-pages">1920×1080</span>
+          <span class="card-btn blue">查看设计稿 →</span>
+        </div>
+      </div>
+    </a>
+    <a class="card" href="admin.html" target="_blank">
+      <div class="card-preview dark">💰⚙️🧮</div>
+      <div class="card-body">
+        <div class="card-type pc">PC后台</div>
+        <div class="card-title">价格与盈利规则配置（核心）</div>
+        <div class="card-desc">全局规则配置表单 + 打印/快递细分规则表格，支持新增编辑删除启用禁用；右侧固定价格试算面板，实时验证规则有效性。</div>
+        <div class="card-footer">
+          <span class="card-pages">1920×1080</span>
+          <span class="card-btn blue">查看设计稿 →</span>
+        </div>
+      </div>
+    </a>
+    <a class="card" href="admin.html" target="_blank">
+      <div class="card-preview dark">🔌📡⚠️</div>
+      <div class="card-body">
+        <div class="card-type pc">PC后台</div>
+        <div class="card-title">第三方接口管理</div>
+        <div class="card-desc">打印/快递服务商接口配置与监控，异常接口标红高亮；密钥脱敏展示；接口测试即时反馈；同步价格一键操作。</div>
+        <div class="card-footer">
+          <span class="card-pages">1920×1080</span>
+          <span class="card-btn blue">查看设计稿 →</span>
+        </div>
+      </div>
+    </a>
+    <a class="card" href="admin.html" target="_blank">
+      <div class="card-preview dark">👥🔍📊</div>
+      <div class="card-body">
+        <div class="card-type pc">PC后台</div>
+        <div class="card-title">用户管理 · 侧边栏总览</div>
+        <div class="card-desc">用户列表支持多条件筛选排序，发放优惠券/禁用等操作；侧边栏展示完整菜单层级，含展开/折叠两种状态设计。</div>
+        <div class="card-footer">
+          <span class="card-pages">1920×1080</span>
+          <span class="card-btn blue">查看设计稿 →</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <h2 class="section-title"><span></span>🎨 设计系统规范</h2>
+  <div class="spec-grid">
+    <div class="spec-item">
+      <div class="spec-label">主色 · 活力橙</div>
+      <div class="spec-colors">
+        <div class="spec-color" style="background:#FFF3E8;" data-hex="#FFF3E8"></div>
+        <div class="spec-color" style="background:#FFD4A3;" data-hex="#FFD4A3"></div>
+        <div class="spec-color" style="background:#FF9A3C;" data-hex="#FF9A3C"></div>
+        <div class="spec-color" style="background:#FF7D00;" data-hex="#FF7D00"></div>
+        <div class="spec-color" style="background:#E06E00;" data-hex="#E06E00"></div>
+      </div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">功能色</div>
+      <div class="spec-colors">
+        <div class="spec-color" style="background:#00B42A;" data-hex="成功绿"></div>
+        <div class="spec-color" style="background:#F53F3F;" data-hex="警示红"></div>
+        <div class="spec-color" style="background:#165DFF;" data-hex="信息蓝"></div>
+        <div class="spec-color" style="background:#F9F6F0;border:1px solid rgba(255,255,255,0.2);" data-hex="护眼米白"></div>
+      </div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">中性色系</div>
+      <div class="spec-colors">
+        <div class="spec-color" style="background:#1D2129;" data-hex="#1D2129"></div>
+        <div class="spec-color" style="background:#4E5969;" data-hex="#4E5969"></div>
+        <div class="spec-color" style="background:#86909C;" data-hex="#86909C"></div>
+        <div class="spec-color" style="background:#E5E6EB;" data-hex="#E5E6EB"></div>
+        <div class="spec-color" style="background:#F2F3F5;border:1px solid rgba(255,255,255,0.15);" data-hex="#F2F3F5"></div>
+      </div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">小程序字体规范</div>
+      <div class="spec-value" style="font-size:16px;">标题 16-20px</div>
+      <div class="spec-sub">正文 14px · 辅助 12px</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">PC端字体规范</div>
+      <div class="spec-value" style="font-size:16px;">标题 18-24px</div>
+      <div class="spec-sub">正文 14px · 标签 12px · 思源黑体</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">圆角规范</div>
+      <div class="spec-sub" style="margin-bottom:8px;">按钮 8px · 卡片 12px · 输入框 6px</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div style="width:32px;height:20px;background:#FF7D00;border-radius:8px;"></div>
+        <div style="width:40px;height:28px;background:rgba(255,125,0,0.2);border-radius:12px;border:1px solid rgba(255,125,0,0.3);"></div>
+        <div style="width:36px;height:20px;background:rgba(255,255,255,0.1);border-radius:6px;border:1px solid rgba(255,255,255,0.15);"></div>
+      </div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">间距系统 (8pt Grid)</div>
+      <div style="display:flex;flex-direction:column;gap:5px;margin-top:4px;">
+        <div style="display:flex;align-items:center;gap:8px;"><div style="height:8px;background:#FF7D00;border-radius:2px;width:4px;"></div><span style="font-size:11px;color:rgba(255,255,255,0.4);">4px 最小</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><div style="height:8px;background:#FF7D00;border-radius:2px;width:8px;"></div><span style="font-size:11px;color:rgba(255,255,255,0.4);">8px 元素间</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><div style="height:8px;background:#FF7D00;border-radius:2px;width:16px;"></div><span style="font-size:11px;color:rgba(255,255,255,0.4);">16px 内边距</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><div style="height:8px;background:#FF7D00;border-radius:2px;width:24px;"></div><span style="font-size:11px;color:rgba(255,255,255,0.4);">24px 模块间距</span></div>
+      </div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-label">可访问性</div>
+      <div class="spec-sub">主色对比度 ≥ 4.5:1</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,0.4);">
+          <div style="width:8px;height:8px;border-radius:50%;background:#00B42A;"></div>交互元素最小 44px
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,0.4);">
+          <div style="width:8px;height:8px;border-radius:50%;background:#00B42A;"></div>键盘导航完整支持
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,0.4);">
+          <div style="width:8px;height:8px;border-radius:50%;background:#00B42A;"></div>聚焦态清晰可见
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <strong>优印达 · YouYinDa</strong> · 全套 UI 设计方案 · 微信小程序端 + PC运营管理后台<br>
+  设计规范：微信小程序官方设计规范 + B端产品设计规范 · 2026
+</div>
+
+</body>
+</html>

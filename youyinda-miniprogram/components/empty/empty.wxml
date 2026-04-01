@@ -1,0 +1,10 @@
+<!-- 空状态组件 -->
+<view class="empty-container">
+  <image wx:if="{{image}}" class="empty-image" src="{{image}}" mode="aspectFit"/>
+  <text wx:else class="empty-icon">{{icon}}</text>
+  <text class="empty-title">{{title}}</text>
+  <text wx:if="{{desc}}" class="empty-desc">{{desc}}</text>
+  <view wx:if="{{showBtn}}" class="empty-btn" bindtap="onBtnTap">
+    {{btnText}}
+  </view>
+</view>
