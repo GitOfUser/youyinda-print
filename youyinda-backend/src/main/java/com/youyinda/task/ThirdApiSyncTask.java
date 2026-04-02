@@ -71,8 +71,8 @@ public class ThirdApiSyncTask {
         );
 
         if (existPrice != null) {
-            existPrice.setBasePrice(price.getBasePrice());
-            existPrice.setMinOrderPrice(price.getMinOrderPrice());
+            existPrice.setBasePrice(price.getBasePrice().doubleValue());
+            existPrice.setMinOrderPrice(price.getMinOrderPrice().doubleValue());
             printBasePriceService.updateById(existPrice);
         } else {
             PrintBasePrice newPrice = new PrintBasePrice();
@@ -80,8 +80,8 @@ public class ThirdApiSyncTask {
             newPrice.setPaperType(price.getPaperType());
             newPrice.setColorType(price.getColorType());
             newPrice.setSingleDouble(price.getSingleDouble());
-            newPrice.setBasePrice(price.getBasePrice());
-            newPrice.setMinOrderPrice(price.getMinOrderPrice());
+            newPrice.setBasePrice(price.getBasePrice().doubleValue());
+            newPrice.setMinOrderPrice(price.getMinOrderPrice().doubleValue());
             newPrice.setStatus(1);
             printBasePriceService.save(newPrice);
         }

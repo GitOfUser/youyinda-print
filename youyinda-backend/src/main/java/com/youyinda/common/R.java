@@ -87,4 +87,32 @@ public class R<T> {
     public static <T> R<T> error(int code, String msg, T data) {
         return new R<>(code, msg, data);
     }
+
+    /**
+     * 成功响应（别名）
+     */
+    public static <T> R<T> ok() {
+        return success();
+    }
+
+    /**
+     * 成功响应（带数据，别名）
+     */
+    public static <T> R<T> ok(T data) {
+        return success(data);
+    }
+
+    /**
+     * 失败响应（别名）
+     */
+    public static <T> R<T> fail(int code, String msg) {
+        return error(code, msg);
+    }
+
+    /**
+     * 失败响应（带消息，别名）
+     */
+    public static <T> R<T> fail(String msg) {
+        return error(500, msg);
+    }
 }

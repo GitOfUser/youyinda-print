@@ -119,8 +119,8 @@ CREATE TABLE IF NOT EXISTS print_base_price (
 CREATE TABLE IF NOT EXISTS express_base_price (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   courier VARCHAR(50) NOT NULL COMMENT '快递公司',
-  from_province VARCHAR(50) NOT NULL COMMENT '寄件省份',
-  to_province VARCHAR(50) NOT NULL COMMENT '收件省份',
+  from_province VARCHAR(100) NOT NULL COMMENT '寄件省份',
+  to_province VARCHAR(100) NOT NULL COMMENT '收件省份',
   first_weight DECIMAL(10,2) NOT NULL COMMENT '首重（kg）',
   first_price DECIMAL(10,2) NOT NULL COMMENT '首重价格',
   continue_weight DECIMAL(10,2) NOT NULL COMMENT '续重单位（kg）',

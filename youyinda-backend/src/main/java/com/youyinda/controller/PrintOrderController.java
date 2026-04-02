@@ -63,7 +63,7 @@ public class PrintOrderController {
 
             // 计算订单总价（这里简化处理，实际应该根据价格引擎计算）
             BigDecimal totalPrice = BigDecimal.ZERO;
-            for (var file : printOrderDTO.getFiles()) {
+            for (com.youyinda.dto.PrintFileDTO file : printOrderDTO.getFiles()) {
                 // 假设每页价格为0.5元
                 BigDecimal filePrice = new BigDecimal(0.5)
                         .multiply(new BigDecimal(file.getPages()))
@@ -84,7 +84,7 @@ public class PrintOrderController {
             orderMainService.save(orderMain);
 
             // 创建订单详情
-            for (var file : printOrderDTO.getFiles()) {
+            for (com.youyinda.dto.PrintFileDTO file : printOrderDTO.getFiles()) {
                 OrderDetail orderDetail = new OrderDetail();
                 orderDetail.setOrderId(orderMain.getId());
                 orderDetail.setFileName(file.getFileName());
@@ -134,14 +134,14 @@ public class PrintOrderController {
             List<OrderMain> orderList = orderMainService.getByUserIdAndType(userId, 1);
             List<PrintOrderVO> result = new ArrayList<>();
 
-            for (var order : orderList) {
+            for (OrderMain order : orderList) {
                 PrintOrderVO orderVO = new PrintOrderVO();
                 BeanUtils.copyProperties(order, orderVO);
-                
+
                 // 获取订单详情
                 List<OrderDetail> details = orderDetailService.getByOrderId(order.getId());
                 List<PrintOrderDetailVO> detailVOs = new ArrayList<>();
-                for (var detail : details) {
+                for (OrderDetail detail : details) {
                     PrintOrderDetailVO detailVO = new PrintOrderDetailVO();
                     BeanUtils.copyProperties(detail, detailVO);
                     detailVOs.add(detailVO);
@@ -204,7 +204,7 @@ public class PrintOrderController {
             // 获取订单详情
             List<OrderDetail> details = orderDetailService.getByOrderId(order.getId());
             List<PrintOrderDetailVO> detailVOs = new ArrayList<>();
-            for (var detail : details) {
+            for (OrderDetail detail : details) {
                 PrintOrderDetailVO detailVO = new PrintOrderDetailVO();
                 BeanUtils.copyProperties(detail, detailVO);
                 detailVOs.add(detailVO);

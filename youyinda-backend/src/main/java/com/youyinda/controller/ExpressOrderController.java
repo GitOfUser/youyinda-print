@@ -111,7 +111,7 @@ public class ExpressOrderController {
             List<OrderMain> orderList = orderMainService.getByUserIdAndType(userId, 2);
             List<ExpressOrderVO> result = new ArrayList<>();
 
-            for (var order : orderList) {
+            for (OrderMain order : orderList) {
                 ExpressOrderVO orderVO = new ExpressOrderVO();
                 BeanUtils.copyProperties(order, orderVO);
 

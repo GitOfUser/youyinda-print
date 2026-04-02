@@ -102,7 +102,6 @@ D:\Projects\youyinda-print\youyinda-backend\src\main\java\com\youyinda\controlle
 D:\Projects\youyinda-print\youyinda-backend\src\main\java\com\youyinda\dto\PrintOrderCreateRequest.java
 D:\Projects\youyinda-print\youyinda-backend\src\main\java\com\youyinda\entity\AdminOperationLog.java
 D:\Projects\youyinda-print\youyinda-backend\src\main\java\com\youyinda\service\SysConfigService.java
-D:\Projects\youyinda-print\youyinda-backend\src\main\java\com\youyinda\config\GlobalExceptionHandler.java
 D:\Projects\youyinda-print\youyinda-backend\src\main\java\com\youyinda\entity\AdminRole.java
 D:\Projects\youyinda-print\youyinda-backend\src\main\java\com\youyinda\entity\OrderDetail.java
 D:\Projects\youyinda-print\youyinda-backend\src\main\java\com\youyinda\vo\ExpressCompanyVO.java

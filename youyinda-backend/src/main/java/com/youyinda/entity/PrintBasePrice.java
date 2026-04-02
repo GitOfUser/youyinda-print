@@ -60,6 +60,30 @@ public class PrintBasePrice {
     private String thirdProvider;
 
     /**
+     * 服务商代码
+     */
+    @TableField("provider_code")
+    private String providerCode;
+
+    /**
+     * 单双面：single-单面，double-双面
+     */
+    @TableField("single_double")
+    private String singleDouble;
+
+    /**
+     * 最低订单价格
+     */
+    @TableField("min_order_price")
+    private Double minOrderPrice;
+
+    /**
+     * 状态：0-未激活，1-激活
+     */
+    @TableField("status")
+    private Integer status;
+
+    /**
      * 是否激活：0-未激活，1-激活
      */
     @TableField("is_active")

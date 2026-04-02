@@ -241,7 +241,11 @@ public class WechatUtil {
             params.put("page", page);
             params.put("width", width);
             params.put("auto_color", false);
-            params.put("line_color", Map.of("r", 0, "g", 0, "b", 0));
+            Map<String, Object> lineColor = new HashMap<>();
+            lineColor.put("r", 0);
+            lineColor.put("g", 0);
+            lineColor.put("b", 0);
+            params.put("line_color", lineColor);
             params.put("is_hyaline", false);
 
             // 发送请求

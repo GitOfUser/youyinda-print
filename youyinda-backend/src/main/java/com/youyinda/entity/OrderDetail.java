@@ -78,6 +78,72 @@ public class OrderDetail {
     private String expressConfig;
 
     /**
+     * 文件名
+     */
+    @TableField("file_name")
+    private String fileName;
+
+    /**
+     * 文件类型
+     */
+    @TableField("file_type")
+    private String fileType;
+
+    /**
+     * 文件大小
+     */
+    @TableField("file_size")
+    private Long fileSize;
+
+    /**
+     * 打印页数
+     */
+    @TableField("print_pages")
+    private Integer printPages;
+
+    /**
+     * 打印份数
+     */
+    @TableField("print_copies")
+    private Integer printCopies;
+
+    /**
+     * 纸张类型
+     */
+    @TableField("paper_type")
+    private String paperType;
+
+    /**
+     * 颜色类型
+     */
+    @TableField("color_type")
+    private String colorType;
+
+    /**
+     * 打印面数
+     */
+    @TableField("print_side")
+    private String printSide;
+
+    /**
+     * 装订类型
+     */
+    @TableField("binding_type")
+    private String bindingType;
+
+    /**
+     * 增值服务
+     */
+    @TableField("value_added_service")
+    private String valueAddedService;
+
+    /**
+     * 小计
+     */
+    @TableField("subtotal")
+    private Double subtotal;
+
+    /**
      * 创建时间
      */
     @TableField("create_time")

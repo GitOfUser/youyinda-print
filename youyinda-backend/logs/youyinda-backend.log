@@ -82,3 +82,107 @@ Caused by: java.sql.SQLSyntaxErrorException: Table 'youyinda.order_main' doesn't
 	at java.lang.reflect.Method.invoke(Method.java:498)
 	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:427)
 	... 29 common frames omitted
+2026-04-03 00:39:10 [main] INFO  com.youyinda.YouyindaApplication - Starting YouyindaApplication v1.0.0 using Java 1.8.0_121 on LAPTOP-A65VBUM1 with PID 46092 (D:\Projects\youyinda-print\youyinda-backend\target\youyinda-backend-1.0.0.jar started by 22915 in D:\Projects\youyinda-print\youyinda-backend)
+2026-04-03 00:39:10 [main] DEBUG com.youyinda.YouyindaApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 00:39:10 [main] INFO  com.youyinda.YouyindaApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 00:39:10 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.youyinda.YouyindaApplication]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'globalExceptionHandler' for bean class [com.youyinda.exception.GlobalExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [com.youyinda.config.GlobalExceptionHandler]
+2026-04-03 00:39:11 [main] ERROR org.springframework.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.youyinda.YouyindaApplication]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'globalExceptionHandler' for bean class [com.youyinda.exception.GlobalExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [com.youyinda.config.GlobalExceptionHandler]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:331)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:756)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:572)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:732)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:409)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1289)
+	at com.youyinda.YouyindaApplication.main(YouyindaApplication.java:16)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'globalExceptionHandler' for bean class [com.youyinda.exception.GlobalExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [com.youyinda.config.GlobalExceptionHandler]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349)
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287)
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:128)
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:295)
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:249)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:206)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:174)
+	... 21 common frames omitted
+2026-04-03 00:39:59 [main] INFO  com.youyinda.YouyindaApplication - Starting YouyindaApplication v1.0.0 using Java 1.8.0_121 on LAPTOP-A65VBUM1 with PID 11000 (D:\Projects\youyinda-print\youyinda-backend\target\youyinda-backend-1.0.0.jar started by 22915 in D:\Projects\youyinda-print\youyinda-backend)
+2026-04-03 00:39:59 [main] DEBUG com.youyinda.YouyindaApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 00:39:59 [main] INFO  com.youyinda.YouyindaApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 00:40:00 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.youyinda.YouyindaApplication]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'globalExceptionHandler' for bean class [com.youyinda.exception.GlobalExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [com.youyinda.config.GlobalExceptionHandler]
+2026-04-03 00:40:00 [main] ERROR org.springframework.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.youyinda.YouyindaApplication]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'globalExceptionHandler' for bean class [com.youyinda.exception.GlobalExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [com.youyinda.config.GlobalExceptionHandler]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:331)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:247)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:311)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:112)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:756)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:572)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:732)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:409)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1289)
+	at com.youyinda.YouyindaApplication.main(YouyindaApplication.java:16)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:108)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'globalExceptionHandler' for bean class [com.youyinda.exception.GlobalExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [com.youyinda.config.GlobalExceptionHandler]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349)
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287)
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:128)
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:295)
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:249)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:206)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:174)
+	... 21 common frames omitted
+2026-04-03 00:41:42 [main] INFO  com.youyinda.YouyindaApplication - Starting YouyindaApplication v1.0.0 using Java 1.8.0_121 on LAPTOP-A65VBUM1 with PID 43656 (D:\Projects\youyinda-print\youyinda-backend\target\youyinda-backend-1.0.0.jar started by 22915 in D:\Projects\youyinda-print\youyinda-backend)
+2026-04-03 00:41:42 [main] DEBUG com.youyinda.YouyindaApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
+2026-04-03 00:41:42 [main] INFO  com.youyinda.YouyindaApplication - No active profile set, falling back to 1 default profile: "default"
+2026-04-03 00:41:43 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=bba9fcbb-cd47-3ab4-97c7-27a25ee9ea80
+2026-04-03 00:41:45 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+2026-04-03 00:41:45 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2026-04-03 00:41:45 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
+2026-04-03 00:41:45 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-04-03 00:41:45 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3416 ms
+2026-04-03 00:41:45 [main] DEBUG com.youyinda.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-04-03 00:41:45 [main] DEBUG com.youyinda.config.AdminJwtAuthenticationFilter - Filter 'adminJwtAuthenticationFilter' configured for use
+2026-04-03 00:41:46 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2026-04-03 00:41:46 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2026-04-03 00:41:49 [main] INFO  c.youyinda.service.impl.ThirdApiConfigServiceImpl - 初始化第三方API配置缓存...
+2026-04-03 00:41:49 [main] WARN  c.youyinda.service.impl.ThirdApiConfigServiceImpl - Redis不可用，跳过缓存刷新
+2026-04-03 00:41:50 [main] INFO  o.s.cloud.openfeign.FeignClientFactoryBean - For 'printProvider' URL not provided. Will try picking an instance via load-balancing.
+2026-04-03 00:41:50 [main] INFO  o.s.cloud.openfeign.FeignClientFactoryBean - For 'expressProvider' URL not provided. Will try picking an instance via load-balancing.
+2026-04-03 00:41:50 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
+
+Using generated security password: 8fa512f3-e362-499f-b108-acc7f7df719f
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-04-03 00:41:50 [main] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@12bfd80d, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@41925502, org.springframework.security.web.context.SecurityContextPersistenceFilter@20b12f8a, org.springframework.security.web.header.HeaderWriterFilter@3bd418e4, org.springframework.web.filter.CorsFilter@13e3c1c7, org.springframework.security.web.authentication.logout.LogoutFilter@5ee2b6f9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2e554a3b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7d42c224, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5316e95f, org.springframework.security.web.session.SessionManagementFilter@6b98a075, org.springframework.security.web.access.ExceptionTranslationFilter@4c5474f5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@efde75f]
+2026-04-03 00:41:53 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-04-03 00:41:53 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path '/api'
+2026-04-03 00:41:55 [main] INFO  com.youyinda.YouyindaApplication - Started YouyindaApplication in 14.736 seconds (JVM running for 15.276)
+2026-04-03 00:42:20 [http-nio-8080-exec-2] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-03 00:42:20 [http-nio-8080-exec-2] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-04-03 00:42:20 [http-nio-8080-exec-2] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 4 ms

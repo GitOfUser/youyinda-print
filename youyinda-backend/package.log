@@ -1,0 +1,55 @@
+﻿[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building 优印达后端服务 1.0.0
+[INFO] ------------------------------------------------------------------------
+[WARNING] The artifact mysql:mysql-connector-java:jar:8.0.33 has been relocated to com.mysql:mysql-connector-j:jar:8.0.33
+[INFO] 
+[INFO] --- maven-clean-plugin:3.2.0:clean (default-clean) @ youyinda-backend ---
+[INFO] Deleting D:\Projects\youyinda-print\youyinda-backend\target
+[INFO] 
+[INFO] --- maven-resources-plugin:3.2.0:resources (default-resources) @ youyinda-backend ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 1 resource
+[INFO] Copying 4 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ youyinda-backend ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 174 source files to D:\Projects\youyinda-print\youyinda-backend\target\classes
+[INFO] /D:/Projects/youyinda-print/youyinda-backend/src/main/java/com/youyinda/config/SecurityConfig.java: 某些输入文件使用或覆盖了已过时的 API。
+[INFO] /D:/Projects/youyinda-print/youyinda-backend/src/main/java/com/youyinda/config/SecurityConfig.java: 有关详细信息, 请使用 -Xlint:deprecation 重新编译。
+[INFO] /D:/Projects/youyinda-print/youyinda-backend/src/main/java/com/youyinda/util/WechatUtil.java: D:\Projects\youyinda-print\youyinda-backend\src\main\java\com\youyinda\util\WechatUtil.java使用了未经检查或不安全的操作。
+[INFO] /D:/Projects/youyinda-print/youyinda-backend/src/main/java/com/youyinda/util/WechatUtil.java: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /D:/Projects/youyinda-print/youyinda-backend/src/main/java/com/youyinda/controller/PrintOrderController.java:[66,48] 找不到符号
+  符号:   类 FileInfo
+  位置: 类 com.youyinda.dto.PrintOrderDTO
+[ERROR] /D:/Projects/youyinda-print/youyinda-backend/src/main/java/com/youyinda/controller/PrintOrderController.java:[87,48] 找不到符号
+  符号:   类 FileInfo
+  位置: 类 com.youyinda.dto.PrintOrderDTO
+[INFO] 2 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 8.166 s
+[INFO] Finished at: 2026-04-03T00:40:46+08:00
+[INFO] Final Memory: 44M/450M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.1:compile (default-compile) on project youyinda-backend: Compilation failure: Compilation failure:
+[ERROR] /D:/Projects/youyinda-print/youyinda-backend/src/main/java/com/youyinda/controller/PrintOrderController.java:[66,48] 找不到符号
+[ERROR] 符号:   类 FileInfo
+[ERROR] 位置: 类 com.youyinda.dto.PrintOrderDTO
+[ERROR] /D:/Projects/youyinda-print/youyinda-backend/src/main/java/com/youyinda/controller/PrintOrderController.java:[87,48] 找不到符号
+[ERROR] 符号:   类 FileInfo
+[ERROR] 位置: 类 com.youyinda.dto.PrintOrderDTO
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

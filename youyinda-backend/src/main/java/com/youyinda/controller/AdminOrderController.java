@@ -43,9 +43,9 @@ public class AdminOrderController {
     }
 
     @PutMapping("/{id}/status")
-    public R<Void> updateOrderStatus(@PathVariable Long id, @RequestParam String orderStatus) {
+    public R<Void> updateOrderStatus(@PathVariable Long id, @RequestParam Integer status) {
         OrderMain order = orderMainService.getById(id);
-        order.setOrderStatus(orderStatus);
+        order.setStatus(status);
         orderMainService.updateById(order);
         return R.ok();
     }

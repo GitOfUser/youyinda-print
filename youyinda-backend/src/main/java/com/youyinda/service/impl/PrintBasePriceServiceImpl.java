@@ -27,4 +27,22 @@ public class PrintBasePriceServiceImpl extends ServiceImpl<PrintBasePriceMapper,
         }
         return baseMapper.selectOne(queryWrapper);
     }
+
+    @Override
+    public PrintBasePrice getBySpec(String providerCode, String paperType, String colorType, String printSide) {
+        QueryWrapper<PrintBasePrice> queryWrapper = new QueryWrapper<>();
+        if (providerCode != null) {
+            queryWrapper.eq("provider_code", providerCode);
+        }
+        if (paperType != null) {
+            queryWrapper.eq("paper_type", paperType);
+        }
+        if (colorType != null) {
+            queryWrapper.eq("color_type", colorType);
+        }
+        if (printSide != null) {
+            queryWrapper.eq("print_side", printSide);
+        }
+        return baseMapper.selectOne(queryWrapper);
+    }
 }
