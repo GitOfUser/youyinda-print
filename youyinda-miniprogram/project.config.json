@@ -5,7 +5,7 @@
     "include": []
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -48,7 +48,7 @@
     "disableSWC": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.19.4",
+  "libVersion": "2.25.0",
   "appid": "wx964877e6c76f94b2",
   "projectname": "youyinda-miniprogram",
   "isGameTourist": false,

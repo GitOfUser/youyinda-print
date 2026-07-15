@@ -25,7 +25,7 @@ import java.util.Map;
  * 认证控制器
  */
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/v1/auth")
 public class AuthController {
 
     @Autowired

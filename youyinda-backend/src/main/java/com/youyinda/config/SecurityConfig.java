@@ -39,13 +39,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 白名单：不需要认证的接口
                 .antMatchers(
-                        "/api/v1/auth/**",                  // 认证相关接口
-                        "/api/v1/public/**",                // 公共接口
-                        "/api/v1/pay/notify",              // 支付回调
-                        "/api/v1/health/**",               // 健康检查
-                        "/druid/**",                       // Druid监控
-                        "/static/**",                      // 静态资源
-                        "/uploads/**"                      // 上传文件
+                        "/v1/auth/**",                    // 认证相关接口
+                        "/v1/public/**",                  // 公共接口
+                        "/v1/pay/notify",                // 支付回调
+                        "/v1/health/**",                 // 健康检查
+                        "/actuator/**",                  // Actuator监控端点
+                        "/druid/**",                     // Druid监控
+                        "/static/**",                    // 静态资源
+                        "/uploads/**"                    // 上传文件
                 ).permitAll()
                 // 其他接口需要认证
                 .anyRequest().authenticated()

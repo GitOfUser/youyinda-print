@@ -20,7 +20,7 @@ import java.util.List;
  * 用户地址控制器
  */
 @RestController
-@RequestMapping("/api/v1/user/address")
+@RequestMapping("/v1/user/address")
 public class UserAddressController {
 
     @Autowired

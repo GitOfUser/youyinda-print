@@ -15,7 +15,7 @@ import java.util.Date;
  * 用户控制器
  */
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/v1/user")
 public class UserController {
 
     @Autowired

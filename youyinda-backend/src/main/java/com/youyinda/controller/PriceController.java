@@ -26,7 +26,7 @@ import java.math.BigDecimal;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/price")
+@RequestMapping("/v1/price")
 public class PriceController {
 
     @Autowired

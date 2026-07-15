@@ -1,0 +1,56 @@
+# Maven
+*.class
+**/target/
+**/build/
+**/out/
+
+# IDE请注释掉这行
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+.project
+
+
+# Trae
+.trae/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Spring Boot
+*.jar
+
+# Docker
+.dockerignore
+.env
+.env.*
+docker-compose.override.yml
+
+# Kubernetes
+*.yaml
+*.yml
+!docker-compose.yml
+!application-docker.yml
+
+# Node.js
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.npmrc
+
+# Frontend build
+dist/
+*.html
+
+# Temp files
+hs_err_pid*.log
+*.pid
+start-debug.bat

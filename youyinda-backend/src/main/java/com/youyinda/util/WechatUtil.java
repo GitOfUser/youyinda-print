@@ -49,17 +49,28 @@ public class WechatUtil {
     private static final String WX_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token";
 
     /**
+     * 检查是否为测试模式（使用占位符配置）
+     */
+    private boolean isTestMode() {
+        return "your_app_id".equals(appId) || "your_app_secret".equals(appSecret);
+    }
+
+    /**
      * 微信登录
      * @param code 登录凭证
      * @return 登录结果
      */
     public Map<String, Object> wxLogin(String code) {
         try {
-            // 测试模式，返回模拟数据
-            if ("test_code".equals(code)) {
+            // 测试模式，返回模拟数据（当使用占位符配置时自动进入测试模式）
+            if ("test_code".equals(code) || isTestMode()) {
                 Map<String, Object> result = new HashMap<>();
-                result.put("openid", "test_openid_123456");
-                result.put("session_key", "test_session_key_123456");
+                // 使用code生成唯一的openid，方便测试不同用户
+                String openid = "test_openid_" + (code != null ? code.hashCode() : "default");
+                String sessionKey = "test_session_key_" + (code != null ? code.hashCode() : "default");
+                result.put("openid", openid);
+                result.put("session_key", sessionKey);
+                log.info("测试模式 - 微信登录成功，openid: {}", openid);
                 return result;
             }
 

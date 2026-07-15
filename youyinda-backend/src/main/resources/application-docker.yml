@@ -7,16 +7,10 @@ spring:
   application:
     name: youyinda-backend
 
-  # 排除 Redis 自动配置
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
-      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
-
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/youyinda?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://mysql:3306/youyinda?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
     username: root
     password: 1234
     druid:
@@ -43,8 +37,8 @@ spring:
         login-password: admin
 
   redis:
-    host: localhost
-    port: 6380
+    host: redis
+    port: 6379
     password:
     database: 0
     timeout: 1000ms
@@ -79,15 +73,15 @@ jwt:
 
 wechat:
   miniapp:
-    appId: your_app_id
-    appSecret: your_app_secret
+    appId: ${WX_MINIAPP_APP_ID:your_app_id}
+    appSecret: ${WX_MINIAPP_APP_SECRET:your_app_secret}
   pay:
-    mchId: your_mch_id
-    apiV3Key: your_api_v3_key
+    mchId: ${WX_PAY_MCH_ID:your_mch_id}
+    apiV3Key: ${WX_PAY_API_V3_KEY:your_api_v3_key}
     privateKeyPath: classpath:cert/apiclient_key.pem
     privateCertPath: classpath:cert/apiclient_cert.pem
-    serialNo: your_serial_no
-    notifyUrl: https://your-domain.com/api/v1/pay/notify
+    serialNo: ${WX_PAY_SERIAL_NO:your_serial_no}
+    notifyUrl: ${WX_PAY_NOTIFY_URL:https://your-domain.com/api/v1/pay/notify}
 
 resilience4j:
   circuitbreaker:
@@ -141,6 +135,15 @@ third-party:
     enabled: true
     cron: "0 0 2 * * ?"
     alert-email: ${SYNC_ALERT_EMAIL:admin@youyinda.com}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
 
 logging:
   level:
