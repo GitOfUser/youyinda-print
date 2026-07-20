@@ -19,7 +19,8 @@
     <description>优印达微信小程序云打印与快递聚合平台</description>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>21</java.version>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <druid.version>1.2.18</druid.version>
@@ -156,8 +157,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${maven.compiler.release}</release>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
