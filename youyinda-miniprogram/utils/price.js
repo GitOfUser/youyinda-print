@@ -82,6 +82,6 @@ function calculateExpressPrice(config) {
 module.exports = {
   formatPrice,
   formatPriceWithSymbol,
-  calculatePrintPrice,
-  calculateExpressPrice
+  calcPrintPrice: calculatePrintPrice,
+  calcExpressPrice: calculateExpressPrice
 };

@@ -11,7 +11,7 @@
 *.swp
 *.swo
 .project
-logs/
+youyinda-backend/logs/
 
 
 # Trae

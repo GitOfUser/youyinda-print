@@ -3,10 +3,13 @@ package com.youyinda.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +37,13 @@ public class JwtUtil {
     private long expiration;
 
     /**
+     * 签名密钥（懒加载）
+     */
+    private SecretKey getSigningKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
      * 生成Token
      * @param claims 自定义声明
      * @return Token字符串
@@ -47,7 +57,7 @@ public class JwtUtil {
                     .setClaims(claims)
                     .setIssuedAt(now)
                     .setExpiration(expireDate)
-                    .signWith(SignatureAlgorithm.HS256, secret)
+                    .signWith(getSigningKey())
                     .compact();
         } catch (Exception e) {
             log.error("生成Token失败: {}", e.getMessage(), e);
@@ -71,7 +81,7 @@ public class JwtUtil {
                     .claim("openid", openid)
                     .setIssuedAt(now)
                     .setExpiration(expireDate)
-                    .signWith(SignatureAlgorithm.HS256, secret)
+                    .signWith(getSigningKey())
                     .compact();
         } catch (Exception e) {
             log.error("生成Token失败: {}", e.getMessage(), e);
@@ -86,8 +96,9 @@ public class JwtUtil {
      */
     public Claims parseToken(String token) {
         try {
-            return Jwts.parser()
-                    .setSigningKey(secret)
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
