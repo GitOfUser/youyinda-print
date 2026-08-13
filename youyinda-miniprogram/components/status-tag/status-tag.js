@@ -2,24 +2,32 @@
  * 状态标签组件
  */
 Component({
+  options: {
+    styleIsolation: 'apply-shared'
+  },
+
   properties: {
-    // 标签文本
     text: {
       type: String,
       value: ''
     },
-    // 类型：primary/success/warning/danger/info/default
     type: {
       type: String,
       value: 'default'
     },
-    // 尺寸：small/medium/large
     size: {
       type: String,
       value: 'medium'
     },
-    // 是否镂空
     plain: {
+      type: Boolean,
+      value: false
+    },
+    round: {
+      type: Boolean,
+      value: false
+    },
+    dot: {
       type: Boolean,
       value: false
     }

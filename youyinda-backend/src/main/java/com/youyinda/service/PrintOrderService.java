@@ -22,4 +22,12 @@ public interface PrintOrderService extends IService<PrintOrder> {
      * @return 是否更新成功
      */
     boolean updateThirdInfo(Long orderId, String thirdOrderNo, Integer thirdStatus);
+
+    /**
+     * 创建打印订单（多场景打印全链路：计价 → 第三方下单 → 落库）
+     * @param userId 用户ID
+     * @param request 打印订单创建请求
+     * @return 打印订单VO
+     */
+    com.youyinda.vo.PrintOrderVO createPrintOrder(Long userId, com.youyinda.dto.PrintOrderCreateRequest request);
 }

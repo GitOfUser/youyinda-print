@@ -1,13 +1,18 @@
 package com.youyinda.controller;
 
 import com.youyinda.common.BusinessException;
+import com.youyinda.common.R;
 import com.youyinda.common.enums.ErrorCodeEnum;
+import com.youyinda.dto.PrintFileDTO;
+import com.youyinda.dto.PrintOrderCreateRequest;
 import com.youyinda.dto.PrintOrderDTO;
+import com.youyinda.dto.PrintOrderItemRequest;
 import com.youyinda.entity.OrderMain;
 import com.youyinda.entity.OrderDetail;
 import com.youyinda.entity.UserAddress;
 import com.youyinda.service.OrderMainService;
 import com.youyinda.service.OrderDetailService;
+import com.youyinda.service.PrintOrderService;
 import com.youyinda.service.UserAddressService;
 import com.youyinda.util.JwtUtil;
 import com.youyinda.vo.PrintOrderVO;
@@ -41,13 +46,17 @@ public class PrintOrderController {
     @Autowired
     private UserAddressService userAddressService;
 
+    @Autowired
+    private PrintOrderService printOrderService;
+
     /**
-     * 创建打印订单
+     * 创建打印订单（多场景打印全链路）
+     * 委托 PrintOrderServiceImpl 完成计价、第三方下单与落库
      * @param printOrderDTO 打印订单请求参数
      * @return 订单ID
      */
     @PostMapping("/create")
-    public com.youyinda.common.R<Long> createOrder(@Valid @RequestBody PrintOrderDTO printOrderDTO) {
+    public R<Long> createOrder(@Valid @RequestBody PrintOrderDTO printOrderDTO) {
         try {
             // 获取当前用户ID
             Long userId = JwtUtil.getUserIdFromToken();
@@ -61,54 +70,35 @@ public class PrintOrderController {
                 throw new BusinessException(ErrorCodeEnum.ADDRESS_NOT_FOUND, "地址不存在");
             }
 
-            // 计算订单总价（这里简化处理，实际应该根据价格引擎计算）
-            BigDecimal totalPrice = BigDecimal.ZERO;
-            for (com.youyinda.dto.PrintFileDTO file : printOrderDTO.getFiles()) {
-                // 假设每页价格为0.5元
-                BigDecimal filePrice = new BigDecimal(0.5)
-                        .multiply(new BigDecimal(file.getPages()))
-                        .multiply(new BigDecimal(file.getCopies()));
-                totalPrice = totalPrice.add(filePrice);
+            // 将 PrintOrderDTO 转换为 PrintOrderCreateRequest（多场景打印参数）
+            PrintOrderCreateRequest createRequest = new PrintOrderCreateRequest();
+            createRequest.setAddressId(printOrderDTO.getAddressId());
+            createRequest.setRemark(printOrderDTO.getRemark());
+            List<PrintOrderItemRequest> items = new ArrayList<>();
+            for (PrintFileDTO file : printOrderDTO.getFiles()) {
+                PrintOrderItemRequest item = new PrintOrderItemRequest();
+                item.setFileId(file.getFileId());
+                item.setFileUrl(file.getFileUrl());
+                item.setFileName(file.getFileName());
+                item.setFileType(file.getFileType());
+                item.setFileSize(file.getFileSize());
+                item.setCopies(file.getCopies());
+                item.setPaperType(printOrderDTO.getPaperType());
+                item.setColorType(printOrderDTO.getColorType());
+                // 单双面：单面=single，双面=double
+                item.setSingleDouble("双面".equals(printOrderDTO.getPrintSide()) ? "double" : "single");
+                item.setBindingType(printOrderDTO.getBindingType());
+                item.setQuantity(file.getPages());
+                // 增值服务写入 specJson 供价格计算识别（覆膜/打孔）
+                item.setSpecJson(printOrderDTO.getValueAddedService());
+                items.add(item);
             }
+            createRequest.setItems(items);
 
-            // 创建订单主表
-            OrderMain orderMain = new OrderMain();
-            orderMain.setUserId(userId);
-            orderMain.setOrderType(1); // 1-打印订单
-            orderMain.setOrderNo(orderMainService.generateOrderNo());
-            orderMain.setTotalPrice(totalPrice.doubleValue());
-            orderMain.setStatus(1); // 1-待支付
-            orderMain.setPayStatus(1); // 1-未支付
-            orderMain.setAddressId(printOrderDTO.getAddressId());
-            orderMain.setRemark(printOrderDTO.getRemark());
-            orderMainService.save(orderMain);
+            // 委托 Service 完成全链路下单
+            PrintOrderVO orderVO = printOrderService.createPrintOrder(userId, createRequest);
 
-            // 创建订单详情
-            for (com.youyinda.dto.PrintFileDTO file : printOrderDTO.getFiles()) {
-                OrderDetail orderDetail = new OrderDetail();
-                orderDetail.setOrderId(orderMain.getId());
-                orderDetail.setFileName(file.getFileName());
-                orderDetail.setFileUrl(file.getFileUrl());
-                orderDetail.setFileType(file.getFileType());
-                orderDetail.setFileSize(file.getFileSize());
-                orderDetail.setPrintPages(file.getPages());
-                orderDetail.setPrintCopies(file.getCopies());
-                orderDetail.setPaperType(printOrderDTO.getPaperType());
-                orderDetail.setColorType(printOrderDTO.getColorType());
-                orderDetail.setPrintSide(printOrderDTO.getPrintSide());
-                orderDetail.setBindingType(printOrderDTO.getBindingType());
-                orderDetail.setValueAddedService(printOrderDTO.getValueAddedService());
-                // 计算详情小计
-                BigDecimal unitPrice = new BigDecimal(0.5);
-                BigDecimal subtotal = unitPrice
-                        .multiply(new BigDecimal(file.getPages()))
-                        .multiply(new BigDecimal(file.getCopies()));
-                orderDetail.setUnitPrice(unitPrice.doubleValue());
-                orderDetail.setSubtotal(subtotal.doubleValue());
-                orderDetailService.save(orderDetail);
-            }
-
-            return com.youyinda.common.R.success(orderMain.getId());
+            return R.success(orderVO.getId());
         } catch (BusinessException e) {
             throw e;
         } catch (Exception e) {

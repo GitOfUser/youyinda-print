@@ -39,7 +39,7 @@ public class ExpressTrackSyncTask {
         try {
             LambdaQueryWrapper<OrderMain> wrapper = new LambdaQueryWrapper<>();
             wrapper.eq(OrderMain::getOrderType, "express")
-                    .in(OrderMain::getOrderStatus, SYNC_STATUS_LIST);
+                    .in(OrderMain::getStatus, SYNC_STATUS_LIST);
             List<OrderMain> orderList = orderMainService.list(wrapper);
 
             log.info("需要同步物流状态的订单数量：{}", orderList.size());

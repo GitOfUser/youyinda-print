@@ -12,7 +12,16 @@ App({
     openid: null,
     isLogin: false,
     systemInfo: null,
-    locationInfo: null
+    locationInfo: null,
+    /** 流程状态对象：存储打印/快递多步流程中间数据，替代 Storage */
+    flowState: {}
+  },
+
+  /**
+   * 清空流程状态（订单创建成功后调用）
+   */
+  clearFlowState() {
+    this.globalData.flowState = {};
   },
 
   onLaunch() {

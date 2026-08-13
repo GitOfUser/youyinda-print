@@ -66,11 +66,48 @@ Page({
   selectRegion() {
     wx.chooseLocation({
       success: (res) => {
+        // TODO: 应调用腾讯地图逆地理编码接口解析经纬度获取省市区
+        // 当前方案：使用用户选择的地址信息，让用户手动补充省市区
+        const address = res.address || '';
+        
+        // 简单解析：尝试从地址中提取省市信息（实际应使用地图SDK）
+        let province = this.data.form.province;
+        let city = this.data.form.city;
+        let district = this.data.form.district;
+        
+        if (address) {
+          // 如果地址包含已知城市信息，尝试提取
+          const cityMatch = address.match(/(.*?市)/);
+          if (cityMatch) {
+            city = cityMatch[1];
+          }
+          
+          const provinceMatch = address.match(/(.*?省)/);
+          if (provinceMatch) {
+            province = provinceMatch[1];
+          }
+        }
+        
         this.setData({
-          'form.province': '广东省',
-          'form.city': '深圳市',
-          'form.district': '南山区',
-          'form.detail': res.address || this.data.form.detail
+          'form.province': province,
+          'form.city': city,
+          'form.district': district,
+          'form.detail': address || this.data.form.detail
+        });
+        
+        if (!province || !city) {
+          wx.showToast({
+            title: '请手动选择或输入省市区',
+            icon: 'none',
+            duration: 2000
+          });
+        }
+      },
+      fail: (err) => {
+        console.error('选择位置失败:', err);
+        wx.showToast({
+          title: '选择位置失败，请手动输入',
+          icon: 'none'
         });
       }
     });

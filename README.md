@@ -2,12 +2,14 @@
 AIGC:
     Label: "1"
     ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: 7620c09593e95e5e8c1e60fb77a4f605_dedf8a21840611f184135254006c9bbf
-    ReservedCode1: JhYbm+0Dk74AhDhltWUPT+rduas0ZQooCJLXSvWTf7aYPyvRy/LHQqwz7HESPTATkp2NK5vy29NU6iZaF0buhccGk/skAmAVpudR3ilYQ9wSnyGs1/owuzT+uU9HUhO3qTt9e7CRL0Rjo+f8ZDGnsgkUv8V7vxxy71VuBLQeE7pXBB4zXAgzBdFOmkA=
+    ProduceID: 7620c09593e95e5e8c1e60fb77a4f605_bc09e28285a711f18108525400287e28
+    ReservedCode1: mtwyKTeVgd3whVeFaYXS+VLgPAPWsn8TfdARJ4mYLYtRYP1153d/LxDvKXlWpQt5/KNSlEjDOP4tmmUG009kzA2vdmyX8RpTYYvRyxuAt+Nir74xQWS+XCprrTFVgnQLVGUXHZqhAz+JwTprFsh5PCQc0/YU/0tmihGa5aLQv0VNo+nhgqrujL+sJ34=
     ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: 7620c09593e95e5e8c1e60fb77a4f605_dedf8a21840611f184135254006c9bbf
-    ReservedCode2: JhYbm+0Dk74AhDhltWUPT+rduas0ZQooCJLXSvWTf7aYPyvRy/LHQqwz7HESPTATkp2NK5vy29NU6iZaF0buhccGk/skAmAVpudR3ilYQ9wSnyGs1/owuzT+uU9HUhO3qTt9e7CRL0Rjo+f8ZDGnsgkUv8V7vxxy71VuBLQeE7pXBB4zXAgzBdFOmkA=
+    PropagateID: 7620c09593e95e5e8c1e60fb77a4f605_bc09e28285a711f18108525400287e28
+    ReservedCode2: mtwyKTeVgd3whVeFaYXS+VLgPAPWsn8TfdARJ4mYLYtRYP1153d/LxDvKXlWpQt5/KNSlEjDOP4tmmUG009kzA2vdmyX8RpTYYvRyxuAt+Nir74xQWS+XCprrTFVgnQLVGUXHZqhAz+JwTprFsh5PCQc0/YU/0tmihGa5aLQv0VNo+nhgqrujL+sJ34=
 ---
+
+
 
 # 优印达 YouYinDa
 
@@ -279,4 +281,5 @@ start-debug.bat
 本项目采用 [MIT License](LICENSE)。
 
 > ⚠️ 安全提示：生产环境请使用 Jasypt 加密敏感配置（JWT secret、数据库密码、支付密钥），并通过环境变量或配置中心注入，切勿明文提交。
+*（内容由AI生成，仅供参考）*
 *（内容由AI生成，仅供参考）*

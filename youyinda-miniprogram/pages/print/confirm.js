@@ -11,8 +11,10 @@ Page({
   },
 
   onLoad() {
-    const fileList = wx.getStorageSync('printFiles') || [];
-    const config = wx.getStorageSync('printConfig') || {};
+    const app = getApp();
+    const flowState = app.globalData.flowState || {};
+    const fileList = flowState.printFiles || wx.getStorageSync('printFiles') || [];
+    const config = flowState.printConfig || wx.getStorageSync('printConfig') || {};
     this.setData({
       fileList,
       config,
@@ -28,7 +30,7 @@ Page({
 
   selectCoupon() {
     wx.showToast({
-      title: '优惠券功能开发中',
+      title: '暂无可用优惠券',
       icon: 'none'
     });
   },
@@ -74,6 +76,7 @@ Page({
       wx.requestPayment({
         ...payParams,
         success: () => {
+          app.clearFlowState();
           wx.showToast({
             title: '支付成功',
             icon: 'success'

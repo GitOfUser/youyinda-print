@@ -1,10 +1,14 @@
 <!-- 空状态组件 -->
-<view class="empty-container">
-  <image wx:if="{{image}}" class="empty-image" src="{{image}}" mode="aspectFit"/>
-  <text wx:else class="empty-icon">{{icon}}</text>
+<view class="empty-container {{fixed ? 'empty-fixed' : ''}}">
+  <view class="empty-icon-wrapper">
+    <image wx:if="{{image}}" class="empty-image" src="{{image}}" mode="aspectFit"/>
+    <view wx:else class="empty-icon-circle">
+      <text class="empty-icon">{{icon}}</text>
+    </view>
+  </view>
   <text class="empty-title">{{title}}</text>
   <text wx:if="{{desc}}" class="empty-desc">{{desc}}</text>
-  <view wx:if="{{showBtn}}" class="empty-btn" bindtap="onBtnTap">
+  <view wx:if="{{showBtn}}" class="empty-btn {{btnType === 'print' ? 'btn-print' : ''}}" bindtap="onBtnTap">
     {{btnText}}
   </view>
 </view>

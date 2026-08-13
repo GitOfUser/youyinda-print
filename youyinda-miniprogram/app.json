@@ -20,9 +20,9 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#FF7D00",
+    "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTitleText": "优印达",
-    "navigationBarTextStyle": "white",
+    "navigationBarTextStyle": "black",
     "backgroundColor": "#F9F6F0"
   },
   "tabBar": {

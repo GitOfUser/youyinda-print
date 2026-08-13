@@ -24,6 +24,12 @@ public class ExpressOrder {
     private Long orderId;
 
     /**
+     * 快递公司编码
+     */
+    @TableField("express_code")
+    private String expressCode;
+
+    /**
      * 寄件人姓名
      */
     @TableField("sender_name")

@@ -60,4 +60,14 @@ public class PrintOrderVO {
      * 备注
      */
     private String remark;
+
+    /**
+     * 第三方订单号
+     */
+    private String thirdOrderNo;
+
+    /**
+     * 第三方订单状态
+     */
+    private Integer thirdStatus;
 }

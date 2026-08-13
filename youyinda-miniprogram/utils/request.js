@@ -9,6 +9,8 @@ const BASE_URL = 'http://localhost:8080/api/v1';
 // 请求队列，用于登录态过期时暂存请求
 let requestQueue = [];
 let isRefreshing = false;
+let refreshRetryCount = 0;
+const MAX_REFRESH_RETRY = 2;
 
 /**
  * 获取Token
@@ -127,37 +129,58 @@ function request(options) {
  * @param {Function} reject Promise reject
  */
 function handleTokenExpired(options, resolve, reject) {
+  // 达到最大重试次数，清除登录态并跳转登录页
+  if (refreshRetryCount >= MAX_REFRESH_RETRY) {
+    refreshRetryCount = 0;
+    requestQueue.forEach(({ reject }) => reject(new Error('登录已过期，请重新登录')));
+    requestQueue = [];
+    isRefreshing = false;
+    wx.removeStorageSync('token');
+    wx.removeStorageSync('userInfo');
+    const app = getApp();
+    if (app) {
+      app.globalData.isLogin = false;
+      app.globalData.token = null;
+      app.globalData.userInfo = null;
+    }
+    wx.reLaunch({ url: '/pages/login/index' });
+    return;
+  }
+
   if (isRefreshing) {
     // 正在刷新token，将请求加入队列
     requestQueue.push({ options, resolve, reject });
   } else {
     isRefreshing = true;
+    refreshRetryCount++;
     requestQueue.push({ options, resolve, reject });
-    
-    // 重新登录
-    const app = getApp();
-    if (app) {
-      app.login().then(() => {
-        // 重新执行队列中的请求
-        requestQueue.forEach(({ options, resolve }) => {
-          request(options).then(resolve);
+
+    // 指数退避：第1次等1s，第2次等2s
+    const delay = Math.pow(2, refreshRetryCount - 1) * 1000;
+    setTimeout(() => {
+      const app = getApp();
+      if (app) {
+        app.login().then(() => {
+          refreshRetryCount = 0;
+          requestQueue.forEach(({ options, resolve }) => {
+            request(options).then(resolve);
+          });
+          requestQueue = [];
+          isRefreshing = false;
+        }).catch((err) => {
+          requestQueue.forEach(({ reject }) => reject(err));
+          requestQueue = [];
+          isRefreshing = false;
+
+          wx.reLaunch({
+            url: '/pages/login/index'
+          });
         });
-        requestQueue = [];
+      } else {
         isRefreshing = false;
-      }).catch((err) => {
-        requestQueue.forEach(({ reject }) => reject(err));
-        requestQueue = [];
-        isRefreshing = false;
-        
-        // 跳转到登录页
-        wx.navigateTo({
-          url: '/pages/login/index'
-        });
-      });
-    } else {
-      isRefreshing = false;
-      reject(new Error('登录态过期'));
-    }
+        reject(new Error('登录态过期'));
+      }
+    }, delay);
   }
 }
 

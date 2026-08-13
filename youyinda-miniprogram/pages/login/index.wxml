@@ -1,2 +1,71 @@
 <!--pages/login/index.wxml-->
-<text>pages/login/index.wxml</text>
+<view class="login-container">
+  <view class="login-top-bg"></view>
+  
+  <view class="login-header">
+    <view class="login-logo">
+      <text class="logo-text">优</text>
+    </view>
+    <view class="login-app-name">优印达</view>
+    <view class="login-app-desc">打印 · 快递 · 一站服务</view>
+  </view>
+
+  <view class="login-content">
+    <view class="login-slogan">
+      <text class="slogan-text">欢迎使用</text>
+      <text class="slogan-sub">一键登录，开启便捷服务</text>
+    </view>
+
+    <view class="login-features">
+      <view class="feature-item">
+        <view class="feature-icon-box icon-box-primary">
+          <text class="feature-icon">🖨️</text>
+        </view>
+        <text class="feature-text">在线打印</text>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon-box icon-box-primary">
+          <text class="feature-icon">📦</text>
+        </view>
+        <text class="feature-text">快递寄件</text>
+      </view>
+      <view class="feature-item">
+        <view class="feature-icon-box icon-box-primary">
+          <text class="feature-icon">📍</text>
+        </view>
+        <text class="feature-text">订单跟踪</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="login-footer">
+    <button class="login-btn btn-block" open-type="getPhoneNumber" bindgetphonenumber="onGetPhoneNumber">
+      <text class="wechat-icon">💬</text>
+      <text>微信一键登录</text>
+    </button>
+    
+    <view class="login-agreement">
+      <view class="checkbox-wrapper" bindtap="toggleAgree">
+        <view class="login-checkbox {{agreed ? 'checked' : ''}}">
+          <text wx:if="{{agreed}}" class="checkbox-icon">✓</text>
+        </view>
+      </view>
+      <text class="agreement-text">登录即代表同意</text>
+      <text class="agreement-link" bindtap="viewUserAgreement">《用户协议》</text>
+      <text class="agreement-text">和</text>
+      <text class="agreement-link" bindtap="viewPrivacyPolicy">《隐私政策》</text>
+    </view>
+
+    <view class="login-other">
+      <view class="divider-line"></view>
+      <text class="other-text">其他登录方式</text>
+      <view class="divider-line"></view>
+    </view>
+
+    <view class="login-other-actions">
+      <view class="other-btn" bindtap="onPhoneLogin">
+        <text class="other-btn-icon">📱</text>
+      </view>
+    </view>
+  </view>
+</view>

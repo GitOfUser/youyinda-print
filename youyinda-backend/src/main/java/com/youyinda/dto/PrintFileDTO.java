@@ -11,6 +11,11 @@ import javax.validation.constraints.NotNull;
 public class PrintFileDTO {
 
     /**
+     * 文件ID
+     */
+    private Long fileId;
+
+    /**
      * 文件URL
      */
     @NotBlank(message = "文件URL不能为空")

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "expressProvider", url = "${third-party.express.provider-url:}", fallback = ExpressProviderFallback.class)
+@FeignClient(name = "expressProvider", url = "${third-party.express.provider-url:https://api.kuaidi100.com}", fallback = ExpressProviderFallback.class)
 public interface ExpressProviderFeignClient {
 
     @CircuitBreaker(name = "expressProvider", fallbackMethod = "queryPriceFallback")

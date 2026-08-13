@@ -1,68 +1,99 @@
 .container {
   min-height: 100vh;
-  background: #f5f5f5;
-  padding-bottom: 140rpx;
+  background-color: var(--bg-cream);
+  padding: var(--spacing-md) 0 0;
 }
 
-.form-section {
-  background: #fff;
-  margin: 20rpx;
-  border-radius: 16rpx;
-  padding: 10rpx 30rpx;
+.form-card {
+  padding: 0;
 }
 
 .form-item {
   display: flex;
-  align-items: center;
-  padding: 30rpx 0;
-  border-bottom: 1rpx solid #f0f0f0;
+  align-items: flex-start;
+  padding: var(--spacing-lg);
+  border-bottom: 1rpx solid var(--divider);
 }
 
 .form-item:last-child {
   border-bottom: none;
 }
 
-.form-item.switch-item {
-  justify-content: space-between;
-}
-
 .form-label {
-  width: 160rpx;
-  font-size: 28rpx;
-  color: #333;
+  width: 180rpx;
+  font-size: var(--fs-base);
+  color: var(--text-title);
   flex-shrink: 0;
+  padding-top: var(--spacing-sm);
 }
 
-.form-input,
-.form-value {
+.required {
+  color: var(--danger);
+  margin-right: 4rpx;
+}
+
+.form-input {
   flex: 1;
-  font-size: 28rpx;
-  color: #333;
-  text-align: right;
+  font-size: var(--fs-base);
+  color: var(--text-title);
+  padding-top: var(--spacing-sm);
 }
 
-.form-value.placeholder {
-  color: #999;
+.form-picker {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--spacing-sm);
+}
+
+.form-picker text {
+  font-size: var(--fs-base);
+  color: var(--text-title);
+}
+
+.form-picker .placeholder {
+  color: var(--text-hint);
+}
+
+.picker-arrow {
+  font-size: var(--fs-lg);
+  color: var(--text-hint);
 }
 
 .form-textarea {
   flex: 1;
-  font-size: 28rpx;
-  color: #333;
-  text-align: right;
-  min-height: 80rpx;
+  font-size: var(--fs-base);
+  color: var(--text-title);
+  min-height: 120rpx;
+  padding-top: var(--spacing-sm);
+  line-height: 1.6;
 }
 
-.save-btn {
-  position: fixed;
-  bottom: 30rpx;
-  left: 30rpx;
-  right: 30rpx;
-  padding: 28rpx;
-  text-align: center;
-  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
-  color: #fff;
-  font-size: 30rpx;
-  border-radius: 48rpx;
-  font-weight: 500;
+.switch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-lg);
+}
+
+.switch-label {
+  font-size: var(--fs-base);
+  color: var(--text-title);
+}
+
+.tip-text {
+  padding: var(--spacing-lg) var(--page-margin);
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.bottom-bar {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.bottom-bar button {
+  margin: 0;
 }

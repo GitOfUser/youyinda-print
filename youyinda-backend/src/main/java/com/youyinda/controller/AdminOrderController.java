@@ -28,7 +28,7 @@ public class AdminOrderController {
         IPage<OrderMain> page = orderMainService.lambdaQuery()
                 .like(orderNo != null && !orderNo.isEmpty(), OrderMain::getOrderNo, orderNo)
                 .eq(orderType != null && !orderType.isEmpty(), OrderMain::getOrderType, orderType)
-                .eq(orderStatus != null && !orderStatus.isEmpty(), OrderMain::getOrderStatus, orderStatus)
+                .eq(orderStatus != null && !orderStatus.isEmpty(), OrderMain::getStatus, orderStatus)
                 .eq(userId != null, OrderMain::getUserId, userId)
                 .orderByDesc(OrderMain::getCreateTime)
                 .page(new com.baomidou.mybatisplus.extension.plugins.pagination.Page<>(pageNum, pageSize));

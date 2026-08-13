@@ -1,96 +1,94 @@
-/* 状态标签样式 */
 .status-tag {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8rpx;
+  border-radius: var(--radius-lg);
   font-weight: 500;
+  line-height: 1.4;
+  gap: 6rpx;
 }
 
-/* 尺寸 */
 .status-tag.small {
-  padding: 4rpx 12rpx;
-  font-size: 20rpx;
+  padding: 4rpx 16rpx;
+  font-size: var(--fs-xs);
+  border-radius: var(--radius-sm);
 }
 
 .status-tag.medium {
-  padding: 6rpx 16rpx;
-  font-size: 22rpx;
+  padding: 8rpx 20rpx;
+  font-size: var(--fs-sm);
 }
 
 .status-tag.large {
-  padding: 8rpx 20rpx;
-  font-size: 24rpx;
+  padding: 12rpx 28rpx;
+  font-size: var(--fs-base);
 }
 
-/* 类型 - 主色 */
-.status-tag.primary {
-  background: #FFF3E8;
-  color: #FF7D00;
+.status-tag.round {
+  border-radius: var(--radius-full);
 }
 
-.status-tag.primary.plain {
-  background: transparent;
-  border: 1.5px solid #FF7D00;
-  color: #FF7D00;
+.status-tag.small.round {
+  padding: 4rpx 16rpx;
 }
 
-/* 类型 - 成功 */
-.status-tag.success {
-  background: #E8F7EC;
-  color: #00B42A;
+.status-tag.medium.round {
+  padding: 8rpx 24rpx;
 }
 
-.status-tag.success.plain {
-  background: transparent;
-  border: 1.5px solid #00B42A;
-  color: #00B42A;
+.status-tag.large.round {
+  padding: 12rpx 32rpx;
 }
 
-/* 类型 - 警告 */
+.status-dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status-tag.pending,
 .status-tag.warning {
-  background: #FFF3E8;
-  color: #FF7D00;
+  background: var(--warning-light);
+  color: var(--warning);
 }
 
-.status-tag.warning.plain {
-  background: transparent;
-  border: 1.5px solid #FF7D00;
-  color: #FF7D00;
-}
-
-/* 类型 - 危险 */
-.status-tag.danger {
-  background: #FEE8E8;
-  color: #F53F3F;
-}
-
-.status-tag.danger.plain {
-  background: transparent;
-  border: 1.5px solid #F53F3F;
-  color: #F53F3F;
-}
-
-/* 类型 - 信息 */
+.status-tag.processing,
 .status-tag.info {
-  background: #E8EDFF;
-  color: #165DFF;
+  background: var(--info-light);
+  color: var(--info);
 }
 
-.status-tag.info.plain {
+.status-tag.completed,
+.status-tag.success {
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.status-tag.cancelled,
+.status-tag.default,
+.status-tag.gray {
+  background: #F3F4F6;
+  color: var(--text-secondary);
+}
+
+.status-tag.exception,
+.status-tag.danger {
+  background: var(--danger-light);
+  color: var(--danger);
+}
+
+.status-tag.primary {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.status-tag.print {
+  background: var(--print-primary-light);
+  color: var(--print-primary);
+}
+
+.status-tag.plain {
   background: transparent;
-  border: 1.5px solid #165DFF;
-  color: #165DFF;
-}
-
-/* 类型 - 默认 */
-.status-tag.default {
-  background: #F2F3F5;
-  color: #86909C;
-}
-
-.status-tag.default.plain {
-  background: transparent;
-  border: 1.5px solid #86909C;
-  color: #86909C;
+  border: 2rpx solid currentColor;
 }

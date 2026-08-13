@@ -1,0 +1,1 @@
+AdminApp.mount('#app');

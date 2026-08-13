@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "printProvider", url = "${third-party.print.provider-url:}", fallback = PrintProviderFallback.class)
+@FeignClient(name = "printProvider", url = "${third-party.print.provider-url:https://api.print-provider.com}", fallback = PrintProviderFallback.class)
 public interface PrintProviderFeignClient {
 
     @CircuitBreaker(name = "printProvider", fallbackMethod = "syncPrintPriceFallback")

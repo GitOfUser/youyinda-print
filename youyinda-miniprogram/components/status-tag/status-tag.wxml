@@ -1,4 +1,5 @@
 <!-- 状态标签组件 -->
-<view class="status-tag {{type}} {{size}} {{plain ? 'plain' : ''}}">
-  {{text}}
+<view class="status-tag {{type}} {{size}} {{plain ? 'plain' : ''}} {{round ? 'round' : ''}}">
+  <view wx:if="{{dot}}" class="status-dot"></view>
+  <text>{{text}}</text>
 </view>

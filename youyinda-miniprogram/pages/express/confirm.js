@@ -12,10 +12,12 @@ Page({
   },
 
   onLoad() {
-    const senderAddress = wx.getStorageSync('senderAddress');
-    const receiverAddress = wx.getStorageSync('receiverAddress');
-    const packageInfo = wx.getStorageSync('packageInfo');
-    const selectedCompany = wx.getStorageSync('selectedCompany');
+    const app = getApp();
+    const flowState = app.globalData.flowState || {};
+    const senderAddress = flowState.senderAddress || wx.getStorageSync('senderAddress');
+    const receiverAddress = flowState.receiverAddress || wx.getStorageSync('receiverAddress');
+    const packageInfo = flowState.packageInfo || wx.getStorageSync('packageInfo');
+    const selectedCompany = flowState.selectedCompany || wx.getStorageSync('selectedCompany');
 
     this.setData({
       senderAddress,
@@ -28,7 +30,7 @@ Page({
 
   selectCoupon() {
     wx.showToast({
-      title: '优惠券功能开发中',
+      title: '暂无可用优惠券',
       icon: 'none'
     });
   },
@@ -67,6 +69,7 @@ Page({
       wx.requestPayment({
         ...payParams,
         success: () => {
+          app.clearFlowState();
           wx.showToast({
             title: '支付成功',
             icon: 'success'

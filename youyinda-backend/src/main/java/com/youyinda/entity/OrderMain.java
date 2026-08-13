@@ -138,10 +138,4 @@ public class OrderMain {
     @TableLogic
     private Integer isDelete;
 
-    /**
-     * 获取订单状态（别名方法）
-     */
-    public Integer getOrderStatus() {
-        return this.status;
-    }
 }

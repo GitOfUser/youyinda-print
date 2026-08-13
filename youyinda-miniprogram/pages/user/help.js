@@ -37,9 +37,25 @@ Page({
   },
 
   contactService() {
-    wx.showToast({
-      title: '客服功能开发中',
-      icon: 'none'
+    wx.showActionSheet({
+      itemList: ['拨打客服电话 400-123-4567', '复制客服微信 youyinda_001'],
+      success: (res) => {
+        if (res.tapIndex === 0) {
+          wx.makePhoneCall({
+            phoneNumber: '400-123-4567'
+          });
+        } else if (res.tapIndex === 1) {
+          wx.setClipboardData({
+            data: 'youyinda_001',
+            success: () => {
+              wx.showToast({
+                title: '已复制客服微信号',
+                icon: 'none'
+              });
+            }
+          });
+        }
+      }
     });
   },
 

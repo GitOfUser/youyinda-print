@@ -1,12 +1,15 @@
 package com.youyinda.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * Security配置类
@@ -15,6 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     /**
      * 密码编码器
@@ -35,6 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 允许跨域请求
                 .cors()
                 .and()
+                // 无状态会话
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 // 配置请求授权规则
                 .authorizeRequests()
                 // 白名单：不需要认证的接口
@@ -51,6 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 其他接口需要认证
                 .anyRequest().authenticated()
                 .and()
+                // 添加JWT认证过滤器
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 // 配置异常处理
                 .exceptionHandling()
                 // 未认证的请求处理

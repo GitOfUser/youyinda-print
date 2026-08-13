@@ -29,6 +29,11 @@ Page({
   },
 
   goToPackage() {
+    const app = getApp();
+    if (!app.globalData.flowState) app.globalData.flowState = {};
+    app.globalData.flowState.senderAddress = this.data.senderAddress;
+    app.globalData.flowState.receiverAddress = this.data.receiverAddress;
+    // 写入旧 Storage key 以兼容其他模块
     wx.setStorageSync('senderAddress', this.data.senderAddress);
     wx.setStorageSync('receiverAddress', this.data.receiverAddress);
     wx.navigateTo({

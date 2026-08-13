@@ -1,20 +1,22 @@
 <!-- 自定义导航栏组件 -->
-<view class="custom-navbar" style="padding-top: {{statusBarHeight}}px; background: {{bgColor}};">
+<view class="custom-navbar {{transparent ? 'navbar-transparent' : ''}}" style="padding-top: {{statusBarHeight}}px; background: {{bgColor}};">
   <view class="navbar-content" style="height: {{navBarHeight}}px;">
-    <!-- 返回按钮 -->
-    <view wx:if="{{showBack}}" class="back-btn" bindtap="onBack">
+    <view wx:if="{{showBack}}" class="back-btn {{backType === 'capsule' ? 'back-capsule' : ''}}" bindtap="onBack" style="background: {{backBg}};">
       <text class="back-icon" style="color: {{textColor}};">←</text>
     </view>
     
-    <!-- 标题 -->
-    <view class="title" style="color: {{textColor}};">{{title}}</view>
+    <view wx:if="{{showHome && !showBack}}" class="back-btn back-capsule" bindtap="onHome" style="background: {{backBg}};">
+      <text class="back-icon" style="color: {{textColor}};">⌂</text>
+    </view>
     
-    <!-- 右侧插槽 -->
+    <view class="title-wrapper">
+      <text class="title" style="color: {{textColor}};">{{title}}</text>
+    </view>
+    
     <view class="right-slot">
       <slot name="right"></slot>
     </view>
   </view>
 </view>
 
-<!-- 占位元素，防止内容被导航栏遮挡 -->
-<view class="navbar-placeholder" style="height: {{statusBarHeight + navBarHeight}}px;"></view>
+<view wx:if="{{!transparent}}" class="navbar-placeholder" style="height: {{statusBarHeight + navBarHeight}}px;"></view>

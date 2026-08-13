@@ -7,12 +7,6 @@ spring:
   application:
     name: youyinda-backend
 
-  # 排除 Redis 自动配置
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
-      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
-
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -24,30 +18,13 @@ spring:
       min-idle: 5
       max-active: 20
       max-wait: 60000
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      validation-query: SELECT 1
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      filters: stat,wall
-      web-stat-filter:
-        enabled: true
-        url-pattern: /*
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
-        reset-enable: false
-        login-username: admin
-        login-password: admin
 
   redis:
     host: localhost
     port: 6380
     password:
     database: 0
-    timeout: 1000ms
+    timeout: 3000ms
     lettuce:
       pool:
         max-active: 8
@@ -58,6 +35,15 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+file:
+  upload:
+    path: uploads
 
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
@@ -79,68 +65,59 @@ jwt:
 
 wechat:
   miniapp:
-    appId: your_app_id
-    appSecret: your_app_secret
+    appId: wx1234567890abcdef
+    appSecret: your_app_secret_here
   pay:
     mchId: your_mch_id
     apiV3Key: your_api_v3_key
     privateKeyPath: classpath:cert/apiclient_key.pem
     privateCertPath: classpath:cert/apiclient_cert.pem
     serialNo: your_serial_no
-    notifyUrl: https://your-domain.com/api/v1/pay/notify
+    notifyUrl: http://localhost:8080/api/v1/pay/notify
 
-resilience4j:
+feign:
   circuitbreaker:
-    configs:
-      default:
-        register-health-indicator: true
-        sliding-window-type: count_based
-        sliding-window-size: 100
-        minimum-number-of-calls: 10
-        permitted-number-of-calls-in-half-open-state: 3
-        automatic-transition-from-open-to-half-open-enabled: true
-        wait-duration-in-open-state: 60s
-        failure-rate-threshold: 50
-        event-consumer-buffer-size: 10
-  retry:
-    configs:
-      default:
-        max-attempts: 3
-        wait-duration: 1s
-        retry-exceptions:
-          - java.io.IOException
-          - java.util.concurrent.TimeoutException
-      idempotent:
-        max-attempts: 3
-        wait-duration: 1s
-        retry-exceptions:
-          - java.io.IOException
-          - java.util.concurrent.TimeoutException
-      non-idempotent:
-        max-attempts: 1
-        wait-duration: 0s
+    enabled: true
 
 third-party:
   print:
+    # FeignClient 默认占位 URL（实际调用由 Service 层通过 ThirdApiConfigService 动态选择）
+    provider-url: https://api.print-provider.com
     providers:
-      - code: print_provider_001
+      - code: xiaohou
         name: 小猴云印
-        api-url: ${PRINT_PROVIDER_URL:https://api.print-provider.com}
-        app-id: ${PRINT_PROVIDER_APP_ID:your_print_app_id}
-        app-secret: ${PRINT_PROVIDER_APP_SECRET:your_print_app_secret}
+        api-url: https://api.print-provider.com
+        app-id: your_print_app_id
+        app-secret: your_print_app_secret
+        timeout: 3000
+      - code: liuliuyin
+        name: 66印
+        api-url: https://api.66yin.com
+        app-id: your_66yin_app_id
+        app-secret: your_66yin_app_secret
         timeout: 3000
   express:
+    # FeignClient 默认占位 URL（实际调用由 Service 层通过 ThirdApiConfigService 动态选择）
+    provider-url: https://api.kuaidi100.com
     providers:
-      - code: express_provider_001
-        name: 快递100
-        api-url: ${EXPRESS_PROVIDER_URL:https://api.express-provider.com}
-        app-id: ${EXPRESS_PROVIDER_APP_ID:your_express_app_id}
-        app-secret: ${EXPRESS_PROVIDER_APP_SECRET:your_express_app_secret}
+      - code: kuaidi100
+        name: 快递100·百递云
+        api-url: https://api.kuaidi100.com
+        app-id: your_kuaidi100_app_id
+        app-secret: your_kuaidi100_app_secret
         timeout: 3000
   sync:
-    enabled: true
+    enabled: false
     cron: "0 0 2 * * ?"
-    alert-email: ${SYNC_ALERT_EMAIL:admin@youyinda.com}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
 
 logging:
   level:
@@ -149,6 +126,3 @@ logging:
     org.springframework: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n"
-  file:
-    name: logs/youyinda-backend.log

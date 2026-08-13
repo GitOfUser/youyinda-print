@@ -79,4 +79,34 @@ public class ExpressOrderVO {
      * 备注
      */
     private String remark;
+
+    /**
+     * 快递公司编码
+     */
+    private String expressCode;
+
+    /**
+     * 快递公司名称
+     */
+    private String expressName;
+
+    /**
+     * 运费
+     */
+    private BigDecimal freight;
+
+    /**
+     * 预计时效
+     */
+    private String estimatedTime;
+
+    /**
+     * 第三方订单号
+     */
+    private String thirdOrderNo;
+
+    /**
+     * 第三方订单状态
+     */
+    private Integer thirdStatus;
 }

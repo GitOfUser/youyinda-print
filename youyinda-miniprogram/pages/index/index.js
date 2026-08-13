@@ -6,7 +6,10 @@ Page({
 
   onLoad() {
     if (!app.globalData.isLogin) {
-      app.login().catch(() => {});
+      app.login().catch((err) => {
+        console.error('自动登录失败:', err);
+        // 不强制跳转登录页，让用户手动触发登录
+      });
     }
   },
 

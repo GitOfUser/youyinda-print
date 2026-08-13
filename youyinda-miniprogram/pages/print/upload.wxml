@@ -1,27 +1,67 @@
 <view class="container">
-  <view class="upload-section">
-    <view class="section-title">选择文件</view>
-    <view class="upload-area" bindtap="chooseFile">
-      <view class="upload-icon">📁</view>
-      <view class="upload-text">点击选择文件</view>
-      <view class="upload-desc">支持Word、Excel、PDF、图片等格式</view>
+  <view class="upload-tips card">
+    <view class="tips-header">
+      <view class="tips-icon icon-box icon-box-print">📋</view>
+      <view class="tips-content">
+        <view class="tips-title">上传须知</view>
+        <view class="tips-desc">支持Word、Excel、PDF、图片等格式，单个文件不超过50MB</view>
+      </view>
     </view>
   </view>
 
-  <view class="file-list" wx:if="{{fileList.length > 0}}">
-    <view class="section-title">已选文件</view>
-    <view class="file-item" wx:for="{{fileList}}" wx:key="index">
-      <view class="file-icon">📄</view>
-      <view class="file-info">
-        <view class="file-name">{{item.name}}</view>
-        <view class="file-size">{{item.size}}</view>
+  <view class="upload-area card" bindtap="chooseFile">
+    <view class="upload-inner">
+      <view class="upload-cloud-icon">☁️</view>
+      <view class="upload-main-text">点击选择文件或拖拽到此处</view>
+      <view class="upload-sub-text">支持 .doc .docx .xls .xlsx .pdf .jpg .png 格式</view>
+      <view class="upload-btn">
+        <text class="upload-btn-text">选择文件</text>
       </view>
-      <view class="file-delete" bindtap="deleteFile" data-index="{{index}}">✕</view>
     </view>
   </view>
+
+  <view class="file-section" wx:if="{{fileList.length > 0}}">
+    <view class="section-header page-margin">
+      <view class="section-title">已选文件</view>
+      <view class="file-count-badge">{{fileList.length}}个</view>
+    </view>
+    <view class="file-list">
+      <view class="file-item card" wx:for="{{fileList}}" wx:key="index">
+        <view class="file-type-icon icon-box icon-box-print">📄</view>
+        <view class="file-info">
+          <view class="file-name">{{item.name}}</view>
+          <view class="file-meta">
+            <text class="file-size">{{item.size}}</text>
+            <text class="file-status" wx:if="{{item.status === 'uploading'}}">上传中 {{item.progress}}%</text>
+            <text class="file-status success" wx:if="{{item.status === 'success'}}">上传成功</text>
+            <text class="file-status error" wx:if="{{item.status === 'error'}}">上传失败</text>
+          </view>
+          <view class="file-progress" wx:if="{{item.status === 'uploading'}}">
+            <view class="file-progress-bar" style="width: {{item.progress}}%"></view>
+          </view>
+        </view>
+        <view class="file-actions">
+          <view class="file-retry" wx:if="{{item.status === 'error'}}" bindtap="retryUpload" data-index="{{index}}">重试</view>
+          <view class="file-delete" bindtap="deleteFile" data-index="{{index}}">
+            <text class="delete-icon">✕</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-bar-placeholder" wx:if="{{fileList.length > 0}}"></view>
 
   <view class="bottom-bar" wx:if="{{fileList.length > 0}}">
-    <view class="file-count">共 {{fileList.length}} 个文件</view>
-    <view class="btn-next" bindtap="goToConfig">下一步</view>
+    <view class="bottom-bar-left">
+      <view class="file-count-text">
+        <text>共</text>
+        <text class="count-num">{{fileList.length}}</text>
+        <text>个文件</text>
+      </view>
+    </view>
+    <button class="btn-primary btn-print btn-next" bindtap="goToConfig" disabled="{{!canNext}}">
+      下一步
+    </button>
   </view>
 </view>

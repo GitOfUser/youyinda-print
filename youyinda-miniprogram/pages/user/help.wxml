@@ -1,25 +1,110 @@
 <view class="container">
-  <view class="help-list">
-    <view class="help-item" wx:for="{{helpList}}" wx:key="index">
-      <view class="help-question" bindtap="toggleAnswer" data-index="{{index}}">
-        <view class="question-text">{{item.question}}</view>
-        <view class="question-arrow {{item.expanded ? 'expanded' : ''}}">▼</view>
+  <view class="search-section">
+    <view class="search-bar">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索问题" placeholder-class="search-placeholder" value="{{keyword}}" bindinput="onSearchInput" confirm-type="search" bindconfirm="onSearch" />
+    </view>
+  </view>
+
+  <view class="quick-section card" wx:if="{{!keyword}}">
+    <view class="section-title">快捷入口</view>
+    <view class="quick-grid">
+      <view class="quick-item" bindtap="goToTrack">
+        <view class="quick-icon orange-bg">
+          <text>🚚</text>
+        </view>
+        <text class="quick-text">物流查询</text>
       </view>
-      <view class="help-answer {{item.expanded ? 'show' : ''}}">
-        <view class="answer-text">{{item.answer}}</view>
+      <view class="quick-item" bindtap="contactService">
+        <view class="quick-icon blue-bg">
+          <text>💬</text>
+        </view>
+        <text class="quick-text">在线客服</text>
+      </view>
+      <view class="quick-item" bindtap="callPhone">
+        <view class="quick-icon green-bg">
+          <text>📞</text>
+        </view>
+        <text class="quick-text">电话咨询</text>
+      </view>
+      <view class="quick-item" bindtap="goToFeedback">
+        <view class="quick-icon red-bg">
+          <text>✏️</text>
+        </view>
+        <text class="quick-text">意见反馈</text>
       </view>
     </view>
   </view>
 
-  <view class="contact-section">
-    <view class="contact-title">联系客服</view>
-    <view class="contact-item" bindtap="contactService">
-      <view class="contact-icon">💬</view>
-      <view class="contact-text">在线客服</view>
+  <view class="faq-section card" wx:if="{{hotQuestions.length > 0 && !keyword}}">
+    <view class="section-title">热门问题</view>
+    <view class="faq-list">
+      <view class="faq-item" wx:for="{{hotQuestions}}" wx:key="id" bindtap="toggleFaq" data-id="{{item.id}}">
+        <view class="faq-question">
+          <text class="faq-icon">Q</text>
+          <text class="question-text">{{item.question}}</text>
+          <text class="faq-arrow {{item.expanded ? 'expanded' : ''}}">›</text>
+        </view>
+        <view class="faq-answer" wx:if="{{item.expanded}}">
+          <text class="answer-text">{{item.answer}}</text>
+        </view>
+      </view>
     </view>
-    <view class="contact-item" bindtap="makePhoneCall">
-      <view class="contact-icon">📞</view>
-      <view class="contact-text">电话客服：400-123-4567</view>
+  </view>
+
+  <view class="category-section" wx:if="{{!keyword}}">
+    <view class="section-title page-padding">问题分类</view>
+    <view class="category-list">
+      <view class="category-card card" wx:for="{{categories}}" wx:key="id" bindtap="goToCategory" data-id="{{item.id}}">
+        <view class="category-icon-wrap" style="background: {{item.bgColor}}">
+          <text class="category-icon">{{item.icon}}</text>
+        </view>
+        <view class="category-info">
+          <view class="category-name">{{item.name}}</view>
+          <view class="category-desc">{{item.desc}}</view>
+        </view>
+        <text class="category-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="search-result card" wx:if="{{keyword && searchResults.length > 0}}">
+    <view class="section-title">搜索结果</view>
+    <view class="faq-list">
+      <view class="faq-item" wx:for="{{searchResults}}" wx:key="id" bindtap="toggleFaq" data-id="{{item.id}}">
+        <view class="faq-question">
+          <text class="faq-icon">Q</text>
+          <text class="question-text">{{item.question}}</text>
+          <text class="faq-arrow {{item.expanded ? 'expanded' : ''}}">›</text>
+        </view>
+        <view class="faq-answer" wx:if="{{item.expanded}}">
+          <text class="answer-text">{{item.answer}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{keyword && searchResults.length === 0}}">
+    <text class="empty-icon">❓</text>
+    <text class="empty-text">未找到相关问题</text>
+    <text class="empty-desc">换个关键词试试，或联系在线客服</text>
+    <view class="empty-btn" bindtap="contactService">联系客服</view>
+  </view>
+
+  <view class="contact-card card" wx:if="{{!keyword}}">
+    <view class="contact-header">
+      <text class="contact-title">没有找到答案？</text>
+      <text class="contact-desc">联系客服，为您解决问题</text>
+    </view>
+    <view class="contact-btns">
+      <view class="contact-btn online-btn" bindtap="contactService">
+        <text class="btn-icon">💬</text>
+        <text>在线客服</text>
+      </view>
+      <view class="contact-btn phone-btn" bindtap="callPhone">
+        <text class="btn-icon">📞</text>
+        <text>电话客服</text>
+      </view>
     </view>
   </view>
 </view>

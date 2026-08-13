@@ -12,6 +12,14 @@ public class PrintOrderItemRequest {
     @NotNull(message = "文件ID不能为空")
     private Long fileId;
 
+    private String fileUrl;
+
+    private String fileName;
+
+    private String fileType;
+
+    private Long fileSize;
+
     @NotBlank(message = "纸张类型不能为空")
     private String paperType;
 

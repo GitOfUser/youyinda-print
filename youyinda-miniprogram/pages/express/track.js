@@ -14,6 +14,15 @@ Page({
     if (options.orderId) {
       this.setData({ orderId: options.orderId });
       this.loadTrackInfo();
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '缺少订单号，无法查询物流信息',
+        showCancel: false,
+        success: () => {
+          wx.navigateBack();
+        }
+      });
     }
   },
 

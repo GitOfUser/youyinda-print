@@ -1,590 +1,23 @@
-2026-07-20 14:09:19 [main] INFO  com.youyinda.YouyindaApplication - Starting YouyindaApplication v1.0.0 using Java 21.0.2 on LAPTOP-A65VBUM1 with PID 26840 (D:\Projects\youyinda-print\youyinda-backend\target\youyinda-backend-1.0.0.jar started by 22915 in D:\Projects\youyinda-print\youyinda-backend)
-2026-07-20 14:09:19 [main] DEBUG com.youyinda.YouyindaApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
-2026-07-20 14:09:19 [main] INFO  com.youyinda.YouyindaApplication - No active profile set, falling back to 1 default profile: "default"
-2026-07-20 14:09:23 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=33bd6b70-9673-3253-8c22-139cdc8edca2
-2026-07-20 14:09:25 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-2026-07-20 14:09:25 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
-2026-07-20 14:09:25 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
-2026-07-20 14:09:25 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring embedded WebApplicationContext
-2026-07-20 14:09:25 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5704 ms
-2026-07-20 14:09:25 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
-2026-07-20 14:09:27 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
-2026-07-20 14:09:27 [main] DEBUG com.youyinda.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
-2026-07-20 14:09:27 [main] DEBUG com.youyinda.config.AdminJwtAuthenticationFilter - Filter 'adminJwtAuthenticationFilter' configured for use
-2026-07-20 14:09:30 [main] INFO  c.youyinda.service.impl.ThirdApiConfigServiceImpl - 初始化第三方API配置缓存...
-2026-07-20 14:09:30 [main] WARN  c.youyinda.service.impl.ThirdApiConfigServiceImpl - Redis不可用，跳过缓存刷新
-2026-07-20 14:09:30 [main] INFO  o.s.cloud.openfeign.FeignClientFactoryBean - For 'printProvider' URL not provided. Will try picking an instance via load-balancing.
-2026-07-20 14:09:31 [main] INFO  o.s.cloud.openfeign.FeignClientFactoryBean - For 'expressProvider' URL not provided. Will try picking an instance via load-balancing.
-2026-07-20 14:09:31 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: 77945b69-3a4d-43f9-b4a3-cc9a9ba282ed
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-07-20 14:09:32 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
-2026-07-20 14:09:32 [main] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@61bcbcce, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6af91cc8, org.springframework.security.web.context.SecurityContextPersistenceFilter@3f1ed068, org.springframework.security.web.header.HeaderWriterFilter@34780cd9, org.springframework.web.filter.CorsFilter@6232ffdb, org.springframework.security.web.authentication.logout.LogoutFilter@6e4c0d8c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2e645fbd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3dd31157, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@330c1f61, org.springframework.security.web.session.SessionManagementFilter@66b59b7d, org.springframework.security.web.access.ExceptionTranslationFilter@72fd8a3c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2f860823]
-2026-07-20 14:09:34 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-07-20 14:09:34 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
-2026-07-20 14:09:34 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
-2026-07-20 14:09:34 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
-2026-07-20 14:09:34 [main] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
-2026-07-20 14:09:34 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLoggingListener - 
-
-Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
-2026-07-20 14:09:34 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
-
-***************************
-APPLICATION FAILED TO START
-***************************
-
-Description:
-
-Web server failed to start. Port 8080 was already in use.
-
-Action:
-
-Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
-
-2026-07-20 14:10:19 [main] INFO  com.youyinda.YouyindaApplication - Starting YouyindaApplication v1.0.0 using Java 21.0.2 on LAPTOP-A65VBUM1 with PID 15540 (D:\Projects\youyinda-print\youyinda-backend\target\youyinda-backend-1.0.0.jar started by 22915 in D:\Projects\youyinda-print\youyinda-backend)
-2026-07-20 14:10:19 [main] DEBUG com.youyinda.YouyindaApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
-2026-07-20 14:10:19 [main] INFO  com.youyinda.YouyindaApplication - No active profile set, falling back to 1 default profile: "default"
-2026-07-20 14:10:24 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=33bd6b70-9673-3253-8c22-139cdc8edca2
-2026-07-20 14:10:27 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-2026-07-20 14:10:27 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
-2026-07-20 14:10:27 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
-2026-07-20 14:10:27 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring embedded WebApplicationContext
-2026-07-20 14:10:27 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 7301 ms
-2026-07-20 14:10:28 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
-2026-07-20 14:10:29 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
-2026-07-20 14:10:30 [main] DEBUG com.youyinda.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
-2026-07-20 14:10:30 [main] DEBUG com.youyinda.config.AdminJwtAuthenticationFilter - Filter 'adminJwtAuthenticationFilter' configured for use
-2026-07-20 14:10:33 [main] INFO  c.youyinda.service.impl.ThirdApiConfigServiceImpl - 初始化第三方API配置缓存...
-2026-07-20 14:10:33 [main] WARN  c.youyinda.service.impl.ThirdApiConfigServiceImpl - Redis不可用，跳过缓存刷新
-2026-07-20 14:10:35 [main] INFO  o.s.cloud.openfeign.FeignClientFactoryBean - For 'printProvider' URL not provided. Will try picking an instance via load-balancing.
-2026-07-20 14:10:36 [main] INFO  o.s.cloud.openfeign.FeignClientFactoryBean - For 'expressProvider' URL not provided. Will try picking an instance via load-balancing.
-2026-07-20 14:10:36 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: 4a4126c4-8713-4fd5-b003-c37016d4a9de
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-07-20 14:10:37 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
-2026-07-20 14:10:38 [main] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4d68b571, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@52b06bef, org.springframework.security.web.context.SecurityContextPersistenceFilter@623ebac7, org.springframework.security.web.header.HeaderWriterFilter@68868328, org.springframework.web.filter.CorsFilter@61bcbcce, org.springframework.security.web.authentication.logout.LogoutFilter@7d3fb0ef, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1ab5f08a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@66b59b7d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6af91cc8, org.springframework.security.web.session.SessionManagementFilter@72fd8a3c, org.springframework.security.web.access.ExceptionTranslationFilter@29149030, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5a0bef24]
-2026-07-20 14:10:40 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-07-20 14:10:40 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path '/api'
-2026-07-20 14:10:40 [main] INFO  com.youyinda.YouyindaApplication - Started YouyindaApplication in 22.457 seconds (JVM running for 23.459)
-2026-07-20 14:20:29 [http-nio-8080-exec-1] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-07-20 14:20:29 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-07-20 14:20:29 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-2026-07-20 14:22:04 [http-nio-8080-exec-7] INFO  com.youyinda.util.WechatUtil - 测试模式 - 微信登录成功，openid: test_openid_-1422501792
-2026-07-20 14:22:04 [http-nio-8080-exec-7] ERROR com.youyinda.util.JwtUtil - 生成Token失败: Illegal base64 character: '-'
-io.jsonwebtoken.io.DecodingException: Illegal base64 character: '-'
-	at io.jsonwebtoken.io.Base64.ctoi(Base64.java:221)
-	at io.jsonwebtoken.io.Base64.decodeFast(Base64.java:270)
-	at io.jsonwebtoken.io.Base64Decoder.decode(Base64Decoder.java:36)
-	at io.jsonwebtoken.io.Base64Decoder.decode(Base64Decoder.java:23)
-	at io.jsonwebtoken.io.ExceptionPropagatingDecoder.decode(ExceptionPropagatingDecoder.java:36)
-	at io.jsonwebtoken.impl.DefaultJwtBuilder.signWith(DefaultJwtBuilder.java:132)
-	at com.youyinda.util.JwtUtil.generateToken(JwtUtil.java:74)
-	at com.youyinda.controller.AuthController.login(AuthController.java:95)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1072)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.youyinda.config.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:53)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.youyinda.config.AdminJwtAuthenticationFilter.doFilterInternal(AdminJwtAuthenticationFilter.java:58)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:114)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
-	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
-	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-07-20 14:23:10 [http-nio-8080-exec-1] INFO  com.youyinda.util.WechatUtil - 测试模式 - 微信登录成功，openid: test_openid_499527541
-2026-07-20 14:23:10 [http-nio-8080-exec-1] ERROR com.youyinda.util.JwtUtil - 生成Token失败: Illegal base64 character: '-'
-io.jsonwebtoken.io.DecodingException: Illegal base64 character: '-'
-	at io.jsonwebtoken.io.Base64.ctoi(Base64.java:221)
-	at io.jsonwebtoken.io.Base64.decodeFast(Base64.java:270)
-	at io.jsonwebtoken.io.Base64Decoder.decode(Base64Decoder.java:36)
-	at io.jsonwebtoken.io.Base64Decoder.decode(Base64Decoder.java:23)
-	at io.jsonwebtoken.io.ExceptionPropagatingDecoder.decode(ExceptionPropagatingDecoder.java:36)
-	at io.jsonwebtoken.impl.DefaultJwtBuilder.signWith(DefaultJwtBuilder.java:132)
-	at com.youyinda.util.JwtUtil.generateToken(JwtUtil.java:74)
-	at com.youyinda.controller.AuthController.login(AuthController.java:95)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1072)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.youyinda.config.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:53)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.youyinda.config.AdminJwtAuthenticationFilter.doFilterInternal(AdminJwtAuthenticationFilter.java:58)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:114)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
-	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
-	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-07-20 14:23:29 [http-nio-8080-exec-2] INFO  com.youyinda.util.WechatUtil - 测试模式 - 微信登录成功，openid: test_openid_-1989289645
-2026-07-20 14:23:29 [http-nio-8080-exec-2] ERROR com.youyinda.util.JwtUtil - 生成Token失败: Illegal base64 character: '-'
-io.jsonwebtoken.io.DecodingException: Illegal base64 character: '-'
-	at io.jsonwebtoken.io.Base64.ctoi(Base64.java:221)
-	at io.jsonwebtoken.io.Base64.decodeFast(Base64.java:270)
-	at io.jsonwebtoken.io.Base64Decoder.decode(Base64Decoder.java:36)
-	at io.jsonwebtoken.io.Base64Decoder.decode(Base64Decoder.java:23)
-	at io.jsonwebtoken.io.ExceptionPropagatingDecoder.decode(ExceptionPropagatingDecoder.java:36)
-	at io.jsonwebtoken.impl.DefaultJwtBuilder.signWith(DefaultJwtBuilder.java:132)
-	at com.youyinda.util.JwtUtil.generateToken(JwtUtil.java:74)
-	at com.youyinda.controller.AuthController.login(AuthController.java:95)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1072)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.youyinda.config.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:53)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.youyinda.config.AdminJwtAuthenticationFilter.doFilterInternal(AdminJwtAuthenticationFilter.java:58)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:114)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
-	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
-	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-07-20 14:24:36 [http-nio-8080-exec-4] INFO  com.youyinda.util.WechatUtil - 测试模式 - 微信登录成功，openid: test_openid_-2111451667
-2026-07-20 14:24:36 [http-nio-8080-exec-4] ERROR com.youyinda.util.JwtUtil - 生成Token失败: Illegal base64 character: '-'
-io.jsonwebtoken.io.DecodingException: Illegal base64 character: '-'
-	at io.jsonwebtoken.io.Base64.ctoi(Base64.java:221)
-	at io.jsonwebtoken.io.Base64.decodeFast(Base64.java:270)
-	at io.jsonwebtoken.io.Base64Decoder.decode(Base64Decoder.java:36)
-	at io.jsonwebtoken.io.Base64Decoder.decode(Base64Decoder.java:23)
-	at io.jsonwebtoken.io.ExceptionPropagatingDecoder.decode(ExceptionPropagatingDecoder.java:36)
-	at io.jsonwebtoken.impl.DefaultJwtBuilder.signWith(DefaultJwtBuilder.java:132)
-	at com.youyinda.util.JwtUtil.generateToken(JwtUtil.java:74)
-	at com.youyinda.controller.AuthController.login(AuthController.java:95)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
-	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150)
-	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
-	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
-	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1072)
-	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:965)
-	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:555)
-	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-	at javax.servlet.http.HttpServlet.service(HttpServlet.java:623)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:209)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.youyinda.config.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:53)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.youyinda.config.AdminJwtAuthenticationFilter.doFilterInternal(AdminJwtAuthenticationFilter.java:58)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:114)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115)
-	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
-	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
-	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
-	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
-	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
-	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
-	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
-	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
-	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
-	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:96)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
-	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
-	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:178)
-	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:153)
-	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:168)
-	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
-	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:481)
-	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:130)
-	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93)
-	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
-	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:342)
-	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:390)
-	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
-	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:928)
-	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1794)
-	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
-	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
-	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-07-20 14:28:05 [main] INFO  com.youyinda.YouyindaApplication - Starting YouyindaApplication v1.0.0 using Java 21.0.2 on LAPTOP-A65VBUM1 with PID 27428 (D:\Projects\youyinda-print\youyinda-backend\target\youyinda-backend-1.0.0.jar started by 22915 in D:\Projects\youyinda-print\youyinda-backend)
-2026-07-20 14:28:05 [main] DEBUG com.youyinda.YouyindaApplication - Running with Spring Boot v2.7.18, Spring v5.3.31
-2026-07-20 14:28:05 [main] INFO  com.youyinda.YouyindaApplication - No active profile set, falling back to 1 default profile: "default"
-2026-07-20 14:28:07 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=33bd6b70-9673-3253-8c22-139cdc8edca2
-2026-07-20 14:28:09 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
-2026-07-20 14:28:09 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
-2026-07-20 14:28:09 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.83]
-2026-07-20 14:28:09 [main] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring embedded WebApplicationContext
-2026-07-20 14:28:09 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4288 ms
-2026-07-20 14:28:10 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
-2026-07-20 14:28:11 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
-2026-07-20 14:28:11 [main] DEBUG com.youyinda.config.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
-2026-07-20 14:28:11 [main] DEBUG com.youyinda.config.AdminJwtAuthenticationFilter - Filter 'adminJwtAuthenticationFilter' configured for use
-2026-07-20 14:28:13 [main] INFO  c.youyinda.service.impl.ThirdApiConfigServiceImpl - 初始化第三方API配置缓存...
-2026-07-20 14:28:13 [main] WARN  c.youyinda.service.impl.ThirdApiConfigServiceImpl - Redis不可用，跳过缓存刷新
-2026-07-20 14:28:14 [main] INFO  o.s.cloud.openfeign.FeignClientFactoryBean - For 'printProvider' URL not provided. Will try picking an instance via load-balancing.
-2026-07-20 14:28:14 [main] INFO  o.s.cloud.openfeign.FeignClientFactoryBean - For 'expressProvider' URL not provided. Will try picking an instance via load-balancing.
-2026-07-20 14:28:14 [main] WARN  o.s.b.a.s.s.UserDetailsServiceAutoConfiguration - 
-
-Using generated security password: a39eb523-4e75-418f-a864-5862ef6a79ca
-
-This generated password is for development use only. Your security configuration must be updated before running your application in production.
-
-2026-07-20 14:28:15 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 1 endpoint(s) beneath base path '/actuator'
-2026-07-20 14:28:15 [main] INFO  o.s.security.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6c1cfa53, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4d68b571, org.springframework.security.web.context.SecurityContextPersistenceFilter@34780cd9, org.springframework.security.web.header.HeaderWriterFilter@38b8b6c0, org.springframework.web.filter.CorsFilter@52b06bef, org.springframework.security.web.authentication.logout.LogoutFilter@58434b19, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7c8c70d6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@79a04e5f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@61bcbcce, org.springframework.security.web.session.SessionManagementFilter@7f5538a1, org.springframework.security.web.access.ExceptionTranslationFilter@6812fa3a, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@334ebcaa]
-2026-07-20 14:28:17 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2026-07-20 14:28:17 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path '/api'
-2026-07-20 14:28:17 [main] INFO  com.youyinda.YouyindaApplication - Started YouyindaApplication in 13.448 seconds (JVM running for 14.277)
-2026-07-20 14:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
-2026-07-20 14:30:00 [scheduling-1] WARN  c.b.m.core.toolkit.support.ReflectLambdaMeta - Unable to make field private final java.lang.Class java.lang.invoke.SerializedLambda.capturingClass accessible: module java.base does not "opens java.lang.invoke" to unnamed module @7a5d012c
-2026-07-20 14:30:00 [scheduling-1] ERROR com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步异常
-org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.builder.BuilderException: Error evaluating expression 'ew.sqlSegment != null and ew.sqlSegment != '' and ew.nonEmptyOfNormal'. Cause: org.apache.ibatis.ognl.OgnlException: sqlSegment [com.baomidou.mybatisplus.core.exceptions.MybatisPlusException: can not find lambda cache for this property [orderStatus] of entity [com.youyinda.entity.OrderMain]]
-	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:96)
-	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:441)
-	at jdk.proxy2/jdk.proxy2.$Proxy110.selectList(Unknown Source)
-	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:224)
-	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.executeForMany(MybatisMapperMethod.java:166)
-	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:77)
-	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:148)
-	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
-	at jdk.proxy2/jdk.proxy2.$Proxy115.selectList(Unknown Source)
-	at com.baomidou.mybatisplus.extension.service.IService.list(IService.java:370)
-	at com.baomidou.mybatisplus.extension.service.IService$$FastClassBySpringCGLIB$$f8525d18.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
-	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386)
-	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:703)
-	at com.youyinda.service.impl.OrderMainServiceImpl$$EnhancerBySpringCGLIB$$aa7e7bcc.list(<generated>)
-	at com.youyinda.task.ExpressTrackSyncTask.syncExpressTrack(ExpressTrackSyncTask.java:43)
+2026-07-21 00:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 00:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 00:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：9ms
+2026-07-21 00:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 00:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 00:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：11ms
+2026-07-21 01:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 01:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 01:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：9ms
+2026-07-21 01:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 01:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 01:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：8ms
+2026-07-21 02:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 02:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 02:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：8ms
+2026-07-21 02:00:00 [scheduling-1] INFO  com.youyinda.task.ThirdApiSyncTask - 开始同步打印基础价格...
+2026-07-21 02:00:00 [scheduling-1] ERROR com.youyinda.task.ThirdApiSyncTask - 打印基础价格同步异常
+java.lang.reflect.UndeclaredThrowableException: null
+	at jdk.proxy2/jdk.proxy2.$Proxy174.syncPrintPrice(Unknown Source)
+	at com.youyinda.task.ThirdApiSyncTask.syncPrintBasePrice(ThirdApiSyncTask.java:40)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84)
@@ -596,136 +29,97 @@ org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
-Caused by: org.apache.ibatis.builder.BuilderException: Error evaluating expression 'ew.sqlSegment != null and ew.sqlSegment != '' and ew.nonEmptyOfNormal'. Cause: org.apache.ibatis.ognl.OgnlException: sqlSegment [com.baomidou.mybatisplus.core.exceptions.MybatisPlusException: can not find lambda cache for this property [orderStatus] of entity [com.youyinda.entity.OrderMain]]
-	at org.apache.ibatis.scripting.xmltags.OgnlCache.getValue(OgnlCache.java:48)
-	at org.apache.ibatis.scripting.xmltags.ExpressionEvaluator.evaluateBoolean(ExpressionEvaluator.java:32)
-	at org.apache.ibatis.scripting.xmltags.IfSqlNode.apply(IfSqlNode.java:34)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.lambda$apply$0(MixedSqlNode.java:32)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:32)
-	at org.apache.ibatis.scripting.xmltags.IfSqlNode.apply(IfSqlNode.java:35)
-	at org.apache.ibatis.scripting.xmltags.ChooseSqlNode.apply(ChooseSqlNode.java:35)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.lambda$apply$0(MixedSqlNode.java:32)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:32)
-	at org.apache.ibatis.scripting.xmltags.TrimSqlNode.apply(TrimSqlNode.java:55)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.lambda$apply$0(MixedSqlNode.java:32)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:32)
-	at org.apache.ibatis.scripting.xmltags.DynamicSqlSource.getBoundSql(DynamicSqlSource.java:39)
-	at org.apache.ibatis.mapping.MappedStatement.getBoundSql(MappedStatement.java:305)
-	at com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor.intercept(MybatisPlusInterceptor.java:69)
-	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:62)
-	at jdk.proxy2/jdk.proxy2.$Proxy208.query(Unknown Source)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:151)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:145)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:140)
+Caused by: java.lang.NoSuchMethodException: class com.youyinda.dto.ThirdApiResponse class jdk.proxy2.$Proxy170.syncPrintPriceFallback(,class java.lang.Throwable)
+	at io.github.resilience4j.fallback.FallbackMethod.create(FallbackMethod.java:92)
+	at io.github.resilience4j.circuitbreaker.configure.CircuitBreakerAspect.circuitBreakerAroundAdvice(CircuitBreakerAspect.java:115)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:427)
-	... 26 common frames omitted
-Caused by: org.apache.ibatis.ognl.OgnlException: sqlSegment
-Caused by: com.baomidou.mybatisplus.core.exceptions.MybatisPlusException: can not find lambda cache for this property [orderStatus] of entity [com.youyinda.entity.OrderMain]
-	at com.baomidou.mybatisplus.core.toolkit.ExceptionUtils.mpe(ExceptionUtils.java:49)
-	at com.baomidou.mybatisplus.core.toolkit.Assert.isTrue(Assert.java:38)
-	at com.baomidou.mybatisplus.core.toolkit.Assert.notNull(Assert.java:72)
-	at com.baomidou.mybatisplus.core.conditions.AbstractLambdaWrapper.getColumnCache(AbstractLambdaWrapper.java:101)
-	at com.baomidou.mybatisplus.core.conditions.AbstractLambdaWrapper.getColumnCache(AbstractLambdaWrapper.java:84)
-	at com.baomidou.mybatisplus.core.conditions.AbstractLambdaWrapper.columnToString(AbstractLambdaWrapper.java:67)
-	at com.baomidou.mybatisplus.core.conditions.AbstractLambdaWrapper.columnToString(AbstractLambdaWrapper.java:63)
-	at com.baomidou.mybatisplus.core.conditions.AbstractLambdaWrapper.columnToString(AbstractLambdaWrapper.java:39)
-	at com.baomidou.mybatisplus.core.conditions.AbstractWrapper.lambda$columnToSqlSegment$638936d7$1(AbstractWrapper.java:647)
-	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:197)
-	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1708)
-	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509)
-	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499)
-	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921)
-	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
-	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682)
-	at com.baomidou.mybatisplus.core.conditions.segments.NormalSegmentList.childrenSqlSegment(NormalSegmentList.java:89)
-	at com.baomidou.mybatisplus.core.conditions.segments.AbstractISegmentList.getSqlSegment(AbstractISegmentList.java:103)
-	at com.baomidou.mybatisplus.core.conditions.segments.MergeSegments.getSqlSegment(MergeSegments.java:72)
-	at com.baomidou.mybatisplus.core.conditions.AbstractWrapper.getSqlSegment(AbstractWrapper.java:596)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:624)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:72)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:89)
+	at io.github.resilience4j.retry.Retry.lambda$decorateCheckedSupplier$3f69f149$1(Retry.java:137)
+	at io.github.resilience4j.retry.Retry.executeCheckedSupplier(Retry.java:419)
+	at io.github.resilience4j.retry.configure.RetryAspect.handleDefaultJoinPoint(RetryAspect.java:184)
+	at io.github.resilience4j.retry.configure.RetryAspect.proceed(RetryAspect.java:141)
+	at io.github.resilience4j.retry.configure.RetryAspect.retryAroundAdvice(RetryAspect.java:120)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.apache.ibatis.ognl.OgnlRuntime.invokeMethodInsideSandbox(OgnlRuntime.java:1245)
-	at org.apache.ibatis.ognl.OgnlRuntime.invokeMethod(OgnlRuntime.java:1230)
-	at org.apache.ibatis.ognl.OgnlRuntime.getMethodValue(OgnlRuntime.java:2139)
-	at org.apache.ibatis.ognl.ObjectPropertyAccessor.getPossibleProperty(ObjectPropertyAccessor.java:66)
-	at org.apache.ibatis.ognl.ObjectPropertyAccessor.getProperty(ObjectPropertyAccessor.java:160)
-	at org.apache.ibatis.ognl.OgnlRuntime.getProperty(OgnlRuntime.java:3341)
-	at org.apache.ibatis.ognl.ASTProperty.getValueBody(ASTProperty.java:121)
-	at org.apache.ibatis.ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:212)
-	at org.apache.ibatis.ognl.SimpleNode.getValue(SimpleNode.java:258)
-	at org.apache.ibatis.ognl.ASTChain.getValueBody(ASTChain.java:141)
-	at org.apache.ibatis.ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:212)
-	at org.apache.ibatis.ognl.SimpleNode.getValue(SimpleNode.java:258)
-	at org.apache.ibatis.ognl.ASTNotEq.getValueBody(ASTNotEq.java:50)
-	at org.apache.ibatis.ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:212)
-	at org.apache.ibatis.ognl.SimpleNode.getValue(SimpleNode.java:258)
-	at org.apache.ibatis.ognl.ASTAnd.getValueBody(ASTAnd.java:61)
-	at org.apache.ibatis.ognl.SimpleNode.evaluateGetValueBody(SimpleNode.java:212)
-	at org.apache.ibatis.ognl.SimpleNode.getValue(SimpleNode.java:258)
-	at org.apache.ibatis.ognl.Ognl.getValue(Ognl.java:586)
-	at org.apache.ibatis.ognl.Ognl.getValue(Ognl.java:550)
-	at org.apache.ibatis.scripting.xmltags.OgnlCache.getValue(OgnlCache.java:46)
-	at org.apache.ibatis.scripting.xmltags.ExpressionEvaluator.evaluateBoolean(ExpressionEvaluator.java:32)
-	at org.apache.ibatis.scripting.xmltags.IfSqlNode.apply(IfSqlNode.java:34)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.lambda$apply$0(MixedSqlNode.java:32)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:32)
-	at org.apache.ibatis.scripting.xmltags.IfSqlNode.apply(IfSqlNode.java:35)
-	at org.apache.ibatis.scripting.xmltags.ChooseSqlNode.apply(ChooseSqlNode.java:35)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.lambda$apply$0(MixedSqlNode.java:32)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:32)
-	at org.apache.ibatis.scripting.xmltags.TrimSqlNode.apply(TrimSqlNode.java:55)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.lambda$apply$0(MixedSqlNode.java:32)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:32)
-	at org.apache.ibatis.scripting.xmltags.DynamicSqlSource.getBoundSql(DynamicSqlSource.java:39)
-	at org.apache.ibatis.mapping.MappedStatement.getBoundSql(MappedStatement.java:305)
-	at com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor.intercept(MybatisPlusInterceptor.java:69)
-	at org.apache.ibatis.plugin.Plugin.invoke(Plugin.java:62)
-	at jdk.proxy2/jdk.proxy2.$Proxy208.query(Unknown Source)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:151)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:145)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:140)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:427)
-	at jdk.proxy2/jdk.proxy2.$Proxy110.selectList(Unknown Source)
-	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:224)
-	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.executeForMany(MybatisMapperMethod.java:166)
-	at com.baomidou.mybatisplus.core.override.MybatisMapperMethod.execute(MybatisMapperMethod.java:77)
-	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy$PlainMethodInvoker.invoke(MybatisMapperProxy.java:148)
-	at com.baomidou.mybatisplus.core.override.MybatisMapperProxy.invoke(MybatisMapperProxy.java:89)
-	at jdk.proxy2/jdk.proxy2.$Proxy115.selectList(Unknown Source)
-	at com.baomidou.mybatisplus.extension.service.IService.list(IService.java:370)
-	at com.baomidou.mybatisplus.extension.service.IService$$FastClassBySpringCGLIB$$f8525d18.invoke(<generated>)
-	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218)
-	at org.springframework.aop.framework.CglibAopProxy.invokeMethod(CglibAopProxy.java:386)
-	at org.springframework.aop.framework.CglibAopProxy.access$000(CglibAopProxy.java:85)
-	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:703)
-	at com.youyinda.service.impl.OrderMainServiceImpl$$EnhancerBySpringCGLIB$$aa7e7bcc.list(<generated>)
-	at com.youyinda.task.ExpressTrackSyncTask.syncExpressTrack(ExpressTrackSyncTask.java:43)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:84)
-	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
-	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:95)
-	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
-	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2026-07-20 14:38:31 [http-nio-8080-exec-1] INFO  o.a.c.c.ContainerBase.[Tomcat].[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-07-20 14:38:31 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2026-07-20 14:38:31 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
-2026-07-20 14:38:31 [http-nio-8080-exec-1] INFO  com.youyinda.util.WechatUtil - 测试模式 - 微信登录成功，openid: test_openid_-1880486610
-2026-07-20 14:39:14 [http-nio-8080-exec-3] INFO  com.youyinda.util.WechatUtil - 测试模式 - 微信登录成功，openid: test_openid_-255074745
-2026-07-20 14:47:12 [http-nio-8080-exec-2] INFO  com.youyinda.util.WechatUtil - 测试模式 - 微信登录成功，openid: test_openid_-773271293
-2026-07-20 14:48:28 [http-nio-8080-exec-5] INFO  com.youyinda.util.WechatUtil - 测试模式 - 微信登录成功，openid: test_openid_1568054640
-2026-07-20 14:48:58 [http-nio-8080-exec-8] INFO  com.youyinda.util.WechatUtil - 测试模式 - 微信登录成功，openid: test_openid_1886939869
-2026-07-20 14:48:58 [http-nio-8080-exec-9] INFO  com.youyinda.util.WechatUtil - 测试模式 - 微信登录成功，openid: test_openid_3556498
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethodWithGivenArgs(AbstractAspectJAdvice.java:634)
+	at org.springframework.aop.aspectj.AbstractAspectJAdvice.invokeAdviceMethod(AbstractAspectJAdvice.java:624)
+	at org.springframework.aop.aspectj.AspectJAroundAdvice.invoke(AspectJAroundAdvice.java:72)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:175)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:241)
+	... 13 common frames omitted
+2026-07-21 02:00:00 [scheduling-1] ERROR com.youyinda.task.ThirdApiSyncTask - 发送告警：打印基础价格同步异常：null
+2026-07-21 02:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 02:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 02:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：6ms
+2026-07-21 02:30:00 [scheduling-1] INFO  com.youyinda.task.ThirdApiSyncTask - 开始同步快递基础价格...
+2026-07-21 02:30:00 [scheduling-1] INFO  com.youyinda.task.ThirdApiSyncTask - 快递基础价格同步完成，耗时：0ms
+2026-07-21 03:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 03:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 03:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：11ms
+2026-07-21 03:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 03:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 03:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：8ms
+2026-07-21 04:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 04:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 04:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：9ms
+2026-07-21 04:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 04:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 04:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：8ms
+2026-07-21 05:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 05:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 05:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：8ms
+2026-07-21 05:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 05:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 05:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：10ms
+2026-07-21 06:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 06:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 06:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：7ms
+2026-07-21 06:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 06:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 06:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：9ms
+2026-07-21 07:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 07:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 07:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：7ms
+2026-07-21 07:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 07:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 07:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：8ms
+2026-07-21 08:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 08:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 08:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：8ms
+2026-07-21 08:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 08:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 08:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：5ms
+2026-07-21 09:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 09:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 09:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：6ms
+2026-07-21 09:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 09:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 09:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：10ms
+2026-07-21 10:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 10:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 10:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：8ms
+2026-07-21 10:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 10:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 10:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：27ms
+2026-07-21 11:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 11:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 11:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：728ms
+2026-07-21 11:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 11:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 11:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：18ms
+2026-07-21 12:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 12:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 12:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：13ms
+2026-07-21 12:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 12:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 12:30:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：10ms
+2026-07-21 13:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 开始同步快递物流状态...
+2026-07-21 13:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 需要同步物流状态的订单数量：0
+2026-07-21 13:00:00 [scheduling-1] INFO  com.youyinda.task.ExpressTrackSyncTask - 快递物流状态同步完成，耗时：35ms

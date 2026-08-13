@@ -30,6 +30,9 @@ public class FileInfo implements Serializable {
     @TableField("file_size")
     private Long fileSize;
 
+    @TableField("file_path")
+    private String filePath;
+
     @TableField("file_type")
     private String fileType;
 

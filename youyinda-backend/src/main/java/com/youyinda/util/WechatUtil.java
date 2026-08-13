@@ -52,7 +52,8 @@ public class WechatUtil {
      * 检查是否为测试模式（使用占位符配置）
      */
     private boolean isTestMode() {
-        return "your_app_id".equals(appId) || "your_app_secret".equals(appSecret);
+        return "your_app_id".equals(appId) 
+            || appSecret != null && appSecret.startsWith("your_app_secret");
     }
 
     /**
@@ -63,7 +64,7 @@ public class WechatUtil {
     public Map<String, Object> wxLogin(String code) {
         try {
             // 测试模式，返回模拟数据（当使用占位符配置时自动进入测试模式）
-            if ("test_code".equals(code) || isTestMode()) {
+            if (code != null && code.startsWith("test_code") || isTestMode()) {
                 Map<String, Object> result = new HashMap<>();
                 // 使用code生成唯一的openid，方便测试不同用户
                 String openid = "test_openid_" + (code != null ? code.hashCode() : "default");

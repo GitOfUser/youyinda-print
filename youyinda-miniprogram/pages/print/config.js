@@ -58,32 +58,37 @@ Page({
 
   calculatePrice() {
     const { colorType, duplex, paperSize, copies, fileList } = this.data;
-    const pageCount = fileList.length * 10;
+    const totalPages = fileList.length * 10; // 假设每个文件10页
     
+    // 转换参数格式以匹配 price.js 的函数签名
     const price = priceUtil.calcPrintPrice({
-      pageCount,
-      colorType,
-      duplex,
-      paperSize,
-      copies
+      totalPages: totalPages,
+      isDoubleSide: duplex === 2, // 1=单面, 2=双面
+      colorType: colorType === 1 ? 'bw' : 'color', // 1=黑白, 2=彩色
+      paperSize: paperSize,
+      printType: 'normal',
+      isBinding: false
     });
 
     this.setData({
-      basePrice: price.basePrice.toFixed(2),
-      colorPrice: price.colorPrice.toFixed(2),
+      basePrice: (price.totalPrice / copies).toFixed(2),
+      colorPrice: (colorType === 2 ? price.totalPrice * 0.8 : 0).toFixed(2),
       totalPrice: price.totalPrice.toFixed(2)
     });
   },
 
   goToConfirm() {
-    const printConfig = {
+    const app = getApp();
+    if (!app.globalData.flowState) app.globalData.flowState = {};
+    app.globalData.flowState.printConfig = {
       colorType: this.data.colorType,
       duplex: this.data.duplex,
       paperSize: this.data.paperSize,
       copies: this.data.copies,
       totalPrice: this.data.totalPrice
     };
-    wx.setStorageSync('printConfig', printConfig);
+    // 写入旧 Storage key 以兼容其他模块
+    wx.setStorageSync('printConfig', app.globalData.flowState.printConfig);
     wx.navigateTo({
       url: '/pages/print/confirm'
     });

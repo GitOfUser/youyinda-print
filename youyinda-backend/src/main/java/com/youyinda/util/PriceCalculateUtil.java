@@ -40,7 +40,7 @@ public class PriceCalculateUtil {
         if (actualPages <= 0) {
             return 0;
         }
-        return (actualPages + 1) / 2 * 2; // 奇数进一
+        return (actualPages + 1) / 2; // 双面按奇数进一转为张数
     }
 
     /**
@@ -116,18 +116,18 @@ public class PriceCalculateUtil {
             throw new IllegalArgumentException("打印基础价格信息不能为空");
         }
 
-        // 计算计费页数
-        int billingPages = calculatePrintPageCount(actualPages);
+        // 计费页数：调用方已按单面/双面算好张数并传入，此处直接使用
+        int billingPages = actualPages;
         // 计算单页价格
         BigDecimal unitPrice = calculatePrintPrice(
-                new BigDecimal(printBasePrice.getBasePrice()),
-                new BigDecimal(printBasePrice.getProfitRatio()),
-                new BigDecimal(printBasePrice.getMinPrice())
+                BigDecimal.valueOf(printBasePrice.getBasePrice()),
+                BigDecimal.valueOf(printBasePrice.getProfitRatio()),
+                BigDecimal.valueOf(printBasePrice.getMinPrice())
         );
         // 计算总费用
         BigDecimal totalPrice = calculatePrintTotalPrice(unitPrice, billingPages, bindingFee, valueAddedFee, expressFee);
         // 计算第三方基础总费用
-        BigDecimal baseTotalPrice = new BigDecimal(printBasePrice.getBasePrice())
+        BigDecimal baseTotalPrice = BigDecimal.valueOf(printBasePrice.getBasePrice())
                 .multiply(new BigDecimal(billingPages))
                 .add(bindingFee)
                 .add(valueAddedFee)
@@ -136,7 +136,7 @@ public class PriceCalculateUtil {
         BigDecimal profit = totalPrice.subtract(baseTotalPrice);
 
         return PriceDetail.builder()
-                .basePrice(new BigDecimal(printBasePrice.getBasePrice()))
+                .basePrice(BigDecimal.valueOf(printBasePrice.getBasePrice()))
                 .unitPrice(unitPrice)
                 .billingPages(billingPages)
                 .bindingFee(bindingFee)
@@ -161,17 +161,17 @@ public class PriceCalculateUtil {
 
         // 计算第三方基础运费
         BigDecimal basePrice = calculateExpressBasePrice(
-                new BigDecimal(expressBasePrice.getFirstWeight()),
-                new BigDecimal(expressBasePrice.getFirstPrice()),
-                new BigDecimal(expressBasePrice.getContinueWeight()),
-                new BigDecimal(expressBasePrice.getContinuePrice()),
-                new BigDecimal(weight)
+                BigDecimal.valueOf(expressBasePrice.getFirstWeight()),
+                BigDecimal.valueOf(expressBasePrice.getFirstPrice()),
+                BigDecimal.valueOf(expressBasePrice.getContinueWeight()),
+                BigDecimal.valueOf(expressBasePrice.getContinuePrice()),
+                BigDecimal.valueOf(weight)
         );
         // 计算最终售价
         BigDecimal totalPrice = calculateExpressPrice(
                 basePrice,
-                new BigDecimal(expressBasePrice.getProfitRatio()),
-                new BigDecimal(expressBasePrice.getMinProfit())
+                BigDecimal.valueOf(expressBasePrice.getProfitRatio()),
+                BigDecimal.valueOf(expressBasePrice.getMinProfit())
         );
         // 计算盈利金额
         BigDecimal profit = totalPrice.subtract(basePrice);
