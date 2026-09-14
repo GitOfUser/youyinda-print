@@ -9,7 +9,7 @@ Component({
   properties: {
     icon: {
       type: String,
-      value: '📭'
+      value: 'package'
     },
     image: {
       type: String,

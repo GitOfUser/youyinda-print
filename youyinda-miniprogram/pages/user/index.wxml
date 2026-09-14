@@ -1,63 +1,41 @@
 <view class="container">
   <view class="user-header">
-    <view class="user-info">
+    <view class="user-info" bindtap="doLogin">
       <view class="avatar avatar-lg">
         <image class="avatar-img" src="{{userInfo.avatar}}" mode="aspectFill" wx:if="{{userInfo.avatar}}"></image>
-        <text class="avatar-placeholder" wx:else>👤</text>
+        <icon wx:else name="user" size="{{64}}" color="#FFFFFF" />
       </view>
       <view class="user-detail">
         <view class="user-name">{{userInfo.nickname || '点击登录'}}</view>
         <view class="user-phone" wx:if="{{userInfo.phone}}">{{userInfo.phone}}</view>
       </view>
-      <view class="setting-btn" bindtap="goToSetting">⚙️</view>
+    </view>
+    <view class="setting-btn" bindtap="goToSetting">
+      <icon name="setting" size="{{40}}" color="#FFFFFF" />
     </view>
   </view>
 
   <view class="stats-card card">
     <view class="stats-grid">
       <view class="stats-item" bindtap="goToOrderList" data-status="pending">
+        <view class="icon-tile-sm tile-orange"><icon name="clock" size="{{36}}" color="#F59E0B" /></view>
         <view class="stats-num">{{orderStats.pending}}</view>
         <view class="stats-label">待支付</view>
       </view>
       <view class="stats-item" bindtap="goToOrderList" data-status="processing">
+        <view class="icon-tile-sm tile-blue"><icon name="refresh" size="{{36}}" color="#3B82F6" /></view>
         <view class="stats-num">{{orderStats.processing}}</view>
         <view class="stats-label">处理中</view>
       </view>
       <view class="stats-item" bindtap="goToOrderList" data-status="completed">
+        <view class="icon-tile-sm tile-green"><icon name="check-circle" size="{{36}}" color="#10B981" /></view>
         <view class="stats-num">{{orderStats.completed}}</view>
         <view class="stats-label">已完成</view>
       </view>
-      <view class="stats-item" bindtap="goToCoupon">
-        <view class="stats-num">{{orderStats.coupon}}</view>
-        <view class="stats-label">优惠券</view>
-      </view>
-    </view>
-  </view>
-
-  <view class="card order-card">
-    <view class="card-header" bindtap="goToOrderList">
-      <view class="card-title">我的订单</view>
-      <view class="view-all">
-        <text>全部订单</text>
-        <text class="arrow">›</text>
-      </view>
-    </view>
-    <view class="order-tabs">
-      <view class="order-tab" bindtap="goToOrderList" data-status="pending">
-        <view class="order-tab-icon">💰</view>
-        <text class="order-tab-text">待支付</text>
-      </view>
-      <view class="order-tab" bindtap="goToOrderList" data-status="processing">
-        <view class="order-tab-icon">📦</view>
-        <text class="order-tab-text">处理中</text>
-      </view>
-      <view class="order-tab" bindtap="goToOrderList" data-status="completed">
-        <view class="order-tab-icon">✅</view>
-        <text class="order-tab-text">已完成</text>
-      </view>
-      <view class="order-tab" bindtap="goToTrack">
-        <view class="order-tab-icon">🚚</view>
-        <text class="order-tab-text">物流跟踪</text>
+      <view class="stats-item" bindtap="goToOrderList" data-status="all">
+        <view class="icon-tile-sm tile-brand"><icon name="order" size="{{36}}" color="#4F46E5" /></view>
+        <view class="stats-num">{{orderStats.all}}</view>
+        <view class="stats-label">全部</view>
       </view>
     </view>
   </view>
@@ -65,40 +43,27 @@
   <view class="card">
     <view class="menu-list">
       <view class="menu-item" bindtap="goToAddress">
-        <view class="menu-icon-wrap orange-bg">
-          <text class="menu-icon">📍</text>
-        </view>
+        <view class="icon-tile-sm tile-orange"><icon name="location" size="{{36}}" color="#F59E0B" /></view>
         <text class="menu-text">地址管理</text>
-        <text class="menu-arrow">›</text>
+        <icon name="chevron-right" size="{{36}}" color="#94A3B8" />
       </view>
       <view class="menu-item" bindtap="goToCoupon">
-        <view class="menu-icon-wrap red-bg">
-          <text class="menu-icon">🎫</text>
-        </view>
+        <view class="icon-tile-sm tile-red"><icon name="ticket" size="{{36}}" color="#EF4444" /></view>
         <text class="menu-text">我的优惠券</text>
-        <text class="menu-arrow">›</text>
+        <icon name="chevron-right" size="{{36}}" color="#94A3B8" />
       </view>
       <view class="menu-item" bindtap="goToHelp">
-        <view class="menu-icon-wrap blue-bg">
-          <text class="menu-icon">❓</text>
-        </view>
+        <view class="icon-tile-sm tile-blue"><icon name="help" size="{{36}}" color="#3B82F6" /></view>
         <text class="menu-text">帮助中心</text>
-        <text class="menu-arrow">›</text>
+        <icon name="chevron-right" size="{{36}}" color="#94A3B8" />
       </view>
       <view class="menu-item" bindtap="contactService">
-        <view class="menu-icon-wrap green-bg">
-          <text class="menu-icon">💬</text>
-        </view>
+        <view class="icon-tile-sm tile-green"><icon name="service" size="{{36}}" color="#10B981" /></view>
         <text class="menu-text">联系客服</text>
-        <text class="menu-arrow">›</text>
-      </view>
-      <view class="menu-item" bindtap="goToAbout">
-        <view class="menu-icon-wrap gray-bg">
-          <text class="menu-icon">ℹ️</text>
-        </view>
-        <text class="menu-text">关于我们</text>
-        <text class="menu-arrow">›</text>
+        <icon name="chevron-right" size="{{36}}" color="#94A3B8" />
       </view>
     </view>
   </view>
+
+  <view class="version-text">优印达 v1.0.0</view>
 </view>

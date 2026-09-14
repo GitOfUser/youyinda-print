@@ -1,12 +1,56 @@
 const app = getApp();
 const request = require('../../utils/request');
+const priceUtil = require('../../utils/price');
+
+const CART_KEY = 'printCart';
+
+function genCartId() {
+  return 'pc_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+}
+
+function getCart() {
+  return wx.getStorageSync(CART_KEY) || { items: [] };
+}
+
+function saveCart(cart) {
+  wx.setStorageSync(CART_KEY, cart);
+}
+
+function defaultConfig() {
+  const price = priceUtil.calcItemPrice({
+    paperSize: 'A4',
+    colorType: 1,
+    duplex: 1,
+    copies: 1,
+    binding: 'none'
+  });
+  return {
+    paperSize: 'A4',
+    colorType: 1,
+    duplex: 1,
+    copies: 1,
+    binding: 'none',
+    basePrice: price.basePrice,
+    colorPrice: price.colorPrice,
+    bindingPrice: price.bindingPrice,
+    totalPrice: price.totalPrice
+  };
+}
 
 Page({
   data: {
     fileList: [],
     uploading: false,
-    uploadProgress: 0,
-    canNext: false
+    cartCount: 0
+  },
+
+  onShow() {
+    this.refreshCartCount();
+  },
+
+  refreshCartCount() {
+    const cart = getCart();
+    this.setData({ cartCount: (cart.items || []).length });
   },
 
   chooseFile() {
@@ -14,82 +58,95 @@ Page({
       count: 10,
       type: 'file',
       success: (res) => {
+        const startIndex = this.data.fileList.length;
         const newFiles = res.tempFiles.map(file => ({
           name: file.name,
           size: this.formatFileSize(file.size),
           sizeRaw: file.size,
           path: file.path,
           type: file.type || (file.name ? file.name.split('.').pop() : ''),
-          uploaded: false,
+          status: 'uploading',
+          progress: 0,
           fileUrl: '',
-          fileId: ''
+          fileId: '',
+          cartId: '',
+          inCart: false
         }));
         this.setData({
-          fileList: [...this.data.fileList, ...newFiles],
-          canNext: true
+          fileList: [...this.data.fileList, ...newFiles]
         });
-        // 自动上传新选的文件
-        this.uploadFiles(newFiles);
+        this.uploadFiles(newFiles, startIndex);
       }
     });
   },
 
   /**
-   * 上传文件到服务器
+   * 上传文件到服务器，成功后自动加入购物车并持久化
    */
-  uploadFiles(newFiles) {
+  uploadFiles(newFiles, baseIndex) {
     if (newFiles.length === 0) return;
-
-    this.setData({ uploading: true, uploadProgress: 0 });
+    this.setData({ uploading: true });
 
     const totalCount = newFiles.length;
     let completedCount = 0;
-    const uploadResults = [];
+    let successCount = 0;
 
     const doUpload = (index) => {
       if (index >= newFiles.length) {
         this.setData({ uploading: false });
-        wx.showToast({ title: '全部上传完成', icon: 'success' });
+        this.refreshCartCount();
+        if (successCount > 0) {
+          wx.showToast({ title: '已加入购物车', icon: 'success' });
+        } else {
+          wx.showToast({ title: '上传失败，请重试', icon: 'none' });
+        }
         return;
       }
 
       const file = newFiles[index];
-      wx.showLoading({ title: `上传中 ${index + 1}/${totalCount}` });
+      const listIndex = baseIndex + index;
 
       request.upload('/print/file/upload', file.path, 'file', {})
         .then((res) => {
           completedCount++;
+          successCount++;
           const result = res.data || res;
-          uploadResults.push({
-            index: index,
-            fileId: result.fileId || '',
-            fileUrl: result.fileUrl || ''
-          });
+          const fileUrl = result.fileUrl || '';
+          const fileId = result.fileId || '';
 
-          // 更新文件列表中的上传状态
-          const key = `fileList[${this.data.fileList.length - totalCount + index}]`;
+          // 生成购物车项并持久化
+          const cartId = genCartId();
+          const config = defaultConfig();
+          const cart = getCart();
+          cart.items.push({
+            cartId,
+            name: file.name,
+            size: file.size,
+            sizeRaw: file.sizeRaw,
+            fileUrl,
+            fileId,
+            config
+          });
+          saveCart(cart);
+
           this.setData({
-            [key + '.fileUrl']: result.fileUrl || '',
-            [key + '.fileId']: result.fileId || '',
-            [key + '.uploaded']: true,
-            uploadProgress: Math.round((completedCount / totalCount) * 100)
+            [`fileList[${listIndex}].status`]: 'success',
+            [`fileList[${listIndex}].progress`]: 100,
+            [`fileList[${listIndex}].fileUrl`]: fileUrl,
+            [`fileList[${listIndex}].fileId`]: fileId,
+            [`fileList[${listIndex}].cartId`]: cartId,
+            [`fileList[${listIndex}].inCart`]: true
           });
 
-          wx.hideLoading();
+          this.refreshCartCount();
           doUpload(index + 1);
         })
         .catch((err) => {
           completedCount++;
-          wx.hideLoading();
-          wx.showToast({
-            title: `上传失败(${index + 1}/${totalCount}): ${err.message || '网络错误'}`,
-            icon: 'none',
-            duration: 3000
-          });
-          const key = `fileList[${this.data.fileList.length - totalCount + index}]`;
+          console.error('[Upload] 上传失败:', err);
           this.setData({
-            [key + '.uploadError']: true,
-            uploadProgress: Math.round((completedCount / totalCount) * 100)
+            [`fileList[${listIndex}].status`]: 'error',
+            [`fileList[${listIndex}].progress`]: 0
           });
           doUpload(index + 1);
         });
@@ -98,58 +155,62 @@ Page({
     doUpload(0);
   },
 
+  /**
+   * 重试上传失败的文件
+   */
+  retryUpload(e) {
+    const index = e.currentTarget.dataset.index;
+    const file = this.data.fileList[index];
+    if (!file) return;
+
+    // 防御：若该文件曾入购物车，先移除旧记录，重传成功后重新加入
+    if (file.inCart && file.cartId) {
+      const cart = getCart();
+      cart.items = (cart.items || []).filter(it => it.cartId !== file.cartId);
+      saveCart(cart);
+      this.setData({
+        [`fileList[${index}].inCart`]: false,
+        [`fileList[${index}].cartId`]: ''
+      });
+    }
+
+    this.setData({
+      [`fileList[${index}].status`]: 'uploading',
+      [`fileList[${index}].progress`]: 0
+    });
+
+    this.uploadFiles([this.data.fileList[index]], index);
+  },
+
   formatFileSize(bytes) {
     if (bytes < 1024) return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
   },
 
+  /**
+   * 从列表移除文件，若已入购物车则同步移除
+   */
   deleteFile(e) {
     const index = e.currentTarget.dataset.index;
-    const fileList = this.data.fileList;
+    const file = this.data.fileList[index];
+    if (!file) return;
+
+    if (file.inCart && file.cartId) {
+      const cart = getCart();
+      cart.items = (cart.items || []).filter(it => it.cartId !== file.cartId);
+      saveCart(cart);
+    }
+
+    const fileList = this.data.fileList.slice();
     fileList.splice(index, 1);
-    this.setData({
-      fileList,
-      canNext: fileList.length > 0
-    });
+    this.setData({ fileList });
+    this.refreshCartCount();
   },
 
-  goToConfig() {
-    if (this.data.uploading) {
-      wx.showToast({ title: '文件正在上传中，请稍候', icon: 'none' });
-      return;
-    }
-
-    const hasError = this.data.fileList.some(f => f.uploadError);
-    if (hasError) {
-      wx.showModal({
-        title: '提示',
-        content: '部分文件上传失败，是否继续？失败的文件将不会包含在订单中。',
-        success: (res) => {
-          if (res.confirm) {
-            this.navigateToConfig();
-          }
-        }
-      });
-      return;
-    }
-
-    this.navigateToConfig();
-  },
-
-  navigateToConfig() {
-    const validFiles = this.data.fileList.filter(f => f.uploaded && f.fileUrl);
-    if (validFiles.length === 0) {
-      wx.showToast({ title: '没有成功上传的文件', icon: 'none' });
-      return;
-    }
-    const app = getApp();
-    if (!app.globalData.flowState) app.globalData.flowState = {};
-    app.globalData.flowState.printFiles = validFiles;
-    // 写入旧 Storage key 以兼容其他模块
-    wx.setStorageSync('printFiles', validFiles);
+  goCart() {
     wx.navigateTo({
-      url: '/pages/print/config'
+      url: '/pages/print/cart'
     });
   }
 });

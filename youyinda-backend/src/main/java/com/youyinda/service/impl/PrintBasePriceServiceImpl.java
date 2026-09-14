@@ -25,6 +25,8 @@ public class PrintBasePriceServiceImpl extends ServiceImpl<PrintBasePriceMapper,
         if (printSide != null) {
             queryWrapper.eq("print_side", printSide);
         }
+        // 价格预览接口不区分供应商，多个供应商命中同规格时取一条即可（selectOne 多条会抛异常）
+        queryWrapper.last("LIMIT 1");
         return baseMapper.selectOne(queryWrapper);
     }
 

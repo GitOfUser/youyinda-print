@@ -37,10 +37,8 @@ public class PrintOrderItemRequest {
     @NotNull(message = "数量不能为空")
     private Integer quantity;
 
-    @NotNull(message = "单价不能为空")
     private BigDecimal unitPrice;
 
-    @NotNull(message = "小计不能为空")
     private BigDecimal totalPrice;
 
     private String specJson;

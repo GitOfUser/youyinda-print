@@ -1,242 +1,181 @@
 .container {
   min-height: 100vh;
-  background-color: var(--bg-cream);
-  padding-top: var(--spacing-md);
+  padding-top: var(--s-md);
 }
 
-.upload-tips {
-  margin-bottom: var(--spacing-md);
-}
-
-.tips-header {
+/* 上传须知 */
+.tip-card {
   display: flex;
   align-items: flex-start;
 }
-
-.tips-icon {
-  margin-right: var(--spacing-md);
+.tip-ico {
+  margin-right: var(--s-md);
   flex-shrink: 0;
 }
-
-.tips-content {
-  flex: 1;
-}
-
-.tips-title {
+.tip-title {
   font-size: var(--fs-base);
   font-weight: 600;
-  color: var(--text-title);
+  color: var(--t1);
   margin-bottom: 8rpx;
 }
-
-.tips-desc {
+.tip-desc {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
+  color: var(--t2);
   line-height: 1.5;
 }
 
+/* 大虚线边框上传区 */
 .upload-area {
-  border: 3rpx dashed var(--print-primary);
-  background: var(--print-primary-light);
-  padding: 0;
-  margin-bottom: var(--spacing-lg);
-  transition: all 0.2s ease;
-}
-
-.upload-area:active {
-  transform: scale(0.99);
-  background: #DCE6FF;
-}
-
-.upload-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 80rpx var(--spacing-lg);
+  padding: 72rpx var(--s-lg);
+  border: 3rpx dashed var(--print);
+  background: var(--print-light);
+  transition: transform 0.2s ease;
 }
-
-.upload-cloud-icon {
-  font-size: 96rpx;
-  margin-bottom: var(--spacing-lg);
+.upload-area:active {
+  transform: scale(0.99);
 }
-
-.upload-main-text {
+.upload-tile {
+  margin-bottom: var(--s-md);
+}
+.upload-main {
   font-size: var(--fs-md);
   font-weight: 600;
-  color: var(--print-primary);
-  margin-bottom: var(--spacing-sm);
+  color: var(--print);
+  margin-bottom: 8rpx;
 }
-
-.upload-sub-text {
+.upload-sub {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
-  margin-bottom: var(--spacing-lg);
+  color: var(--t2);
 }
 
-.upload-btn {
+/* 上传中提示 */
+.uploading-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 80rpx;
-  padding: 0 48rpx;
-  background: var(--print-gradient);
-  border-radius: var(--radius-full);
-  box-shadow: var(--print-shadow);
+  gap: var(--s-sm);
+  margin-top: var(--s-md);
+}
+.uploading-text {
+  font-size: var(--fs-sm);
+  color: var(--print);
 }
 
-.upload-btn-text {
-  color: white;
-  font-size: var(--fs-base);
-  font-weight: 600;
-}
-
+/* 文件列表 */
 .file-section {
-  margin-top: var(--spacing-md);
+  margin-top: var(--s-md);
 }
-
 .section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--s-md);
 }
-
-.section-title {
-  font-size: var(--fs-md);
-  font-weight: 600;
-  color: var(--text-title);
-}
-
-.file-count-badge {
+.count-badge {
   padding: 6rpx 20rpx;
-  background: var(--print-primary-light);
-  color: var(--print-primary);
+  background: var(--print-light);
+  color: var(--print);
   font-size: var(--fs-xs);
   font-weight: 600;
-  border-radius: var(--radius-full);
+  border-radius: var(--r-full);
 }
 
 .file-list {
   display: flex;
   flex-direction: column;
 }
-
-.file-item {
+.file-card {
   display: flex;
   align-items: center;
-  margin-bottom: var(--spacing-sm);
+  padding: 24rpx;
+  margin: 0 var(--page-margin) var(--s-sm);
 }
-
-.file-item:last-child {
-  margin-bottom: 0;
-}
-
-.file-type-icon {
-  margin-right: var(--spacing-md);
+.file-ico {
+  margin-right: var(--s-md);
   flex-shrink: 0;
-  font-size: 36rpx;
 }
-
-.file-info {
+.file-main {
   flex: 1;
   min-width: 0;
-  margin-right: var(--spacing-md);
+  margin-right: var(--s-md);
 }
-
 .file-name {
   font-size: var(--fs-base);
-  color: var(--text-title);
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--t1);
   margin-bottom: 8rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 .file-meta {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--s-sm);
 }
-
 .file-size {
   font-size: var(--fs-xs);
-  color: var(--text-secondary);
+  color: var(--t3);
 }
-
-.file-status {
+.file-stat {
   font-size: var(--fs-xs);
-  color: var(--print-primary);
+  font-weight: 500;
 }
+.file-stat.up { color: var(--print); }
+.file-stat.ok { color: var(--success); }
+.file-stat.err { color: var(--danger); }
 
-.file-status.success {
-  color: var(--success);
-}
-
-.file-status.error {
-  color: var(--danger);
-}
-
-.file-progress {
+.progress {
   margin-top: 12rpx;
   height: 8rpx;
-  background: var(--bg-gray);
-  border-radius: 4rpx;
+  background: var(--fill);
+  border-radius: var(--r-full);
   overflow: hidden;
 }
-
-.file-progress-bar {
+.progress-bar {
   height: 100%;
   background: var(--print-gradient);
-  border-radius: 4rpx;
+  border-radius: var(--r-full);
   transition: width 0.3s ease;
 }
-
-.file-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  flex-shrink: 0;
+.progress-bar.done {
+  background: var(--success);
 }
 
-.file-retry {
+.file-ops {
+  display: flex;
+  align-items: center;
+  gap: var(--s-sm);
+  flex-shrink: 0;
+}
+.retry-btn {
   font-size: var(--fs-sm);
-  color: var(--print-primary);
+  color: var(--print);
   font-weight: 500;
   padding: 8rpx 16rpx;
 }
-
-.file-delete {
+.del-btn {
   width: 56rpx;
   height: 56rpx;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--bg-gray);
+  background: var(--fill);
+}
+.del-btn:active {
+  background: var(--border);
 }
 
-.delete-icon {
-  font-size: 28rpx;
-  color: var(--text-secondary);
-}
-
-.file-delete:active .delete-icon {
-  color: var(--danger);
-}
-
-.file-count-text {
+/* 底部栏左侧信息 */
+.bb-label {
   font-size: var(--fs-sm);
-  color: var(--text-body);
+  color: var(--t2);
 }
-
-.count-num {
-  color: var(--print-primary);
-  font-weight: 700;
-  font-size: var(--fs-lg);
-  margin: 0 4rpx;
-}
-
-.btn-next {
-  min-width: 240rpx;
+.bb-unit {
+  font-size: var(--fs-sm);
+  color: var(--t2);
+  margin-left: 8rpx;
 }

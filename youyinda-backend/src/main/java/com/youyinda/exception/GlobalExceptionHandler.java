@@ -1,5 +1,6 @@
 package com.youyinda.exception;
 
+import com.youyinda.common.BusinessException;
 import com.youyinda.common.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindException;
@@ -16,9 +17,21 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * 处理 controller 层抛出的 com.youyinda.common.BusinessException
+     */
     @ExceptionHandler(BusinessException.class)
     public R<Void> handleBusinessException(BusinessException e) {
-        log.error("业务异常：{}", e.getMsg());
+        log.error("业务异常：{}", e.getMessage());
+        return R.fail(e.getCode(), e.getMessage());
+    }
+
+    /**
+     * 处理历史遗留的 com.youyinda.exception.BusinessException（service 层使用）
+     */
+    @ExceptionHandler(com.youyinda.exception.BusinessException.class)
+    public R<Void> handleLegacyBusinessException(com.youyinda.exception.BusinessException e) {
+        log.error("业务异常(旧)：{}", e.getMsg());
         return R.fail(e.getCode(), e.getMsg());
     }
 

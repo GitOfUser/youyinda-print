@@ -1,6 +1,8 @@
+/* 登录页：仅结构性样式，颜色/字号/圆角一律引用 app.wxss 变量 */
+
 .login-container {
   min-height: 100vh;
-  background: var(--bg-cream);
+  background: var(--bg);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -12,8 +14,8 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 520rpx;
-  background: var(--primary-gradient);
+  height: 480rpx;
+  background: var(--brand-gradient);
   border-radius: 0 0 60rpx 60rpx;
   opacity: 0.08;
 }
@@ -22,74 +24,44 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 180rpx;
-  padding-bottom: 80rpx;
+  padding-top: 160rpx;
+  padding-bottom: 64rpx;
   position: relative;
   z-index: 1;
 }
 
 .login-logo {
-  width: 180rpx;
-  height: 180rpx;
-  border-radius: var(--radius-lg);
-  background: var(--primary-gradient);
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 32rpx;
+  background: var(--brand-gradient);
+  box-shadow: var(--brand-shadow);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--primary-shadow);
-  margin-bottom: var(--spacing-lg);
-}
-
-.logo-text {
-  font-size: 80rpx;
-  color: var(--white);
-  font-weight: 700;
+  margin-bottom: var(--s-lg);
 }
 
 .login-app-name {
   font-size: 48rpx;
   font-weight: 700;
-  color: var(--text-title);
-  margin-bottom: var(--spacing-xs);
+  color: var(--t1);
+  margin-bottom: var(--s-xs);
   letter-spacing: 4rpx;
 }
 
 .login-app-desc {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
+  color: var(--t3);
   letter-spacing: 2rpx;
-}
-
-.login-content {
-  flex: 1;
-  padding: 0 var(--page-margin);
-  position: relative;
-  z-index: 1;
-}
-
-.login-slogan {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 80rpx;
-}
-
-.slogan-text {
-  font-size: var(--fs-xxl);
-  font-weight: 700;
-  color: var(--text-title);
-  margin-bottom: var(--spacing-sm);
-}
-
-.slogan-sub {
-  font-size: var(--fs-base);
-  color: var(--text-secondary);
 }
 
 .login-features {
   display: flex;
   justify-content: space-around;
-  padding: var(--spacing-lg) 0;
+  padding: var(--s-lg) 0;
+  position: relative;
+  z-index: 1;
 }
 
 .feature-item {
@@ -98,59 +70,79 @@
   align-items: center;
 }
 
-.feature-icon-box {
-  width: 100rpx;
-  height: 100rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-lg);
-  font-size: 48rpx;
-  margin-bottom: var(--spacing-sm);
-}
-
 .feature-text {
+  margin-top: var(--s-sm);
   font-size: var(--fs-sm);
-  color: var(--text-body);
   font-weight: 500;
+  color: var(--t2);
 }
 
 .login-footer {
-  padding: var(--spacing-xl) var(--page-margin);
-  padding-bottom: calc(var(--spacing-xl) + env(safe-area-inset-bottom));
+  padding: var(--s-xl) var(--page-margin);
+  padding-bottom: calc(var(--s-xl) + env(safe-area-inset-bottom));
   position: relative;
   z-index: 1;
 }
 
+/* 表单 */
+.login-form {
+  margin-bottom: var(--s-lg);
+}
+
+.login-input-group {
+  display: flex;
+  align-items: center;
+  background: var(--card);
+  border-radius: var(--r-full);
+  border: 2rpx solid var(--border);
+  padding: 0 var(--s-lg);
+  height: 96rpx;
+  margin-bottom: var(--s-md);
+  box-shadow: var(--shadow-card);
+}
+
+.login-input-group:focus-within {
+  border-color: var(--brand);
+}
+
+.login-input-icon {
+  margin-right: var(--s-sm);
+  flex-shrink: 0;
+}
+
+.login-input {
+  flex: 1;
+  height: 96rpx;
+  font-size: var(--fs-md);
+  color: var(--t1);
+}
+
+.login-input-placeholder {
+  color: var(--t3);
+}
+
+/* 主按钮直接使用全局 .btn-primary .btn-block */
 .login-btn {
-  height: 96rpx !important;
-  display: flex !important;
+  margin-top: 0;
+}
+
+.login-switch {
+  display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--primary-gradient) !important;
-  color: var(--white) !important;
-  font-size: var(--fs-md) !important;
-  font-weight: 600 !important;
-  border-radius: var(--radius-full) !important;
-  box-shadow: var(--primary-shadow) !important;
-  border: none !important;
-  line-height: 96rpx !important;
-  padding: 0 !important;
-  margin: 0 !important;
+  margin-top: var(--s-lg);
 }
 
-.login-btn::after {
-  border: none !important;
+.login-switch-text {
+  font-size: var(--fs-sm);
+  color: var(--t3);
 }
 
-.login-btn:active {
-  transform: scale(0.98);
-  opacity: 0.9;
-}
-
-.wechat-icon {
-  font-size: 40rpx;
-  margin-right: var(--spacing-sm);
+.login-switch-link {
+  font-size: var(--fs-sm);
+  color: var(--brand);
+  font-weight: 500;
+  margin-left: var(--s-xs);
 }
 
 .login-agreement {
@@ -158,12 +150,12 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: var(--spacing-lg);
+  margin-top: var(--s-lg);
   line-height: 1.6;
 }
 
 .checkbox-wrapper {
-  margin-right: var(--spacing-xs);
+  margin-right: var(--s-xs);
   padding: 8rpx;
 }
 
@@ -175,74 +167,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
-  background: var(--white);
+  background: var(--card);
 }
 
 .login-checkbox.checked {
-  background: var(--primary-gradient);
-  border-color: var(--primary);
-}
-
-.checkbox-icon {
-  font-size: 20rpx;
-  color: var(--white);
-  font-weight: bold;
+  background: var(--brand-gradient);
+  border-color: var(--brand);
 }
 
 .agreement-text {
   font-size: var(--fs-xs);
-  color: var(--text-secondary);
+  color: var(--t3);
 }
 
 .agreement-link {
   font-size: var(--fs-xs);
-  color: var(--primary);
-}
-
-.login-other {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: var(--spacing-xl);
-  margin-bottom: var(--spacing-lg);
-}
-
-.divider-line {
-  width: 80rpx;
-  height: 1rpx;
-  background: var(--border);
-}
-
-.other-text {
-  font-size: var(--fs-xs);
-  color: var(--text-hint);
-  margin: 0 var(--spacing-md);
-}
-
-.login-other-actions {
-  display: flex;
-  justify-content: center;
-  gap: var(--spacing-xl);
-}
-
-.other-btn {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: 50%;
-  background: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-card);
-  transition: all 0.2s ease;
-}
-
-.other-btn:active {
-  transform: scale(0.95);
-  background: var(--bg-gray);
-}
-
-.other-btn-icon {
-  font-size: 40rpx;
+  color: var(--brand);
 }

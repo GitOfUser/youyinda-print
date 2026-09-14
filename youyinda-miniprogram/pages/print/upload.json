@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "选择文件"
+  "navigationBarTitleText": "选择文件",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
 }

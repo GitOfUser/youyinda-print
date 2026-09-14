@@ -45,9 +45,12 @@ import java.util.List;
 @Service
 public class PrintOrderServiceImpl extends ServiceImpl<PrintOrderMapper, PrintOrder> implements PrintOrderService {
 
-    /** 装订附加费：骑马钉 2 元，胶装 5 元 */
-    private static final BigDecimal BINDING_STAPLE_FEE = new BigDecimal("2.00");
+    /** 装订附加费（价格与前端枚举对齐）：staple=1.00、clip=0.50、glue=5.00、ring=8.00、cover=3.00 */
+    private static final BigDecimal BINDING_STAPLE_FEE = new BigDecimal("1.00");
+    private static final BigDecimal BINDING_CLIP_FEE = new BigDecimal("0.50");
     private static final BigDecimal BINDING_GLUE_FEE = new BigDecimal("5.00");
+    private static final BigDecimal BINDING_RING_FEE = new BigDecimal("8.00");
+    private static final BigDecimal BINDING_COVER_FEE = new BigDecimal("3.00");
     /** 增值服务：覆膜每页 +0.5 元，打孔每份 +1 元 */
     private static final BigDecimal FILM_PER_PAGE = new BigDecimal("0.5");
     private static final BigDecimal PUNCH_PER_COPY = new BigDecimal("1.00");
@@ -110,22 +113,35 @@ public class PrintOrderServiceImpl extends ServiceImpl<PrintOrderMapper, PrintOr
         for (PrintOrderItemRequest item : request.getItems()) {
             // 1. 解析打印参数
             String paperType = item.getPaperType();          // A4 / A3 / 照片纸
-            String colorType = item.getColorType();          // 黑白 / 彩色
+            String colorType = item.getColorType();          // 前端传 "1"/"2"，也可能为 黑白/彩色/black/color
+            String colorTypeCn = normalizeColorType(colorType); // 统一为中文「黑白/彩色」再查价格表
             String singleDouble = item.getSingleDouble();    // single / double
             Integer copies = item.getCopies() == null ? 1 : item.getCopies();
             Integer pages = item.getQuantity() == null ? 0 : item.getQuantity();
             String binding = item.getBindingType();         // 无 / 骑马钉 / 胶装
 
             // 2. 查询第三方基础价（优先 66印，降级小猴云印）
-            PrintBasePrice base = printBasePriceService.getBySpec(PROVIDER_66YIN, paperType, colorType, singleDouble);
+            // print_side 列存中文「单面/双面」，需将 single/double 映射后查询（getBySpec 保持按 print_side 列匹配）
+            String printSideCn = "double".equalsIgnoreCase(singleDouble) ? "双面" : "单面";
+            PrintBasePrice base = printBasePriceService.getBySpec(PROVIDER_66YIN, paperType, colorTypeCn, printSideCn);
             String usedProvider = PROVIDER_66YIN;
             if (base == null) {
-                base = printBasePriceService.getBySpec(PROVIDER_XIAOHOU, paperType, colorType, singleDouble);
+                base = printBasePriceService.getBySpec(PROVIDER_XIAOHOU, paperType, colorTypeCn, printSideCn);
                 usedProvider = PROVIDER_XIAOHOU;
+            }
+            // B5 纸型在 print_base_price 表无基础价，兜底降级为 A4 计价，保证下单不中断
+            if (base == null && paperType != null && paperType.contains("B5")) {
+                log.warn("[打印基础价] 纸型 {} 无基础价，降级为 A4 计价", paperType);
+                base = printBasePriceService.getBySpec(PROVIDER_66YIN, "A4", colorTypeCn, printSideCn);
+                usedProvider = PROVIDER_66YIN;
+                if (base == null) {
+                    base = printBasePriceService.getBySpec(PROVIDER_XIAOHOU, "A4", colorTypeCn, printSideCn);
+                    usedProvider = PROVIDER_XIAOHOU;
+                }
             }
             if (base == null) {
                 throw new BusinessException(ErrorCodeEnum.PRICE_CALC_ERROR,
-                        "未找到打印基础价格：" + paperType + "/" + colorType + "/" + singleDouble);
+                        "未找到打印基础价格：" + paperType + "/" + colorType + "/" + printSideCn);
             }
 
             // 3. 计算平台最终价（单份）
@@ -150,16 +166,16 @@ public class PrintOrderServiceImpl extends ServiceImpl<PrintOrderMapper, PrintOr
             OrderDetail od = new OrderDetail();
             od.setOrderId(null); // 回填
             od.setProductType(1); // 1-打印
-            od.setProductName(item.getSpecJson());
+            od.setProductName(item.getFileName());
             od.setQuantity(copies);
             od.setUnitPrice(unitPrice.doubleValue());
             od.setTotalPrice(itemTotal.doubleValue());
-            od.setFileUrl(item.getSpecJson());
-            od.setFileName(item.getSpecJson());
+            od.setFileUrl(item.getFileUrl());
+            od.setFileName(item.getFileName());
             od.setPrintPages(pages);
             od.setPrintCopies(copies);
             od.setPaperType(paperType);
-            od.setColorType(colorType);
+            od.setColorType(colorTypeCn);
             od.setPrintSide(singleDouble);
             od.setBindingType(binding);
             od.setSubtotal(itemTotal.doubleValue());
@@ -167,12 +183,12 @@ public class PrintOrderServiceImpl extends ServiceImpl<PrintOrderMapper, PrintOr
 
             // 5. 构建 VO
             PrintOrderDetailVO dv = new PrintOrderDetailVO();
-            dv.setFileName(item.getSpecJson());
-            dv.setFileUrl(item.getSpecJson());
+            dv.setFileName(item.getFileName());
+            dv.setFileUrl(item.getFileUrl());
             dv.setPages(pages);
             dv.setCopies(copies);
             dv.setPaperType(paperType);
-            dv.setColorType(colorType);
+            dv.setColorType(colorTypeCn);
             dv.setPrintSide(singleDouble);
             dv.setUnitPrice(unitPrice);
             dv.setSubtotal(itemTotal);
@@ -273,18 +289,32 @@ public class PrintOrderServiceImpl extends ServiceImpl<PrintOrderMapper, PrintOr
 
     /**
      * 计算装订费
+     * 支持前端枚举：none=0、staple=1.00、clip=0.50、glue=5.00、ring=8.00、cover=3.00
+     * 兼容旧值：「骑马钉」/「1」按 staple 计，「胶装」/「2」按 glue 计
      */
     private BigDecimal calcBindingFee(String binding) {
         if (binding == null) {
             return BigDecimal.ZERO;
         }
-        if ("骑马钉".equals(binding) || "1".equals(binding)) {
-            return BINDING_STAPLE_FEE;
+        switch (binding) {
+            case "staple":
+            case "骑马钉":
+            case "1":
+                return BINDING_STAPLE_FEE;
+            case "clip":
+                return BINDING_CLIP_FEE;
+            case "glue":
+            case "胶装":
+            case "2":
+                return BINDING_GLUE_FEE;
+            case "ring":
+                return BINDING_RING_FEE;
+            case "cover":
+                return BINDING_COVER_FEE;
+            case "none":
+            default:
+                return BigDecimal.ZERO;
         }
-        if ("胶装".equals(binding) || "2".equals(binding)) {
-            return BINDING_GLUE_FEE;
-        }
-        return BigDecimal.ZERO;
     }
 
     /**
@@ -311,7 +341,20 @@ public class PrintOrderServiceImpl extends ServiceImpl<PrintOrderMapper, PrintOr
         if (CollectionUtils.isEmpty(request.getItems())) {
             return "黑白";
         }
-        return request.getItems().get(0).getColorType();
+        return normalizeColorType(request.getItems().get(0).getColorType());
+    }
+
+    /**
+     * 色彩类型归一化：前端传 "1"/"2"（1-黑白 2-彩色）或 black/color/中文，统一转为中文「黑白/彩色」
+     */
+    private String normalizeColorType(String colorType) {
+        if (colorType == null) {
+            return "黑白";
+        }
+        if ("2".equals(colorType) || "彩色".equals(colorType) || "color".equalsIgnoreCase(colorType)) {
+            return "彩色";
+        }
+        return "黑白"; // "1" / "黑白" / "black" / 其它一律按黑白
     }
 
     /**

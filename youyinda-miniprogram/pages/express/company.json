@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "选择快递公司"
+  "navigationBarTitleText": "选择快递公司",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
 }

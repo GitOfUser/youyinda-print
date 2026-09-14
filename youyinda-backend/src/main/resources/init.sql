@@ -7,10 +7,11 @@ USE `youyinda`;
 -- 1. 用户表
 CREATE TABLE IF NOT EXISTS `user` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `openid` VARCHAR(100) NOT NULL COMMENT '微信OpenID',
+  `openid` VARCHAR(100) DEFAULT NULL COMMENT '微信OpenID（手机号注册用户无openid）',
   `nick_name` VARCHAR(100) DEFAULT NULL COMMENT '用户昵称',
   `avatar_url` VARCHAR(500) DEFAULT NULL COMMENT '用户头像',
   `phone` VARCHAR(20) DEFAULT NULL COMMENT '手机号（加密存储）',
+  `password` VARCHAR(100) DEFAULT NULL COMMENT '密码（BCrypt加密）',
   `gender` TINYINT DEFAULT 0 COMMENT '性别：0-未知，1-男，2-女',
   `city` VARCHAR(50) DEFAULT NULL COMMENT '城市',
   `province` VARCHAR(50) DEFAULT NULL COMMENT '省份',

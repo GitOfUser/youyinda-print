@@ -1,134 +1,115 @@
 <view class="container">
-  <view class="file-preview card" wx:if="{{fileList.length > 0}}">
-    <view class="preview-header">
-      <view class="preview-icon icon-box icon-box-print">📁</view>
-      <view class="preview-info">
-        <view class="preview-title">已选文件</view>
-        <view class="preview-count">共 {{fileList.length}} 个文件</view>
-      </view>
+  <!-- 文件信息条 -->
+  <view class="card file-bar" wx:if="{{fileList.length > 0}}">
+    <view class="icon-tile tile-print file-bar-ico">
+      <icon name="file" size="{{36}}" color="#4F46E5" />
     </view>
-    <scroll-view class="file-scroll" scroll-x="true">
-      <view class="file-mini-list">
-        <view class="file-mini-item" wx:for="{{fileList}}" wx:key="index">
-          <view class="file-mini-icon">📄</view>
-          <view class="file-mini-name">{{item.name}}</view>
-        </view>
-      </view>
-    </scroll-view>
+    <view class="file-bar-info">
+      <view class="file-bar-title">{{mode === 'batch' ? '批量配置' : '文件配置'}}</view>
+      <view class="file-bar-count">共 {{fileList.length}} 个文件{{mode === 'batch' ? '（应用至全部勾选）' : ''}}</view>
+    </view>
   </view>
 
-  <view class="config-card card">
-    <view class="card-header">
-      <view class="card-title">📐 纸张规格</view>
-    </view>
+  <!-- 纸张规格 -->
+  <view class="card">
+    <view class="card-header"><view class="card-title">纸张规格</view></view>
     <view class="option-group">
-      <view class="option-item {{paperSize === 'A4' ? 'print-active' : ''}}" bindtap="selectPaper" data-size="A4">
-        <view class="option-name">A4</view>
-        <view class="option-desc">210×297mm</view>
+      <view class="opt {{paperSize === 'A4' ? 'active' : ''}}" bindtap="selectPaper" data-size="A4">
+        <view class="opt-name">A4</view>
+        <view class="opt-desc">210×297mm</view>
       </view>
-      <view class="option-item {{paperSize === 'A3' ? 'print-active' : ''}}" bindtap="selectPaper" data-size="A3">
-        <view class="option-name">A3</view>
-        <view class="option-desc">297×420mm</view>
+      <view class="opt {{paperSize === 'A3' ? 'active' : ''}}" bindtap="selectPaper" data-size="A3">
+        <view class="opt-name">A3</view>
+        <view class="opt-desc">297×420mm</view>
       </view>
-      <view class="option-item {{paperSize === 'B5' ? 'print-active' : ''}}" bindtap="selectPaper" data-size="B5">
-        <view class="option-name">B5</view>
-        <view class="option-desc">176×250mm</view>
+      <view class="opt {{paperSize === 'B5' ? 'active' : ''}}" bindtap="selectPaper" data-size="B5">
+        <view class="opt-name">B5</view>
+        <view class="opt-desc">176×250mm</view>
       </view>
     </view>
   </view>
 
-  <view class="config-card card">
-    <view class="card-header">
-      <view class="card-title">🎨 色彩模式</view>
-    </view>
+  <!-- 色彩模式 -->
+  <view class="card">
+    <view class="card-header"><view class="card-title">色彩模式</view></view>
     <view class="option-group">
-      <view class="option-item {{colorType === 1 ? 'print-active' : ''}}" bindtap="selectColor" data-type="1">
-        <view class="option-name">黑白</view>
-        <view class="option-desc">经济实惠</view>
+      <view class="opt {{colorType === 1 ? 'active' : ''}}" bindtap="selectColor" data-type="1">
+        <view class="opt-name">黑白</view>
+        <view class="opt-desc">经济实惠</view>
       </view>
-      <view class="option-item {{colorType === 2 ? 'print-active' : ''}}" bindtap="selectColor" data-type="2">
-        <view class="option-name">彩色</view>
-        <view class="option-desc">色彩鲜艳</view>
+      <view class="opt {{colorType === 2 ? 'active' : ''}}" bindtap="selectColor" data-type="2">
+        <view class="opt-name">彩色</view>
+        <view class="opt-desc">色彩鲜艳</view>
       </view>
     </view>
   </view>
 
-  <view class="config-card card">
-    <view class="card-header">
-      <view class="card-title">📄 单双面</view>
-    </view>
+  <!-- 单双面 -->
+  <view class="card">
+    <view class="card-header"><view class="card-title">单双面</view></view>
     <view class="option-group">
-      <view class="option-item {{duplex === 1 ? 'print-active' : ''}}" bindtap="selectDuplex" data-type="1">
-        <view class="option-name">单面打印</view>
-        <view class="option-desc">适合正式文件</view>
+      <view class="opt {{duplex === 1 ? 'active' : ''}}" bindtap="selectDuplex" data-type="1">
+        <view class="opt-name">单面打印</view>
+        <view class="opt-desc">适合正式文件</view>
       </view>
-      <view class="option-item {{duplex === 2 ? 'print-active' : ''}}" bindtap="selectDuplex" data-type="2">
-        <view class="option-name">双面打印</view>
-        <view class="option-desc">环保省纸</view>
+      <view class="opt {{duplex === 2 ? 'active' : ''}}" bindtap="selectDuplex" data-type="2">
+        <view class="opt-name">双面打印</view>
+        <view class="opt-desc">环保省纸</view>
       </view>
     </view>
   </view>
 
-  <view class="config-card card">
-    <view class="card-header">
-      <view class="card-title">🔢 打印份数</view>
-    </view>
+  <!-- 打印份数 -->
+  <view class="card">
+    <view class="card-header"><view class="card-title">打印份数</view></view>
     <view class="quantity-row">
       <view class="quantity-label">份数</view>
       <view class="quantity-control">
-        <view class="quantity-btn" bindtap="decreaseQuantity">
-          <text>−</text>
+        <view class="quantity-btn brand" bindtap="decreaseQuantity">
+          <icon name="minus" size="{{36}}" color="#4F46E5" />
         </view>
         <view class="quantity-value">{{copies}}</view>
-        <view class="quantity-btn" bindtap="increaseQuantity">
-          <text>+</text>
+        <view class="quantity-btn brand" bindtap="increaseQuantity">
+          <icon name="plus" size="{{36}}" color="#4F46E5" />
         </view>
       </view>
     </view>
   </view>
 
-  <view class="config-card card">
-    <view class="card-header">
-      <view class="card-title">📎 装订方式</view>
-    </view>
+  <!-- 装订方式 -->
+  <view class="card">
+    <view class="card-header"><view class="card-title">装订方式</view></view>
     <view class="binding-grid">
-      <view class="binding-item {{binding === 'none' ? 'print-active' : ''}}" bindtap="selectBinding" data-type="none">
-        <view class="binding-icon-box">📃</view>
-        <view class="binding-name">无装订</view>
-        <view class="binding-price free">免费</view>
+      <view class="opt binding-opt {{binding === 'none' ? 'active' : ''}}" bindtap="selectBinding" data-type="none">
+        <view class="opt-name">无装订</view>
+        <view class="opt-price free">免费</view>
       </view>
-      <view class="binding-item {{binding === 'staple' ? 'print-active' : ''}}" bindtap="selectBinding" data-type="staple">
-        <view class="binding-icon-box">📎</view>
-        <view class="binding-name">订书钉</view>
-        <view class="binding-price">¥1.00</view>
+      <view class="opt binding-opt {{binding === 'staple' ? 'active' : ''}}" bindtap="selectBinding" data-type="staple">
+        <view class="opt-name">订书钉</view>
+        <view class="opt-price">¥1.00</view>
       </view>
-      <view class="binding-item {{binding === 'clip' ? 'print-active' : ''}}" bindtap="selectBinding" data-type="clip">
-        <view class="binding-icon-box">🗂️</view>
-        <view class="binding-name">长尾夹</view>
-        <view class="binding-price">¥0.50</view>
+      <view class="opt binding-opt {{binding === 'clip' ? 'active' : ''}}" bindtap="selectBinding" data-type="clip">
+        <view class="opt-name">长尾夹</view>
+        <view class="opt-price">¥0.50</view>
       </view>
-      <view class="binding-item {{binding === 'glue' ? 'print-active' : ''}}" bindtap="selectBinding" data-type="glue">
-        <view class="binding-icon-box">📘</view>
-        <view class="binding-name">胶装</view>
-        <view class="binding-price">¥5.00</view>
+      <view class="opt binding-opt {{binding === 'glue' ? 'active' : ''}}" bindtap="selectBinding" data-type="glue">
+        <view class="opt-name">胶装</view>
+        <view class="opt-price">¥5.00</view>
       </view>
-      <view class="binding-item {{binding === 'ring' ? 'print-active' : ''}}" bindtap="selectBinding" data-type="ring">
-        <view class="binding-icon-box">📒</view>
-        <view class="binding-name">圈装</view>
-        <view class="binding-price">¥8.00</view>
+      <view class="opt binding-opt {{binding === 'ring' ? 'active' : ''}}" bindtap="selectBinding" data-type="ring">
+        <view class="opt-name">圈装</view>
+        <view class="opt-price">¥8.00</view>
       </view>
-      <view class="binding-item {{binding === 'cover' ? 'print-active' : ''}}" bindtap="selectBinding" data-type="cover">
-        <view class="binding-icon-box">📕</view>
-        <view class="binding-name">封皮</view>
-        <view class="binding-price">¥3.00</view>
+      <view class="opt binding-opt {{binding === 'cover' ? 'active' : ''}}" bindtap="selectBinding" data-type="cover">
+        <view class="opt-name">封皮</view>
+        <view class="opt-price">¥3.00</view>
       </view>
     </view>
   </view>
 
-  <view class="price-card card">
-    <view class="card-header">
-      <view class="card-title">💰 价格明细</view>
-    </view>
+  <!-- 价格明细 -->
+  <view class="card">
+    <view class="card-header"><view class="card-title">价格明细</view></view>
     <view class="price-list">
       <view class="price-row">
         <text class="price-label">打印费用</text>
@@ -142,30 +123,26 @@
         <text class="price-label">装订费用</text>
         <text class="price-value">¥{{bindingPrice}}</text>
       </view>
-      <view class="price-row" wx:if="{{copies > 1}}">
-        <text class="price-label">×{{copies}}份</text>
-        <text class="price-value"></text>
-      </view>
     </view>
     <view class="price-divider"></view>
     <view class="price-total-row">
       <text class="total-label">预计总价</text>
-      <text class="total-value">¥{{totalPrice}}</text>
+      <view class="total-price-wrap">
+        <text class="total-symbol">¥</text>
+        <text class="total-value">{{totalPrice}}</text>
+      </view>
     </view>
   </view>
 
-  <view class="bottom-bar-placeholder"></view>
-
+  <view class="bottom-bar-space"></view>
   <view class="bottom-bar">
     <view class="bottom-bar-left">
       <view class="bottom-bar-label">预计费用</view>
       <view class="bottom-bar-price">
         <text class="price-symbol">¥</text>
-        <text class="price-number">{{totalPrice}}</text>
+        <text class="bottom-bar-value">{{totalPrice}}</text>
       </view>
     </view>
-    <button class="btn-primary btn-print btn-confirm" bindtap="goToConfirm">
-      确认配置
-    </button>
+    <button class="btn-primary btn-print" bindtap="saveConfig">保存配置</button>
   </view>
 </view>

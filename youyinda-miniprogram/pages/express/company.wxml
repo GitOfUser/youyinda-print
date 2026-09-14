@@ -4,65 +4,57 @@
     <view class="header-desc">对比价格和时效，选择最合适的快递</view>
   </view>
 
-  <view class="sort-bar">
-    <view class="sort-item {{sortBy === 'price' ? 'active' : ''}}" bindtap="setSortBy" data-sort="price">
-      <text>价格</text>
-      <text class="sort-icon">{{sortBy === 'price' ? (sortOrder === 'asc' ? '↑' : '↓') : '↕'}}</text>
-    </view>
-    <view class="sort-item {{sortBy === 'time' ? 'active' : ''}}" bindtap="setSortBy" data-sort="time">
-      <text>时效</text>
-      <text class="sort-icon">{{sortBy === 'time' ? (sortOrder === 'asc' ? '↑' : '↓') : '↕'}}</text>
-    </view>
-    <view class="sort-item {{sortBy === 'rating' ? 'active' : ''}}" bindtap="setSortBy" data-sort="rating">
-      <text>评分</text>
-      <text class="sort-icon">{{sortBy === 'rating' ? (sortOrder === 'asc' ? '↑' : '↓') : '↕'}}</text>
+  <view class="card rs-card">
+    <view class="rs-route">
+      <view class="rs-point">
+        <text class="rs-city">{{senderAddress.city || senderAddress.province || '—'}}</text>
+        <text class="rs-tag">寄件</text>
+      </view>
+      <icon name="arrow-right" size="{{36}}" color="#0D9488" class="rs-arrow" />
+      <view class="rs-point">
+        <text class="rs-city">{{receiverAddress.city || receiverAddress.province || '—'}}</text>
+        <text class="rs-tag">收件</text>
+      </view>
+      <view class="rs-goods">
+        <icon name="package" size="{{24}}" color="#94A3B8" />
+        <text class="rs-goods-text">{{packageInfo.itemType}} · {{packageInfo.weight}}kg</text>
+      </view>
     </view>
   </view>
 
   <view class="company-list">
-    <view class="company-card {{selectedCompany === item.id ? 'selected' : ''}} {{item.recommended ? 'recommended' : ''}}" wx:for="{{companyList}}" wx:key="id" bindtap="selectCompany" data-id="{{item.id}}">
-      <view wx:if="{{item.recommended}}" class="recommend-tag">推荐</view>
-      <view wx:if="{{item.cheapest}}" class="cheapest-tag">最低价</view>
-      <view class="company-main">
-        <view class="company-logo" style="background: {{item.color}}">
-          <text class="logo-text">{{item.logoText}}</text>
+    <view class="company-card {{selectedCompany && selectedCompany.id === item.id ? 'selected' : ''}}" wx:for="{{companyList}}" wx:key="id" bindtap="selectCompany" data-item="{{item}}">
+      <view wx:if="{{selectedCompany && selectedCompany.id === item.id}}" class="co-check">
+        <icon name="check-circle" size="{{40}}" color="#0D9488" />
+      </view>
+      <view class="co-main">
+        <view class="co-avatar">
+          <text class="co-avatar-text">{{item.expressCode}}</text>
         </view>
-        <view class="company-info">
-          <view class="company-header">
-            <text class="company-name">{{item.name}}</text>
-            <view class="company-rating">
-              <text class="star">★</text>
-              <text class="rating-score">{{item.rating}}</text>
-            </view>
-          </view>
-          <view class="company-tags">
-            <text class="tag-item" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this">{{tag}}</text>
-          </view>
-          <view class="company-meta">
-            <text class="meta-item">⏱️ {{item.estimatedTime}}</text>
-            <text class="meta-item">📦 {{item.pickupTime}}</text>
+        <view class="co-info">
+          <view class="co-name">{{item.name}}</view>
+          <view class="co-tags">
+            <text class="tag tag-express">{{item.desc}}</text>
+            <text class="tag tag-info">{{item.expressCode}}</text>
           </view>
         </view>
-        <view class="company-price">
-          <view class="price-current">¥<text class="price-num">{{item.price}}</text></view>
-          <view wx:if="{{item.originalPrice > item.price}}" class="price-original">¥{{item.originalPrice}}</view>
+        <view class="co-price">
+          <text class="price-cur">¥</text><text class="price-num">{{item.price}}</text>
         </view>
       </view>
-      <view class="check-icon" wx:if="{{selectedCompany === item.id}}">✓</view>
     </view>
   </view>
 
-  <view class="bottom-bar-placeholder"></view>
-
+  <view class="bottom-bar-space"></view>
   <view class="bottom-bar">
-    <view class="bottom-bar-left" wx:if="{{selectedCompanyInfo}}">
-      <view class="bottom-bar-label">已选择 {{selectedCompanyInfo.name}}</view>
-      <view class="bottom-bar-value">¥{{selectedCompanyInfo.price}}</view>
+    <view class="bottom-bar-left" wx:if="{{selectedCompany}}">
+      <view class="bottom-bar-label">已选择 {{selectedCompany.name}}</view>
+      <view class="bottom-bar-value">¥{{selectedCompany.price}}</view>
     </view>
     <view class="bottom-bar-left" wx:else>
       <view class="bottom-bar-label">请选择快递公司</view>
     </view>
-    <button class="btn-primary {{!selectedCompany ? 'btn-disabled' : ''}}" bindtap="goToConfirm" disabled="{{!selectedCompany}}">
+    <button class="btn-primary btn-express" bindtap="goToConfirm" disabled="{{!selectedCompany}}">
       下一步
     </button>
   </view>

@@ -1,105 +1,52 @@
 <view class="container">
-  <view class="status-header">
-    <view class="header-bg"></view>
-    <view class="status-content">
-      <view class="status-icon-wrap">
-        <text class="status-big-icon">📦</text>
+  <!-- 状态卡 -->
+  <view class="status-card">
+    <view class="status-top">
+      <view class="status-icon">
+        <icon name="truck" size="{{52}}" color="#FFFFFF" />
       </view>
       <view class="status-main">
-        <view class="status-text">{{trackInfo.statusText}}</view>
-        <view class="status-desc">{{trackInfo.statusDesc}}</view>
+        <view class="status-text">{{orderStatusText}}</view>
+        <view class="status-sub">{{companyName}}</view>
+      </view>
+    </view>
+    <view class="status-meta">
+      <view class="meta-row meta-copy" bindtap="copyTrackingNo">
+        <text class="meta-label">运单号</text>
+        <text class="meta-value">{{trackingNo}}</text>
+        <icon name="copy" size="{{28}}" color="#FFFFFF" class="copy-ic" />
+      </view>
+      <view class="meta-row" wx:if="{{latestTime}}">
+        <text class="meta-label">更新时间</text>
+        <text class="meta-value">{{latestTime}}</text>
       </view>
     </view>
   </view>
 
-  <view class="card order-card">
-    <view class="order-header">
-      <view class="company-info">
-        <view class="company-logo" style="background: {{trackInfo.companyColor}}">
-          <text class="logo-text">{{trackInfo.companyLogo}}</text>
-        </view>
-        <view class="company-text">
-          <text class="company-name">{{trackInfo.companyName}}</text>
-          <text class="tracking-no">运单号：{{trackInfo.trackingNo}}</text>
-        </view>
-      </view>
-      <view class="copy-btn" bindtap="copyTrackingNo">复制</view>
-    </view>
-    <view class="delivery-estimate">
-      <text class="estimate-icon">🚚</text>
-      <text class="estimate-text">预计 {{trackInfo.estimateTime}} 送达</text>
-    </view>
-  </view>
-
-  <view class="card address-summary">
-    <view class="address-route">
-      <view class="route-point">
-        <view class="point-dot sender"></view>
-        <text class="point-text">{{trackInfo.fromCity}}</text>
-      </view>
-      <view class="route-line">
-        <view class="line-progress" style="width: {{trackInfo.progress}}%"></view>
-        <view class="delivery-truck" style="left: {{trackInfo.progress}}%">🚛</view>
-      </view>
-      <view class="route-point">
-        <view class="point-dot receiver"></view>
-        <text class="point-text">{{trackInfo.toCity}}</text>
-      </view>
-    </view>
-  </view>
-
+  <!-- 物流轨迹 -->
   <view class="card timeline-card">
-    <view class="timeline-header">
-      <text class="timeline-title">物流轨迹</text>
-      <text class="timeline-count">共{{trackList.length}}条</text>
+    <view class="tl-head">
+      <text class="tl-title">物流轨迹</text>
+      <text class="tl-count">共 {{trackList.length}} 条</text>
     </view>
     <view class="timeline">
-      <view class="timeline-item {{index === 0 ? 'current' : ''}}" wx:for="{{trackList}}" wx:key="index">
-        <view class="timeline-left">
-          <view class="timeline-dot"></view>
-          <view class="timeline-line" wx:if="{{index < trackList.length - 1}}"></view>
+      <view class="tl-item {{index === 0 ? 'current' : ''}}" wx:for="{{trackList}}" wx:key="index">
+        <view class="tl-left">
+          <view class="tl-dot"></view>
+          <view class="tl-line" wx:if="{{index < trackList.length - 1}}"></view>
         </view>
-        <view class="timeline-content">
-          <view class="timeline-info">
-            <text class="timeline-status">{{item.status}}</text>
-            <text class="timeline-time">{{item.time}}</text>
+        <view class="tl-content">
+          <view class="tl-info">
+            <text class="tl-status">{{item.status}}</text>
+            <text class="tl-time">{{item.time}}</text>
           </view>
-          <view class="timeline-desc" wx:if="{{item.desc}}">{{item.desc}}</view>
-          <view class="timeline-location" wx:if="{{item.location}}">
-            <text class="location-icon">📍</text>
+          <view class="tl-desc" wx:if="{{item.desc}}">{{item.desc}}</view>
+          <view class="tl-loc" wx:if="{{item.location}}">
+            <icon name="location" size="{{24}}" color="#94A3B8" />
             <text>{{item.location}}</text>
           </view>
         </view>
       </view>
-    </view>
-  </view>
-
-  <view class="card receiver-card" wx:if="{{receiverInfo}}">
-    <view class="receiver-header">
-      <text class="receiver-title">收件信息</text>
-    </view>
-    <view class="receiver-row">
-      <text class="receiver-label">收件人</text>
-      <text class="receiver-value">{{receiverInfo.name}} {{receiverInfo.phone}}</text>
-    </view>
-    <view class="receiver-row">
-      <text class="receiver-label">收货地址</text>
-      <text class="receiver-value">{{receiverInfo.address}}</text>
-    </view>
-  </view>
-
-  <view class="action-buttons">
-    <view class="action-btn" bindtap="contactCourier" wx:if="{{trackInfo.courierPhone}}">
-      <text class="action-icon">📞</text>
-      <text class="action-text">联系快递员</text>
-    </view>
-    <view class="action-btn" bindtap="refreshTrack">
-      <text class="action-icon">🔄</text>
-      <text class="action-text">刷新物流</text>
-    </view>
-    <view class="action-btn" bindtap="complaint">
-      <text class="action-icon">💬</text>
-      <text class="action-text">问题反馈</text>
     </view>
   </view>
 

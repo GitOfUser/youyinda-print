@@ -25,6 +25,8 @@ public class ExpressBasePriceServiceImpl extends ServiceImpl<ExpressBasePriceMap
         if (toProvince != null) {
             queryWrapper.eq("to_province", toProvince);
         }
+        // 同快递/同省组合可能有多条历史价格，取一条即可
+        queryWrapper.last("LIMIT 1");
         return baseMapper.selectOne(queryWrapper);
     }
 }

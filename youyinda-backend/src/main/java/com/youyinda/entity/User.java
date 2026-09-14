@@ -42,6 +42,12 @@ public class User {
     private String phone;
 
     /**
+     * 密码（BCrypt加密）
+     */
+    @TableField("password")
+    private String password;
+
+    /**
      * 性别：0-未知，1-男，2-女
      */
     @TableField("gender")

@@ -32,6 +32,7 @@ import com.youyinda.vo.ExpressTrackVO;
 import com.youyinda.vo.UserAddressVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -81,6 +82,10 @@ public class ExpressOrderServiceImpl extends ServiceImpl<ExpressOrderMapper, Exp
 
     @Resource
     private ExpressProviderFeignClient expressProviderFeignClient;
+
+    /** 第三方快递不可用时是否降级为本地模拟单号（测试/联调环境开启） */
+    @Value("${third-party.express.mock-enabled:false}")
+    private boolean mockEnabled;
 
     @Override
     public ExpressOrder getByOrderId(Long orderId) {
@@ -133,21 +138,53 @@ public class ExpressOrderServiceImpl extends ServiceImpl<ExpressOrderMapper, Exp
         BigDecimal finalPrice = calculateFinalPrice(request.getExpressCode(), sender.getProvince(),
                 receiver.getProvince(), request.getWeight(), thirdFreight);
 
-        // 5. 构建第三方下单请求并调用快递100下单
+        // 5. 构建第三方下单请求并调用快递100下单（第三方不可用时按配置降级为本地模拟单号）
         String orderNo = orderMainService.generateOrderNo();
         ExpressOrderRequest thirdRequest = buildThirdOrderRequest(orderNo, request, sender, receiver, company);
-        ThirdApiResponse<ExpressOrderVO> createResp = expressProviderFeignClient.createOrder(thirdRequest);
-        if (createResp == null || !createResp.isSuccess() || createResp.getData() == null) {
-            throw new BusinessException(ErrorCodeEnum.EXPRESS_ORDER_FAIL, "快递下单失败：" +
-                    (createResp == null ? "无响应" : createResp.getMsg()));
+        String thirdOrderNo = null;
+        String trackingNo = null;
+        try {
+            ThirdApiResponse<ExpressOrderVO> createResp = expressProviderFeignClient.createOrder(thirdRequest);
+            if (createResp != null && createResp.isSuccess() && createResp.getData() != null) {
+                ExpressOrderVO thirdVo = createResp.getData();
+                thirdOrderNo = thirdVo.getOrderNo();
+                trackingNo = thirdVo.getTrackingNo();
+            } else {
+                log.warn("快递第三方下单未成功: {}", createResp == null ? "无响应" : createResp.getMsg());
+            }
+        } catch (Exception e) {
+            log.warn("快递第三方下单异常: {}", e.getMessage());
         }
-        ExpressOrderVO thirdVo = createResp.getData();
-        String thirdOrderNo = thirdVo.getOrderNo();
-        String trackingNo = thirdVo.getTrackingNo();
+        if (thirdOrderNo == null) {
+            if (!mockEnabled) {
+                throw new BusinessException(ErrorCodeEnum.EXPRESS_ORDER_FAIL, "快递下单失败：第三方服务不可用");
+            }
+            thirdOrderNo = "MOCK" + orderNo;
+            trackingNo = "MOCKTN" + System.currentTimeMillis();
+            log.warn("快递第三方不可用，已按 mock-enabled 降级生成本地模拟单号：{}", thirdOrderNo);
+        }
 
-        // 6. 创建 OrderLogistics 记录（含第三方单号、物流状态=待揽收）
+        // 6. 创建 OrderMain 主表记录（先落主表，供子表关联）
+        OrderMain orderMain = new OrderMain();
+        orderMain.setOrderNo(orderNo);
+        orderMain.setUserId(userId);
+        orderMain.setOrderType(2); // 2-快递订单
+        orderMain.setTotalPrice(finalPrice.doubleValue());
+        orderMain.setActualPrice(finalPrice.doubleValue());
+        orderMain.setStatus(1); // 1-待支付（待揽收前置）
+        orderMain.setPayStatus(1); // 1-未支付
+        orderMain.setCourier(company.getExpressCode());
+        orderMain.setTrackingNo(trackingNo);
+        orderMain.setFromAddressId(request.getSenderAddressId());
+        orderMain.setWeight(request.getWeight() == null ? null : request.getWeight().doubleValue());
+        orderMain.setGoodsType(request.getGoodsType());
+        orderMain.setRemark(request.getRemark());
+        orderMainService.save(orderMain);
+        Long orderMainId = orderMain.getId();
+
+        // 7. 创建 OrderLogistics 记录（含第三方单号、物流状态=待揽收）
         OrderLogistics logistics = new OrderLogistics();
-        logistics.setOrderId(null); // 关联 OrderMain 后回填
+        logistics.setOrderId(orderMainId);
         logistics.setOrderNo(orderNo);
         logistics.setExpressCode(company.getExpressCode());
         logistics.setExpressName(company.getExpressName());
@@ -172,8 +209,9 @@ public class ExpressOrderServiceImpl extends ServiceImpl<ExpressOrderMapper, Exp
         logistics.setThirdOrderNo(thirdOrderNo);
         orderLogisticsService.save(logistics);
 
-        // 7. 创建 ExpressOrder 实体落库
+        // 8. 创建 ExpressOrder 实体落库
         ExpressOrder expressOrder = new ExpressOrder();
+        expressOrder.setOrderId(orderMainId);
         expressOrder.setSenderName(sender.getName());
         expressOrder.setSenderPhone(sender.getPhone());
         expressOrder.setSenderProvince(sender.getProvince());
@@ -191,30 +229,6 @@ public class ExpressOrderServiceImpl extends ServiceImpl<ExpressOrderMapper, Exp
         expressOrder.setThirdOrderNo(thirdOrderNo);
         expressOrder.setThirdStatus(0);
         this.save(expressOrder);
-
-        // 8. 创建 OrderMain 主表记录
-        OrderMain orderMain = new OrderMain();
-        orderMain.setOrderNo(orderNo);
-        orderMain.setUserId(userId);
-        orderMain.setOrderType(2); // 2-快递订单
-        orderMain.setTotalPrice(finalPrice.doubleValue());
-        orderMain.setActualPrice(finalPrice.doubleValue());
-        orderMain.setStatus(1); // 1-待支付（待揽收前置）
-        orderMain.setPayStatus(1); // 1-未支付
-        orderMain.setCourier(company.getExpressCode());
-        orderMain.setTrackingNo(trackingNo);
-        orderMain.setFromAddressId(request.getSenderAddressId());
-        orderMain.setWeight(request.getWeight() == null ? null : request.getWeight().doubleValue());
-        orderMain.setGoodsType(request.getGoodsType());
-        orderMain.setRemark(request.getRemark());
-        orderMainService.save(orderMain);
-
-        // 回填关联 ID
-        Long orderMainId = orderMain.getId();
-        expressOrder.setOrderId(orderMainId);
-        this.updateById(expressOrder);
-        logistics.setOrderId(orderMainId);
-        orderLogisticsService.updateById(logistics);
 
         // 9. 组装返回 VO
         ExpressOrderVO vo = new ExpressOrderVO();
@@ -238,13 +252,13 @@ public class ExpressOrderServiceImpl extends ServiceImpl<ExpressOrderMapper, Exp
      */
     @Override
     public ExpressOrderVO getExpressOrderDetail(Long userId, Long orderId) {
-        ExpressOrder expressOrder = this.getById(orderId);
-        if (expressOrder == null) {
+        OrderMain orderMain = orderMainService.getById(orderId);
+        if (orderMain == null || !userId.equals(orderMain.getUserId())) {
             throw new BusinessException(ErrorCodeEnum.ORDER_NOT_FOUND, "快递订单不存在");
         }
-        OrderMain orderMain = orderMainService.getById(expressOrder.getOrderId());
-        if (orderMain == null || !userId.equals(orderMain.getUserId())) {
-            throw new BusinessException(ErrorCodeEnum.ORDER_NOT_FOUND, "订单无权限访问");
+        ExpressOrder expressOrder = this.lambdaQuery().eq(ExpressOrder::getOrderId, orderId).one();
+        if (expressOrder == null) {
+            throw new BusinessException(ErrorCodeEnum.ORDER_NOT_FOUND, "快递订单不存在");
         }
 
         ExpressOrderVO vo = new ExpressOrderVO();
@@ -290,13 +304,13 @@ public class ExpressOrderServiceImpl extends ServiceImpl<ExpressOrderMapper, Exp
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean cancelExpressOrder(Long userId, Long orderId) {
-        ExpressOrder expressOrder = this.getById(orderId);
-        if (expressOrder == null) {
+        OrderMain orderMain = orderMainService.getById(orderId);
+        if (orderMain == null || !userId.equals(orderMain.getUserId())) {
             throw new BusinessException(ErrorCodeEnum.ORDER_NOT_FOUND, "快递订单不存在");
         }
-        OrderMain orderMain = orderMainService.getById(expressOrder.getOrderId());
-        if (orderMain == null || !userId.equals(orderMain.getUserId())) {
-            throw new BusinessException(ErrorCodeEnum.ORDER_NOT_FOUND, "订单无权限访问");
+        ExpressOrder expressOrder = this.lambdaQuery().eq(ExpressOrder::getOrderId, orderId).one();
+        if (expressOrder == null) {
+            throw new BusinessException(ErrorCodeEnum.ORDER_NOT_FOUND, "快递订单不存在");
         }
         // 仅待揽收可取消
         if (!ORDER_STATUS_WAIT_PICKUP.equals(convertOrderStatus(orderMain.getStatus()))
@@ -333,13 +347,13 @@ public class ExpressOrderServiceImpl extends ServiceImpl<ExpressOrderMapper, Exp
      */
     @Override
     public ExpressTrackVO getExpressTrack(Long userId, Long orderId) {
-        ExpressOrder expressOrder = this.getById(orderId);
-        if (expressOrder == null) {
+        OrderMain orderMain = orderMainService.getById(orderId);
+        if (orderMain == null || !userId.equals(orderMain.getUserId())) {
             throw new BusinessException(ErrorCodeEnum.ORDER_NOT_FOUND, "快递订单不存在");
         }
-        OrderMain orderMain = orderMainService.getById(expressOrder.getOrderId());
-        if (orderMain == null || !userId.equals(orderMain.getUserId())) {
-            throw new BusinessException(ErrorCodeEnum.ORDER_NOT_FOUND, "订单无权限访问");
+        ExpressOrder expressOrder = this.lambdaQuery().eq(ExpressOrder::getOrderId, orderId).one();
+        if (expressOrder == null) {
+            throw new BusinessException(ErrorCodeEnum.ORDER_NOT_FOUND, "快递订单不存在");
         }
         OrderLogistics logistics = orderLogisticsService.getByOrderId(orderMain.getId());
         if (logistics == null) {
@@ -527,21 +541,33 @@ public class ExpressOrderServiceImpl extends ServiceImpl<ExpressOrderMapper, Exp
         trackReq.setProviderOrderNo(expressOrder.getThirdOrderNo());
         trackReq.setTrackingNo(orderMain.getTrackingNo());
         trackReq.setExpressCode(orderMain.getCourier());
-        ThirdApiResponse<ExpressTrackVO> resp = expressProviderFeignClient.queryTrack(trackReq);
-        if (resp == null || !resp.isSuccess() || resp.getData() == null) {
-            throw new BusinessException(ErrorCodeEnum.EXPRESS_TRACK_FAIL, "物流查询失败");
-        }
-        ExpressTrackVO track = resp.getData();
-        OrderLogistics logistics = orderLogisticsService.getByOrderId(orderMain.getId());
-        if (logistics != null) {
-            logistics.setLogisticsStatus(track.getLogisticsStatus());
-            logistics.setTrackingNo(track.getTrackingNo());
-            if (!CollectionUtils.isEmpty(track.getTrackList())) {
-                logistics.setTrackJson(com.alibaba.fastjson.JSON.toJSONString(track.getTrackList()));
+        try {
+            ThirdApiResponse<ExpressTrackVO> resp = expressProviderFeignClient.queryTrack(trackReq);
+            if (resp != null && resp.isSuccess() && resp.getData() != null) {
+                ExpressTrackVO track = resp.getData();
+                OrderLogistics logistics = orderLogisticsService.getByOrderId(orderMain.getId());
+                if (logistics != null) {
+                    logistics.setLogisticsStatus(track.getLogisticsStatus());
+                    logistics.setTrackingNo(track.getTrackingNo());
+                    if (!CollectionUtils.isEmpty(track.getTrackList())) {
+                        logistics.setTrackJson(com.alibaba.fastjson.JSON.toJSONString(track.getTrackList()));
+                    }
+                    orderLogisticsService.updateById(logistics);
+                }
+                return track;
             }
-            orderLogisticsService.updateById(logistics);
+            log.warn("[轨迹查询响应无效，降级返回本地状态] orderId={}", orderMain.getId());
+        } catch (Exception e) {
+            log.warn("[轨迹刷新失败，降级返回本地状态] orderId={}, err={}", orderMain.getId(), e.getMessage());
         }
-        return track;
+        // 第三方不可用，返回本地兜底轨迹
+        OrderLogistics logistics = orderLogisticsService.getByOrderId(orderMain.getId());
+        ExpressTrackVO fallback = new ExpressTrackVO();
+        fallback.setTrackingNo(orderMain.getTrackingNo());
+        fallback.setExpressName(logistics != null ? logistics.getExpressName() : null);
+        fallback.setLogisticsStatus(logistics != null ? logistics.getLogisticsStatus() : LOGISTICS_WAIT_PICKUP);
+        fallback.setTrackList(new ArrayList<>());
+        return fallback;
     }
 
     /**

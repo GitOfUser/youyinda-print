@@ -15,6 +15,13 @@ public interface UserService extends IService<User> {
     User getByOpenid(String openid);
 
     /**
+     * 根据手机号获取用户
+     * @param phone 手机号
+     * @return 用户信息
+     */
+    User getByPhone(String phone);
+
+    /**
      * 更新用户最后登录时间
      * @param userId 用户ID
      */

@@ -5,27 +5,29 @@
         <view class="address-top">
           <text class="contact-name">{{item.name}}</text>
           <text class="contact-phone">{{item.phone}}</text>
-          <view class="default-tag" wx:if="{{item.isDefault}}">默认</view>
+          <view class="tag tag-primary" wx:if="{{item.isDefault}}">默认</view>
         </view>
         <view class="address-detail">{{item.province}}{{item.city}}{{item.district}}{{item.detail}}</view>
       </view>
       <view class="address-actions" catchtap>
         <view class="action-item" bindtap="setDefault" data-id="{{item.id}}">
-          <view class="radio {{item.isDefault ? 'checked' : ''}}"></view>
+          <view class="radio {{item.isDefault ? 'checked' : ''}}">
+            <icon wx:if="{{item.isDefault}}" name="check" size="{{24}}" color="#FFFFFF" />
+          </view>
           <text class="action-text">默认</text>
         </view>
         <view class="action-item" bindtap="editAddress" data-id="{{item.id}}">
-          <text class="action-icon">✏️</text>
+          <icon name="edit" size="{{32}}" color="#475569" />
           <text class="action-text">编辑</text>
         </view>
         <view class="action-item" bindtap="deleteAddress" data-id="{{item.id}}">
-          <text class="action-icon">🗑️</text>
-          <text class="action-text">删除</text>
+          <icon name="trash" size="{{32}}" color="#EF4444" />
+          <text class="action-text text-danger">删除</text>
         </view>
       </view>
     </view>
 
-    <view class="address-card card" wx:for="{{addressList}}" wx:key="id" bindtap="selectAddress" data-id="{{item.id}}" wx:if="{{selectMode}}">
+    <view class="address-card card" wx:for="{{addressList}}" wx:key="id" bindtap="selectAddress" data-id="{{item.id}}" data-item="{{item}}" wx:if="{{selectMode}}">
       <view class="select-radio">
         <view class="radio {{selectedId === item.id ? 'checked' : ''}}"></view>
       </view>
@@ -33,7 +35,7 @@
         <view class="address-top">
           <text class="contact-name">{{item.name}}</text>
           <text class="contact-phone">{{item.phone}}</text>
-          <view class="default-tag" wx:if="{{item.isDefault}}">默认</view>
+          <view class="tag tag-primary" wx:if="{{item.isDefault}}">默认</view>
         </view>
         <view class="address-detail">{{item.province}}{{item.city}}{{item.district}}{{item.detail}}</view>
       </view>
@@ -41,13 +43,16 @@
   </view>
 
   <view class="empty-state" wx:if="{{addressList.length === 0}}">
-    <text class="empty-icon">📍</text>
-    <text class="empty-text">暂无地址</text>
-    <text class="empty-desc">添加常用地址，寄件更方便</text>
+    <icon name="location" size="{{120}}" color="#CBD5E1" />
+    <view class="empty-text">还没有收货地址</view>
+    <view class="empty-desc">添加常用地址，寄件更方便</view>
   </view>
 
   <view class="bottom-bar">
-    <button class="btn-primary btn-block" bindtap="addAddress">+ 新增收货地址</button>
+    <button class="btn-primary btn-block" bindtap="addAddress">
+      <icon name="plus" size="{{32}}" color="#FFFFFF" />
+      <text class="btn-label">新增地址</text>
+    </button>
   </view>
   <view class="bottom-bar-placeholder"></view>
 </view>

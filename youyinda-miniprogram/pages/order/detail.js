@@ -138,5 +138,19 @@ Page({
     wx.navigateTo({
       url: `/pages/express/track?orderId=${this.data.orderId}`
     });
+  },
+
+  copyOrderNo() {
+    const orderNo = this.data.orderInfo && this.data.orderInfo.orderNo;
+    if (!orderNo) return;
+    wx.setClipboardData({
+      data: String(orderNo),
+      success: () => {
+        wx.showToast({
+          title: '订单号已复制',
+          icon: 'none'
+        });
+      }
+    });
   }
 });

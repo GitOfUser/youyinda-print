@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "包裹信息"
+  "navigationBarTitleText": "包裹信息",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
 }

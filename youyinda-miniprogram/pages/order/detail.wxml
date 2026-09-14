@@ -1,50 +1,54 @@
 <view class="container">
   <view class="status-banner">
-    <view class="status-icon">{{orderDetail.statusIcon}}</view>
-    <view class="status-info">
-      <view class="status-text status-{{orderDetail.statusType}}">{{orderDetail.statusText}}</view>
-      <view class="status-desc">{{orderDetail.statusDesc}}</view>
+    <view class="banner-icon">
+      <icon wx:if="{{orderInfo.canPay}}" name="clock" size="{{56}}" color="#FFFFFF" />
+      <icon wx:elif="{{orderInfo.canTrack}}" name="truck" size="{{56}}" color="#FFFFFF" />
+      <icon wx:elif="{{orderInfo.statusText === '已取消'}}" name="close" size="{{56}}" color="#FFFFFF" />
+      <icon wx:else name="check-circle" size="{{56}}" color="#FFFFFF" />
+    </view>
+    <view class="banner-info">
+      <view class="banner-title">{{orderInfo.statusText}}</view>
+      <view class="banner-desc">{{orderInfo.statusDesc}}</view>
     </view>
   </view>
 
-  <view class="card" wx:if="{{orderDetail.type === 'express'}}">
+  <view class="card" wx:if="{{orderInfo.orderType === 2 && orderInfo.sender}}">
     <view class="card-header">
       <view class="card-title">收寄信息</view>
+      <view class="btn-text" wx:if="{{orderInfo.canTrack}}" bindtap="goToTrack">查看物流</view>
     </view>
-    <view class="address-section">
-      <view class="address-row">
-        <view class="address-tag sender-tag">寄</view>
-        <view class="address-info">
-          <view class="address-contact">
-            <text class="contact-name">{{orderDetail.sender.name}}</text>
-            <text class="contact-phone">{{orderDetail.sender.phone}}</text>
-          </view>
-          <view class="address-detail">{{orderDetail.sender.address}}</view>
+    <view class="address-row">
+      <view class="address-tag sender-tag">寄</view>
+      <view class="address-info">
+        <view class="address-contact">
+          <text class="contact-name">{{orderInfo.sender.name}}</text>
+          <text class="contact-phone">{{orderInfo.sender.phone}}</text>
         </view>
+        <view class="address-detail">{{orderInfo.sender.address}}</view>
       </view>
-      <view class="address-line"></view>
-      <view class="address-row">
-        <view class="address-tag receiver-tag">收</view>
-        <view class="address-info">
-          <view class="address-contact">
-            <text class="contact-name">{{orderDetail.receiver.name}}</text>
-            <text class="contact-phone">{{orderDetail.receiver.phone}}</text>
-          </view>
-          <view class="address-detail">{{orderDetail.receiver.address}}</view>
+    </view>
+    <view class="address-line"></view>
+    <view class="address-row">
+      <view class="address-tag receiver-tag">收</view>
+      <view class="address-info">
+        <view class="address-contact">
+          <text class="contact-name">{{orderInfo.receiver.name}}</text>
+          <text class="contact-phone">{{orderInfo.receiver.phone}}</text>
         </view>
+        <view class="address-detail">{{orderInfo.receiver.address}}</view>
       </view>
     </view>
   </view>
 
-  <view class="card" wx:if="{{orderDetail.trackInfo}}">
+  <view class="card" wx:if="{{orderInfo.trackInfo}}">
     <view class="card-header">
       <view class="card-title">物流轨迹</view>
       <view class="btn-text" bindtap="goToTrack">查看完整轨迹</view>
     </view>
     <view class="track-list">
-      <view class="track-item {{index === 0 ? 'active' : ''}}" wx:for="{{orderDetail.trackInfo}}" wx:key="time">
+      <view class="track-item {{index === 0 ? 'active' : ''}}" wx:for="{{orderInfo.trackInfo}}" wx:key="time">
         <view class="track-dot"></view>
-        <view class="track-line" wx:if="{{index < orderDetail.trackInfo.length - 1}}"></view>
+        <view class="track-line" wx:if="{{index < orderInfo.trackInfo.length - 1}}"></view>
         <view class="track-content">
           <view class="track-desc">{{item.desc}}</view>
           <view class="track-time">{{item.time}}</view>
@@ -55,67 +59,68 @@
 
   <view class="card">
     <view class="card-header">
-      <view class="card-title">订单信息</view>
+      <view class="card-title">商品明细</view>
     </view>
-    <view class="info-list">
-      <view class="goods-item" wx:for="{{orderDetail.goods}}" wx:key="id">
-        <view class="goods-icon-wrap">
-          <text class="goods-icon">{{item.type === 'print' ? '🖨️' : '📦'}}</text>
-        </view>
-        <view class="goods-info">
-          <view class="goods-name">{{item.name}}</view>
-          <view class="goods-desc">{{item.desc}}</view>
-        </view>
-        <view class="goods-price">
-          <text class="price">¥{{item.price}}</text>
-          <text class="qty">x{{item.quantity}}</text>
-        </view>
+    <view class="goods-item" wx:for="{{orderInfo.goods}}" wx:key="id">
+      <view class="goods-icon-wrap">
+        <icon name="{{item.type === 'print' ? 'printer' : 'package'}}" size="{{44}}" color="{{item.type === 'print' ? '#4F46E5' : '#0D9488'}}" />
+      </view>
+      <view class="goods-info">
+        <view class="goods-name">{{item.name}}</view>
+        <view class="goods-desc">{{item.desc}}</view>
+      </view>
+      <view class="goods-price">
+        <text class="price">¥{{item.price}}</text>
+        <text class="qty">x{{item.quantity}}</text>
       </view>
     </view>
     <view class="line mt-md"></view>
     <view class="fee-list">
       <view class="fee-item">
         <text class="fee-label">商品金额</text>
-        <text class="fee-value">¥{{orderDetail.goodsAmount}}</text>
+        <text class="fee-value">¥{{orderInfo.goodsAmount}}</text>
       </view>
-      <view class="fee-item" wx:if="{{orderDetail.discountAmount > 0}}">
+      <view class="fee-item" wx:if="{{orderInfo.discountAmount > 0}}">
         <text class="fee-label">优惠</text>
-        <text class="fee-value text-danger">-¥{{orderDetail.discountAmount}}</text>
+        <text class="fee-value text-danger">-¥{{orderInfo.discountAmount}}</text>
       </view>
-      <view class="fee-item" wx:if="{{orderDetail.shippingFee > 0}}">
+      <view class="fee-item" wx:if="{{orderInfo.shippingFee > 0}}">
         <text class="fee-label">运费</text>
-        <text class="fee-value">¥{{orderDetail.shippingFee}}</text>
+        <text class="fee-value">¥{{orderInfo.shippingFee}}</text>
       </view>
     </view>
   </view>
 
   <view class="card">
     <view class="card-header">
-      <view class="card-title">订单详情</view>
+      <view class="card-title">订单信息</view>
     </view>
     <view class="detail-list">
       <view class="detail-item">
         <text class="detail-label">订单编号</text>
         <view class="detail-value-wrap">
-          <text class="detail-value">{{orderDetail.orderNo}}</text>
-          <text class="copy-btn" bindtap="copyOrderNo">复制</text>
+          <text class="detail-value">{{orderInfo.orderNo}}</text>
+          <view class="copy-btn" bindtap="copyOrderNo">
+            <icon name="copy" size="{{28}}" color="#4F46E5" />
+            <text>复制</text>
+          </view>
         </view>
       </view>
       <view class="detail-item">
         <text class="detail-label">下单时间</text>
-        <text class="detail-value">{{orderDetail.createTime}}</text>
+        <text class="detail-value">{{orderInfo.createTime}}</text>
       </view>
-      <view class="detail-item" wx:if="{{orderDetail.payTime}}">
+      <view class="detail-item" wx:if="{{orderInfo.payTime}}">
         <text class="detail-label">支付时间</text>
-        <text class="detail-value">{{orderDetail.payTime}}</text>
+        <text class="detail-value">{{orderInfo.payTime}}</text>
       </view>
-      <view class="detail-item" wx:if="{{orderDetail.payMethod}}">
+      <view class="detail-item" wx:if="{{orderInfo.payMethod}}">
         <text class="detail-label">支付方式</text>
-        <text class="detail-value">{{orderDetail.payMethod}}</text>
+        <text class="detail-value">{{orderInfo.payMethod}}</text>
       </view>
-      <view class="detail-item" wx:if="{{orderDetail.remark}}">
+      <view class="detail-item" wx:if="{{orderInfo.remark}}">
         <text class="detail-label">订单备注</text>
-        <text class="detail-value">{{orderDetail.remark}}</text>
+        <text class="detail-value">{{orderInfo.remark}}</text>
       </view>
     </view>
   </view>
@@ -124,16 +129,12 @@
     <view class="bottom-bar-left">
       <view class="bottom-bar-price">
         <text class="bottom-bar-label">实付款：</text>
-        <text class="bottom-bar-value">¥{{orderDetail.totalPrice}}</text>
+        <text class="bottom-bar-value">¥{{orderInfo.totalPrice}}</text>
       </view>
     </view>
     <view class="bottom-bar-actions">
-      <view class="btn-secondary btn-sm" wx:for="{{orderDetail.actions}}" wx:key="type" wx:for-item="action" bindtap="handleAction" data-type="{{action.type}}" wx:if="{{!action.primary}}">
-        {{action.text}}
-      </view>
-      <view class="btn-primary btn-sm" wx:for="{{orderDetail.actions}}" wx:key="type" wx:for-item="action" bindtap="handleAction" data-type="{{action.type}}" wx:if="{{action.primary}}">
-        {{action.text}}
-      </view>
+      <view class="btn-ghost btn-sm" wx:if="{{orderInfo.canCancel}}" bindtap="cancelOrder">取消订单</view>
+      <view class="btn-primary btn-sm" wx:if="{{orderInfo.canPay}}" bindtap="payOrder">去支付</view>
     </view>
   </view>
   <view class="bottom-bar-placeholder"></view>

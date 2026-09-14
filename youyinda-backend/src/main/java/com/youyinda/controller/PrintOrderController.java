@@ -3,10 +3,7 @@ package com.youyinda.controller;
 import com.youyinda.common.BusinessException;
 import com.youyinda.common.R;
 import com.youyinda.common.enums.ErrorCodeEnum;
-import com.youyinda.dto.PrintFileDTO;
 import com.youyinda.dto.PrintOrderCreateRequest;
-import com.youyinda.dto.PrintOrderDTO;
-import com.youyinda.dto.PrintOrderItemRequest;
 import com.youyinda.entity.OrderMain;
 import com.youyinda.entity.OrderDetail;
 import com.youyinda.entity.UserAddress;
@@ -56,7 +53,7 @@ public class PrintOrderController {
      * @return 订单ID
      */
     @PostMapping("/create")
-    public R<Long> createOrder(@Valid @RequestBody PrintOrderDTO printOrderDTO) {
+    public R<Long> createOrder(@Valid @RequestBody PrintOrderCreateRequest printOrderDTO) {
         try {
             // 获取当前用户ID
             Long userId = JwtUtil.getUserIdFromToken();
@@ -70,33 +67,8 @@ public class PrintOrderController {
                 throw new BusinessException(ErrorCodeEnum.ADDRESS_NOT_FOUND, "地址不存在");
             }
 
-            // 将 PrintOrderDTO 转换为 PrintOrderCreateRequest（多场景打印参数）
-            PrintOrderCreateRequest createRequest = new PrintOrderCreateRequest();
-            createRequest.setAddressId(printOrderDTO.getAddressId());
-            createRequest.setRemark(printOrderDTO.getRemark());
-            List<PrintOrderItemRequest> items = new ArrayList<>();
-            for (PrintFileDTO file : printOrderDTO.getFiles()) {
-                PrintOrderItemRequest item = new PrintOrderItemRequest();
-                item.setFileId(file.getFileId());
-                item.setFileUrl(file.getFileUrl());
-                item.setFileName(file.getFileName());
-                item.setFileType(file.getFileType());
-                item.setFileSize(file.getFileSize());
-                item.setCopies(file.getCopies());
-                item.setPaperType(printOrderDTO.getPaperType());
-                item.setColorType(printOrderDTO.getColorType());
-                // 单双面：单面=single，双面=double
-                item.setSingleDouble("双面".equals(printOrderDTO.getPrintSide()) ? "double" : "single");
-                item.setBindingType(printOrderDTO.getBindingType());
-                item.setQuantity(file.getPages());
-                // 增值服务写入 specJson 供价格计算识别（覆膜/打孔）
-                item.setSpecJson(printOrderDTO.getValueAddedService());
-                items.add(item);
-            }
-            createRequest.setItems(items);
-
-            // 委托 Service 完成全链路下单
-            PrintOrderVO orderVO = printOrderService.createPrintOrder(userId, createRequest);
+            // 委托 Service 完成全链路下单（items 已含 per-item 独立配置与计价）
+            PrintOrderVO orderVO = printOrderService.createPrintOrder(userId, printOrderDTO);
 
             return R.success(orderVO.getId());
         } catch (BusinessException e) {

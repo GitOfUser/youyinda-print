@@ -1,17 +1,17 @@
 .container {
   min-height: 100vh;
-  background-color: var(--bg-cream);
-  padding-bottom: var(--spacing-xl);
+  background-color: var(--bg);
+  padding-bottom: var(--s-xl);
 }
 
 .tab-bar {
   display: flex;
-  background: var(--white);
+  background: var(--card);
   padding: 0 var(--page-margin);
   position: sticky;
   top: 0;
   z-index: 10;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+  box-shadow: 0 2rpx 8rpx rgba(15, 23, 42, 0.04);
 }
 
 .tab-item {
@@ -19,14 +19,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--spacing-lg) 0;
+  padding: var(--s-lg) 0;
   font-size: var(--fs-base);
-  color: var(--text-secondary);
+  color: var(--t3);
   position: relative;
 }
 
 .tab-item.active {
-  color: var(--primary);
+  color: var(--brand);
   font-weight: 600;
 }
 
@@ -35,76 +35,65 @@
   bottom: 0;
   width: 48rpx;
   height: 6rpx;
-  background: var(--primary-gradient);
+  background: var(--brand-gradient);
   border-radius: 3rpx;
 }
 
 .order-list {
-  padding-top: var(--spacing-md);
+  padding-top: var(--s-md);
 }
 
 .order-card {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--s-md);
 }
 
 .order-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: var(--spacing-md);
-  border-bottom: 1rpx solid var(--divider);
+  padding-bottom: var(--s-md);
+  border-bottom: 1rpx solid var(--line);
+}
+
+.order-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-sm);
+  min-width: 0;
+}
+
+.tag .tag-text {
+  margin-left: 4rpx;
 }
 
 .order-no {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
-}
-
-.order-status {
-  font-size: var(--fs-sm);
-  font-weight: 500;
-}
-
-.status-pending {
-  color: var(--danger);
-}
-
-.status-processing {
-  color: var(--warning);
-}
-
-.status-completed {
-  color: var(--success);
-}
-
-.status-cancelled {
-  color: var(--text-secondary);
+  color: var(--t3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .order-goods {
-  padding: var(--spacing-md) 0;
+  padding: var(--s-md) 0;
 }
 
 .goods-item {
   display: flex;
   align-items: center;
-  padding: var(--spacing-sm) 0;
+  padding: var(--s-sm) 0;
 }
 
 .goods-icon-wrap {
   width: 96rpx;
   height: 96rpx;
-  background: var(--bg-gray);
-  border-radius: var(--radius-md);
+  background: var(--fill);
+  border-radius: var(--r-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: var(--spacing-md);
+  margin-right: var(--s-md);
   flex-shrink: 0;
-}
-
-.goods-icon {
-  font-size: 44rpx;
 }
 
 .goods-info {
@@ -114,7 +103,7 @@
 
 .goods-name {
   font-size: var(--fs-base);
-  color: var(--text-title);
+  color: var(--t1);
   font-weight: 500;
   margin-bottom: 8rpx;
   overflow: hidden;
@@ -124,7 +113,7 @@
 
 .goods-desc {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
+  color: var(--t2);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -132,58 +121,47 @@
 
 .goods-qty {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
+  color: var(--t2);
   flex-shrink: 0;
-  margin-left: var(--spacing-sm);
+  margin-left: var(--s-sm);
 }
 
 .order-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: var(--spacing-md);
-  border-top: 1rpx solid var(--divider);
+  padding-top: var(--s-md);
+  border-top: 1rpx solid var(--line);
 }
 
 .order-time {
   font-size: var(--fs-xs);
-  color: var(--text-hint);
+  color: var(--t3);
 }
 
 .order-price-wrap {
   display: flex;
   align-items: baseline;
+  gap: 6rpx;
 }
 
 .order-price-label {
   font-size: var(--fs-sm);
-  color: var(--text-body);
+  color: var(--t2);
 }
 
 .order-price {
   font-size: var(--fs-lg);
   font-weight: 700;
-  color: var(--primary);
+  color: var(--brand);
 }
 
 .order-actions {
   display: flex;
   justify-content: flex-end;
-  gap: var(--spacing-sm);
-  padding-top: var(--spacing-md);
-  margin-top: var(--spacing-md);
-  border-top: 1rpx solid var(--divider);
-}
-
-.action-btn {
-  height: 64rpx;
-  padding: 0 28rpx;
-  font-size: var(--fs-sm);
-}
-
-.action-btn.primary {
-  background: var(--primary-gradient);
-  color: white;
-  border: none;
-  box-shadow: var(--primary-shadow);
+  align-items: center;
+  gap: var(--s-sm);
+  padding-top: var(--s-md);
+  margin-top: var(--s-md);
+  border-top: 1rpx solid var(--line);
 }

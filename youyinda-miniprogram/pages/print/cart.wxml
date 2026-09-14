@@ -1,0 +1,63 @@
+<view class="container">
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{items.length === 0}}">
+    <icon name="cart" size="{{120}}" color="#CBD5E1" />
+    <view class="empty-text">购物车是空的</view>
+    <view class="empty-desc">上传文件后自动加入购物车</view>
+    <button class="btn-ghost empty-upload-btn" bindtap="goUpload">去上传文件</button>
+  </view>
+
+  <block wx:else>
+    <!-- 工具栏 -->
+    <view class="cart-toolbar page-margin">
+      <view class="select-all" bindtap="toggleAll">
+        <view class="check-circle {{allSelected ? 'on' : ''}}">
+          <icon wx:if="{{allSelected}}" name="check" size="{{26}}" color="#FFFFFF" />
+        </view>
+        <text class="toolbar-text">全选</text>
+      </view>
+      <view class="toolbar-actions">
+        <text class="toolbar-btn" bindtap="batchConfig">批量配置</text>
+        <text class="toolbar-btn danger" bindtap="clearCart">清空</text>
+      </view>
+    </view>
+
+    <!-- 购物车列表 -->
+    <view class="cart-list">
+      <view class="card cart-item" wx:for="{{items}}" wx:key="cartId">
+        <view class="cart-check" bindtap="toggleSelect" data-id="{{item.cartId}}">
+          <view class="check-circle {{item.selected ? 'on' : ''}}">
+            <icon wx:if="{{item.selected}}" name="check" size="{{26}}" color="#FFFFFF" />
+          </view>
+        </view>
+        <view class="icon-tile-sm tile-print cart-ico">
+          <icon name="file" size="{{36}}" color="#4F46E5" />
+        </view>
+        <view class="cart-main">
+          <view class="cart-name">{{item.name}}</view>
+          <view class="cart-size">{{item.size}}</view>
+          <view class="tag tag-print cart-summary">{{item.configSummary}}</view>
+          <view class="cart-price">¥{{item.config.totalPrice}}</view>
+        </view>
+        <view class="cart-ops">
+          <view class="txt-btn" bindtap="editConfig" data-id="{{item.cartId}}">配置</view>
+          <view class="txt-btn danger" bindtap="removeItem" data-id="{{item.cartId}}">删除</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom-bar-space"></view>
+    <!-- 底部结算栏 -->
+    <view class="bottom-bar">
+      <view class="bottom-bar-left">
+        <view class="bb-label">已选 {{selectedCount}} 件</view>
+        <view class="bottom-bar-price">
+          <text class="bottom-bar-label">合计</text>
+          <text class="price-symbol">¥</text>
+          <text class="bottom-bar-value">{{selectedTotal}}</text>
+        </view>
+      </view>
+      <button class="btn-primary btn-print" bindtap="goConfirm">去结算</button>
+    </view>
+  </block>
+</view>

@@ -1,203 +1,144 @@
-.container {
-  min-height: 100vh;
-  background-color: var(--bg-cream);
-  padding-bottom: 120rpx;
-}
+/* 首页：仅结构性样式，颜色/字号/圆角一律引用 app.wxss 变量 */
 
-/* 顶部区域 */
-.header-section {
-  background: var(--white);
-  padding: var(--spacing-md) var(--page-margin);
-  padding-bottom: var(--spacing-lg);
-}
-
-.location-bar {
+/* 顶部头部 */
+.home-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--spacing-md);
+  background: var(--card);
+  padding: var(--s-lg) var(--page-margin) var(--s-md);
 }
 
-.location {
-  display: flex;
-  align-items: center;
-  gap: 8rpx;
+.greeting {
+  flex: 1;
+  min-width: 0;
 }
 
-.location-icon {
-  font-size: 32rpx;
+.greeting-title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--t1);
+  margin-bottom: 8rpx;
 }
 
-.location-text {
-  font-size: var(--fs-base);
-  font-weight: 600;
-  color: var(--text-title);
-}
-
-.location-arrow {
-  font-size: 20rpx;
-  color: var(--text-secondary);
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-}
-
-.action-icon {
-  font-size: 40rpx;
-}
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  height: 76rpx;
-  background: var(--bg-gray);
-  border-radius: var(--radius-full);
-  padding: 0 var(--spacing-lg);
-}
-
-.search-icon {
-  font-size: 32rpx;
-  opacity: 0.6;
-}
-
-.search-placeholder {
+.greeting-sub {
   font-size: var(--fs-sm);
-  color: var(--text-hint);
+  color: var(--t3);
 }
 
-/* Banner区域 */
-.banner-section {
-  padding: var(--spacing-lg) var(--page-margin);
+.bell-tile {
+  margin-left: var(--s-md);
 }
 
+/* 品牌渐变 Banner */
 .banner-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: linear-gradient(135deg, #FF7D00 0%, #FF9A3C 100%);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg) var(--spacing-xl);
-  box-shadow: 0 8rpx 24rpx rgba(255,125,0,0.25);
+  margin: var(--s-md) var(--page-margin);
+  padding: var(--s-xl) var(--s-lg);
+  border-radius: var(--r-lg);
+  background: var(--brand-gradient);
+  box-shadow: var(--brand-shadow);
 }
 
-.banner-content {
-  color: white;
+.banner-deco {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--white);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.banner-deco-1 {
+  width: 200rpx;
+  height: 200rpx;
+  top: -60rpx;
+  right: -40rpx;
+}
+
+.banner-deco-2 {
+  width: 140rpx;
+  height: 140rpx;
+  bottom: -40rpx;
+  left: -30rpx;
+  opacity: 0.08;
+}
+
+.banner-body {
+  position: relative;
+  z-index: 1;
 }
 
 .banner-title {
+  color: var(--white);
   font-size: var(--fs-md);
   font-weight: 600;
   margin-bottom: 8rpx;
 }
 
 .banner-subtitle {
+  color: var(--white);
   font-size: var(--fs-xl);
   font-weight: 700;
 }
 
-.banner-tag {
-  background: rgba(255,255,255,0.25);
-  color: white;
+.banner-capsule {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  margin-left: var(--s-md);
+  padding: 14rpx 28rpx;
+  border: 2rpx solid var(--white);
+  border-radius: var(--r-full);
+  color: var(--white);
   font-size: var(--fs-sm);
   font-weight: 500;
-  padding: 12rpx 28rpx;
-  border-radius: var(--radius-full);
 }
 
-/* 主要服务入口 */
-.main-entrance {
+/* 双服务主入口 */
+.entrance-row {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-  padding: 0 var(--page-margin) var(--spacing-md);
+  gap: var(--s-md);
+  padding: 0 var(--page-margin) var(--s-md);
 }
 
 .entrance-card {
-  display: flex;
-  align-items: center;
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-lg);
-  box-shadow: var(--shadow-card);
-  position: relative;
-  overflow: hidden;
-}
-
-.print-card {
-  border-left: 8rpx solid var(--print-primary);
-}
-
-.express-card {
-  border-left: 8rpx solid var(--express-primary);
-}
-
-.entrance-icon-wrap {
-  width: 96rpx;
-  height: 96rpx;
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: var(--spacing-lg);
-}
-
-.print-icon-wrap {
-  background: var(--print-primary-light);
-}
-
-.express-icon-wrap {
-  background: var(--express-primary-light);
-}
-
-.entrance-icon-text {
-  font-size: 48rpx;
-}
-
-.entrance-info {
   flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--card);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--s-lg) var(--s-md);
+}
+
+.entrance-tile {
+  margin-bottom: var(--s-sm);
 }
 
 .entrance-title {
-  font-size: var(--fs-lg);
+  font-size: var(--fs-md);
   font-weight: 700;
-  color: var(--text-title);
-  margin-bottom: 8rpx;
+  color: var(--t1);
+  margin-bottom: 6rpx;
 }
 
 .entrance-desc {
-  font-size: var(--fs-sm);
-  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  color: var(--t3);
 }
 
-.entrance-arrow {
-  font-size: 48rpx;
-  color: var(--text-hint);
-  font-weight: 300;
-}
-
-/* 区块标题 */
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-lg);
-}
-
-.section-title {
-  font-size: var(--fs-md);
-  font-weight: 700;
-  color: var(--text-title);
-}
-
-/* 服务网格 */
+/* 快捷服务网格 */
 .service-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--spacing-lg) 0;
+  gap: var(--s-lg) 0;
 }
 
 .service-item {
@@ -206,92 +147,49 @@
   align-items: center;
 }
 
-.service-icon-wrap {
-  width: 88rpx;
-  height: 88rpx;
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: var(--spacing-sm);
-}
-
-.orange-bg {
-  background: var(--primary-light);
-}
-
-.blue-bg {
-  background: var(--print-primary-light);
-}
-
-.red-bg {
-  background: var(--danger-light);
-}
-
-.gray-bg {
-  background: var(--bg-gray);
-}
-
-.service-icon {
-  font-size: 40rpx;
-}
-
 .service-text {
-  font-size: var(--fs-xs);
-  color: var(--text-body);
+  margin-top: var(--s-xs);
+  font-size: var(--fs-sm);
+  color: var(--t2);
 }
 
-/* 活动列表 */
+/* 限时活动 */
 .promotion-list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--s-md);
 }
 
 .promotion-item {
   display: flex;
   align-items: center;
-  padding: var(--spacing-md);
-  background: var(--bg-cream);
-  border-radius: var(--radius-md);
+  padding: var(--s-md);
+  background: var(--fill);
+  border-radius: var(--r-md);
 }
 
 .promotion-tag {
-  color: white;
-  font-size: var(--fs-xs);
-  font-weight: 500;
-  padding: 8rpx 16rpx;
-  border-radius: var(--radius-xs);
-  margin-right: var(--spacing-md);
   flex-shrink: 0;
-}
-
-.new-tag {
-  background: var(--print-primary);
-}
-
-.hot-tag {
-  background: var(--danger);
+  margin-right: var(--s-md);
 }
 
 .promotion-content {
   flex: 1;
+  min-width: 0;
 }
 
 .promotion-title {
   font-size: var(--fs-base);
-  color: var(--text-title);
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--t1);
   margin-bottom: 4rpx;
 }
 
 .promotion-desc {
   font-size: var(--fs-xs);
-  color: var(--text-secondary);
+  color: var(--t3);
 }
 
 .promotion-arrow {
-  font-size: 36rpx;
-  color: var(--text-hint);
   flex-shrink: 0;
 }

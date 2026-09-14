@@ -4,88 +4,71 @@
     <view class="header-desc">请填写物品详细信息，便于准确计费</view>
   </view>
 
+  <!-- 物品类型 -->
   <view class="card">
     <view class="card-header">
       <text class="card-title">物品类型</text>
-      <text class="card-required">*</text>
+      <text class="req">*</text>
     </view>
-    <view class="type-grid">
-      <view class="type-item {{selectedType === item.value ? 'active' : ''}}" wx:for="{{goodsTypes}}" wx:key="value" bindtap="selectType" data-type="{{item.value}}">
-        <text class="type-icon">{{item.icon}}</text>
-        <text class="type-name">{{item.name}}</text>
+    <view class="option-group type-grid">
+      <view class="opt type-opt {{itemType === '文件' ? 'active-express' : ''}}" bindtap="selectItemType">
+        <icon name="file" size="{{36}}" color="{{itemType === '文件' ? '#0D9488' : '#94A3B8'}}" />
+        <text class="type-name">文件</text>
+      </view>
+      <view class="opt type-opt {{itemType === '衣服' ? 'active-express' : ''}}" bindtap="selectItemType">
+        <icon name="users" size="{{36}}" color="{{itemType === '衣服' ? '#0D9488' : '#94A3B8'}}" />
+        <text class="type-name">衣服</text>
+      </view>
+      <view class="opt type-opt {{itemType === '食品' ? 'active-express' : ''}}" bindtap="selectItemType">
+        <icon name="gift" size="{{36}}" color="{{itemType === '食品' ? '#0D9488' : '#94A3B8'}}" />
+        <text class="type-name">食品</text>
+      </view>
+      <view class="opt type-opt {{itemType === '电子产品' ? 'active-express' : ''}}" bindtap="selectItemType">
+        <icon name="zap" size="{{36}}" color="{{itemType === '电子产品' ? '#0D9488' : '#94A3B8'}}" />
+        <text class="type-name">电子产品</text>
+      </view>
+      <view class="opt type-opt {{itemType === '其他' ? 'active-express' : ''}}" bindtap="selectItemType">
+        <icon name="more" size="{{36}}" color="{{itemType === '其他' ? '#0D9488' : '#94A3B8'}}" />
+        <text class="type-name">其他</text>
       </view>
     </view>
   </view>
 
+  <!-- 物品名称 -->
+  <view class="card">
+    <view class="card-header">
+      <text class="card-title">物品名称</text>
+    </view>
+    <input class="input" placeholder="如：合同文件、冬装等" value="{{itemName}}" bindinput="onItemNameInput" />
+  </view>
+
+  <!-- 物品重量 -->
   <view class="card">
     <view class="card-header">
       <text class="card-title">物品重量</text>
-      <text class="card-required">*</text>
+      <text class="req">*</text>
     </view>
-    <view class="weight-section">
-      <view class="weight-control">
-        <view class="weight-btn" bindtap="decreaseWeight">
-          <text>−</text>
-        </view>
-        <view class="weight-input-wrap">
-          <input class="weight-input" type="digit" value="{{weight}}" bindinput="onWeightInput" />
-          <text class="weight-unit">kg</text>
-        </view>
-        <view class="weight-btn" bindtap="increaseWeight">
-          <text>+</text>
-        </view>
-      </view>
-      <view class="weight-tips">
-        <text>首重1kg内按起步价计算，超出部分按续重计费</text>
-      </view>
-      <view class="quick-weight">
-        <view class="quick-tag {{weight === item ? 'active' : ''}}" wx:for="{{quickWeights}}" wx:key="*this" bindtap="setWeight" data-weight="{{item}}">
-          {{item}}kg
-        </view>
-      </view>
+    <view class="weight-row">
+      <input class="weight-input" type="digit" placeholder="0.0" value="{{weight}}" bindinput="onWeightInput" />
+      <text class="weight-unit">kg</text>
     </view>
+    <view class="weight-tip">首重 1kg 内按起步价计算，超出部分按续重计费</view>
   </view>
 
+  <!-- 物品描述 -->
   <view class="card">
     <view class="card-header">
       <text class="card-title">物品描述</text>
-      <text class="card-optional">选填</text>
+      <text class="opt-tip">选填</text>
     </view>
-    <view class="input-wrap">
-      <textarea class="desc-input" placeholder="请填写物品名称、数量等信息，便于快递员确认" value="{{remark}}" bindinput="onRemarkInput" maxlength="100" />
-      <view class="char-count">{{remark.length}}/100</view>
-    </view>
+    <textarea class="desc-input" placeholder="请填写物品名称、数量等信息，便于快递员确认" value="{{remark}}" bindinput="onRemarkInput" maxlength="100" />
+    <view class="char-count">{{remark.length}}/100</view>
   </view>
 
-  <view class="card">
-    <view class="card-header">
-      <text class="card-title">保价服务</text>
-    </view>
-    <view class="insurance-row" bindtap="toggleInsurance">
-      <view class="insurance-info">
-        <view class="insurance-label">物品保价</view>
-        <view class="insurance-desc">按保价金额的1%收取保价费，最高保价10000元</view>
-      </view>
-      <view class="insurance-value">
-        <text wx:if="{{insuranceAmount > 0}}">¥{{insuranceAmount}}</text>
-        <switch class="switch" checked="{{insuranceEnabled}}" color="#FF7D00" bindchange="onInsuranceChange" />
-      </view>
-    </view>
-    <view wx:if="{{insuranceEnabled}}" class="insurance-input-wrap">
-      <text class="insurance-prefix">¥</text>
-      <input class="insurance-input" type="digit" placeholder="请输入保价金额" value="{{insuranceAmount}}" bindinput="onInsuranceAmountInput" />
-    </view>
-  </view>
-
-  <view class="bottom-bar-placeholder"></view>
-
+  <view class="bottom-bar-space"></view>
   <view class="bottom-bar">
-    <view class="bottom-bar-left">
-      <view class="bottom-bar-label">预估运费</view>
-      <view class="bottom-bar-value">¥{{estimatedPrice}}</view>
-    </view>
-    <button class="btn-primary {{!(selectedType && weight) ? 'btn-disabled' : ''}}" bindtap="goToCompany" disabled="{{!(selectedType && weight)}}">
-      选择快递
+    <button class="btn-primary btn-block btn-express" bindtap="goToCompany" disabled="{{!(itemType && weight)}}">
+      下一步
     </button>
   </view>
 </view>

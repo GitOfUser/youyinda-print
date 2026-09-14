@@ -20,21 +20,21 @@ import java.util.List;
 @FeignClient(name = "expressProvider", url = "${third-party.express.provider-url:https://api.kuaidi100.com}", fallback = ExpressProviderFallback.class)
 public interface ExpressProviderFeignClient {
 
-    @CircuitBreaker(name = "expressProvider", fallbackMethod = "queryPriceFallback")
+    @CircuitBreaker(name = "expressProvider")
     @Retry(name = "expressProviderIdempotent")
     @PostMapping("/api/express/price/query")
     ThirdApiResponse<List<ExpressPriceVO>> queryPrice(@RequestBody ExpressPriceQueryRequest request);
 
-    @CircuitBreaker(name = "expressProvider", fallbackMethod = "createOrderFallback")
+    @CircuitBreaker(name = "expressProvider")
     @PostMapping("/api/express/order/create")
     ThirdApiResponse<ExpressOrderVO> createOrder(@RequestBody ExpressOrderRequest request);
 
-    @CircuitBreaker(name = "expressProvider", fallbackMethod = "queryTrackFallback")
+    @CircuitBreaker(name = "expressProvider")
     @Retry(name = "expressProviderIdempotent")
     @PostMapping("/api/express/track/query")
     ThirdApiResponse<ExpressTrackVO> queryTrack(@RequestBody ExpressTrackQueryRequest request);
 
-    @CircuitBreaker(name = "expressProvider", fallbackMethod = "cancelOrderFallback")
+    @CircuitBreaker(name = "expressProvider")
     @PostMapping("/api/express/order/cancel")
     ThirdApiResponse<Boolean> cancelOrder(@RequestBody ExpressCancelOrderRequest request);
 }

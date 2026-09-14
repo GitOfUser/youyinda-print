@@ -3,12 +3,11 @@ const request = require('../../../utils/request');
 Page({
   data: {
     addressId: null,
-    form: {
+    formData: {
       name: '',
       phone: '',
-      province: '',
-      city: '',
-      district: '',
+      region: [],
+      regionText: '',
       detail: '',
       isDefault: false
     }
@@ -30,13 +29,16 @@ Page({
       id: this.data.addressId
     }).then(res => {
       wx.hideLoading();
+      // 回显时把后端返回的 province/city/district 组装回 region 数组与 regionText
+      const province = res.province || '';
+      const city = res.city || '';
+      const district = res.district || '';
       this.setData({
-        form: {
+        formData: {
           name: res.name || '',
           phone: res.phone || '',
-          province: res.province || '',
-          city: res.city || '',
-          district: res.district || '',
+          region: province ? [province, city, district] : [],
+          regionText: province ? `${province}${city}${district}` : '',
           detail: res.detail || '',
           isDefault: res.isDefault || false
         }
@@ -53,68 +55,29 @@ Page({
   onInput(e) {
     const field = e.currentTarget.dataset.field;
     this.setData({
-      [`form.${field}`]: e.detail.value
+      [`formData.${field}`]: e.detail.value
     });
   },
 
   onSwitchChange(e) {
     this.setData({
-      'form.isDefault': e.detail.value
+      'formData.isDefault': e.detail.value
     });
   },
 
-  selectRegion() {
-    wx.chooseLocation({
-      success: (res) => {
-        // TODO: 应调用腾讯地图逆地理编码接口解析经纬度获取省市区
-        // 当前方案：使用用户选择的地址信息，让用户手动补充省市区
-        const address = res.address || '';
-        
-        // 简单解析：尝试从地址中提取省市信息（实际应使用地图SDK）
-        let province = this.data.form.province;
-        let city = this.data.form.city;
-        let district = this.data.form.district;
-        
-        if (address) {
-          // 如果地址包含已知城市信息，尝试提取
-          const cityMatch = address.match(/(.*?市)/);
-          if (cityMatch) {
-            city = cityMatch[1];
-          }
-          
-          const provinceMatch = address.match(/(.*?省)/);
-          if (provinceMatch) {
-            province = provinceMatch[1];
-          }
-        }
-        
-        this.setData({
-          'form.province': province,
-          'form.city': city,
-          'form.district': district,
-          'form.detail': address || this.data.form.detail
-        });
-        
-        if (!province || !city) {
-          wx.showToast({
-            title: '请手动选择或输入省市区',
-            icon: 'none',
-            duration: 2000
-          });
-        }
-      },
-      fail: (err) => {
-        console.error('选择位置失败:', err);
-        wx.showToast({
-          title: '选择位置失败，请手动输入',
-          icon: 'none'
-        });
-      }
+  /**
+   * 所在地区选择（微信内置 region 三级联动）
+   */
+  onRegionChange(e) {
+    const region = e.detail.value || [];
+    this.setData({
+      'formData.region': region,
+      'formData.regionText': region.join('')
     });
   },
 
   saveAddress() {
-    const { name, phone, province, detail } = this.data.form;
+    const { name, phone, region, detail, isDefault } = this.data.formData;
 
     if (!name) {
       wx.showToast({
@@ -140,7 +103,8 @@ Page({
       return;
     }
 
-    if (!province) {
+    // 校验省市区已选
+    if (!region || region.length < 3) {
       wx.showToast({
         title: '请选择所在地区',
         icon: 'none'
@@ -160,13 +124,23 @@ Page({
       title: '保存中...'
     });
 
-    const url = this.data.addressId ? '/user/address/update' : '/user/address/add';
-    const data = this.data.addressId ? {
-      id: this.data.addressId,
-      ...this.data.form
-    } : this.data.form;
+    // 提交给后端仍是 province/city/district 三个独立字段，从 region 数组取值
+    const payload = {
+      name,
+      phone,
+      province: region[0],
+      city: region[1],
+      district: region[2],
+      detail,
+      isDefault
+    };
+    if (this.data.addressId) {
+      payload.id = this.data.addressId;
+    }
 
-    request.post(url, data).then(() => {
+    const url = this.data.addressId ? '/user/address/update' : '/user/address/add';
+
+    request.post(url, payload).then(() => {
       wx.hideLoading();
       wx.showToast({
         title: '保存成功',

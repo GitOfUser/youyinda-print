@@ -1,67 +1,73 @@
 <view class="container">
-  <view class="upload-tips card">
-    <view class="tips-header">
-      <view class="tips-icon icon-box icon-box-print">📋</view>
-      <view class="tips-content">
-        <view class="tips-title">上传须知</view>
-        <view class="tips-desc">支持Word、Excel、PDF、图片等格式，单个文件不超过50MB</view>
-      </view>
+  <!-- 上传须知 -->
+  <view class="card tip-card">
+    <view class="icon-tile tile-print tip-ico">
+      <icon name="file" size="{{36}}" color="#4F46E5" />
+    </view>
+    <view class="tip-body">
+      <view class="tip-title">上传须知</view>
+      <view class="tip-desc">支持 PDF / Word / Excel / 图片，单个文件不超过 50MB，上传成功后自动加入购物车</view>
     </view>
   </view>
 
-  <view class="upload-area card" bindtap="chooseFile">
-    <view class="upload-inner">
-      <view class="upload-cloud-icon">☁️</view>
-      <view class="upload-main-text">点击选择文件或拖拽到此处</view>
-      <view class="upload-sub-text">支持 .doc .docx .xls .xlsx .pdf .jpg .png 格式</view>
-      <view class="upload-btn">
-        <text class="upload-btn-text">选择文件</text>
-      </view>
+  <!-- 大虚线边框上传区 -->
+  <view class="card upload-area" bindtap="chooseFile">
+    <view class="icon-tile-grad-brand upload-tile">
+      <icon name="upload" size="{{44}}" color="#FFFFFF" />
     </view>
+    <view class="upload-main">点击选择文件</view>
+    <view class="upload-sub">支持 PDF / Word / 图片</view>
   </view>
 
+  <!-- 上传中提示 -->
+  <view class="uploading-bar page-margin" wx:if="{{uploading}}">
+    <icon name="refresh" size="{{28}}" color="#4F46E5" />
+    <text class="uploading-text">文件上传中，请稍候…</text>
+  </view>
+
+  <!-- 文件列表 -->
   <view class="file-section" wx:if="{{fileList.length > 0}}">
     <view class="section-header page-margin">
-      <view class="section-title">已选文件</view>
-      <view class="file-count-badge">{{fileList.length}}个</view>
+      <view class="card-title">本批已选文件</view>
+      <view class="count-badge">{{fileList.length}} 个</view>
     </view>
+
     <view class="file-list">
-      <view class="file-item card" wx:for="{{fileList}}" wx:key="index">
-        <view class="file-type-icon icon-box icon-box-print">📄</view>
-        <view class="file-info">
+      <view class="card file-card" wx:for="{{fileList}}" wx:key="index">
+        <view class="icon-tile-sm tile-print file-ico">
+          <icon name="file" size="{{36}}" color="#4F46E5" />
+        </view>
+        <view class="file-main">
           <view class="file-name">{{item.name}}</view>
           <view class="file-meta">
             <text class="file-size">{{item.size}}</text>
-            <text class="file-status" wx:if="{{item.status === 'uploading'}}">上传中 {{item.progress}}%</text>
-            <text class="file-status success" wx:if="{{item.status === 'success'}}">上传成功</text>
-            <text class="file-status error" wx:if="{{item.status === 'error'}}">上传失败</text>
+            <text class="file-stat up" wx:if="{{item.status === 'uploading'}}">上传中 {{item.progress}}%</text>
+            <text class="file-stat ok" wx:elif="{{item.status === 'success'}}">已加入购物车</text>
+            <text class="file-stat err" wx:elif="{{item.status === 'error'}}">上传失败</text>
           </view>
-          <view class="file-progress" wx:if="{{item.status === 'uploading'}}">
-            <view class="file-progress-bar" style="width: {{item.progress}}%"></view>
+          <view class="progress" wx:if="{{item.status === 'uploading' || item.status === 'success'}}">
+            <view class="progress-bar {{item.status === 'success' ? 'done' : ''}}" style="width: {{item.status === 'success' ? 100 : item.progress}}%"></view>
           </view>
         </view>
-        <view class="file-actions">
-          <view class="file-retry" wx:if="{{item.status === 'error'}}" bindtap="retryUpload" data-index="{{index}}">重试</view>
-          <view class="file-delete" bindtap="deleteFile" data-index="{{index}}">
-            <text class="delete-icon">✕</text>
+        <view class="file-ops">
+          <view class="retry-btn" wx:if="{{item.status === 'error'}}" bindtap="retryUpload" data-index="{{index}}">重试</view>
+          <view class="del-btn" bindtap="deleteFile" data-index="{{index}}">
+            <icon name="trash" size="{{32}}" color="#94A3B8" />
           </view>
         </view>
       </view>
     </view>
   </view>
 
-  <view class="bottom-bar-placeholder" wx:if="{{fileList.length > 0}}"></view>
-
-  <view class="bottom-bar" wx:if="{{fileList.length > 0}}">
+  <view class="bottom-bar-space" wx:if="{{fileList.length > 0 || cartCount > 0}}"></view>
+  <view class="bottom-bar" wx:if="{{fileList.length > 0 || cartCount > 0}}">
     <view class="bottom-bar-left">
-      <view class="file-count-text">
-        <text>共</text>
-        <text class="count-num">{{fileList.length}}</text>
-        <text>个文件</text>
+      <view class="bb-label">已选文件</view>
+      <view class="bottom-bar-price">
+        <text class="bottom-bar-value">{{fileList.length}}</text>
+        <text class="bb-unit">个 · 购物车 {{cartCount}}</text>
       </view>
     </view>
-    <button class="btn-primary btn-print btn-next" bindtap="goToConfig" disabled="{{!canNext}}">
-      下一步
-    </button>
+    <button class="btn-primary btn-print" bindtap="goCart">下一步</button>
   </view>
 </view>

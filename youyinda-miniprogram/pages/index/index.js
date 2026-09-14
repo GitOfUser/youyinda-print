@@ -6,10 +6,8 @@ Page({
 
   onLoad() {
     if (!app.globalData.isLogin) {
-      app.login().catch((err) => {
-        console.error('自动登录失败:', err);
-        // 不强制跳转登录页，让用户手动触发登录
-      });
+      // 密码登录需用户手动输入手机号和密码，此处不自动登录
+      console.log('未登录，等待用户手动登录');
     }
   },
 

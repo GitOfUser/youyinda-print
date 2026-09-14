@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
   servlet:
     context-path: /api
 
@@ -63,6 +63,12 @@ jwt:
   secret: youyinda-secret-key-2024-jwt-token
   expiration: 604800000
 
+sms:
+  # dev-mode=true 时验证码仅打印日志，不真实发送短信（上线前替换为阿里云/腾讯云短信并关闭）
+  dev-mode: true
+  # 验证码有效期（秒）
+  expire-seconds: 300
+
 wechat:
   miniapp:
     appId: wx1234567890abcdef
@@ -73,7 +79,7 @@ wechat:
     privateKeyPath: classpath:cert/apiclient_key.pem
     privateCertPath: classpath:cert/apiclient_cert.pem
     serialNo: your_serial_no
-    notifyUrl: http://localhost:8080/api/v1/pay/notify
+    notifyUrl: http://localhost:8081/api/v1/pay/notify
 
 feign:
   circuitbreaker:
@@ -99,6 +105,8 @@ third-party:
   express:
     # FeignClient 默认占位 URL（实际调用由 Service 层通过 ThirdApiConfigService 动态选择）
     provider-url: https://api.kuaidi100.com
+    # 第三方快递不可用时降级为本地模拟单号（测试/联调环境 true；生产必须 false）
+    mock-enabled: true
     providers:
       - code: kuaidi100
         name: 快递100·百递云

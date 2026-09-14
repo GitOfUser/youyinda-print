@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "打印购物车",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
+}

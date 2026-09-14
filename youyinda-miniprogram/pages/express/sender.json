@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "填写寄件信息"
+  "navigationBarTitleText": "填写寄件信息",
+  "usingComponents": {
+    "icon": "/components/icon/icon"
+  }
 }

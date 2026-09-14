@@ -3,7 +3,7 @@
   <view class="empty-icon-wrapper">
     <image wx:if="{{image}}" class="empty-image" src="{{image}}" mode="aspectFit"/>
     <view wx:else class="empty-icon-circle">
-      <text class="empty-icon">{{icon}}</text>
+      <icon name="{{icon}}" size="{{72}}" color="#94A3B8" strokeWidth="{{1.6}}" />
     </view>
   </view>
   <text class="empty-title">{{title}}</text>

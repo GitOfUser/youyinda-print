@@ -82,43 +82,63 @@ App({
   },
 
   /**
-   * 微信登录
+   * 手机号密码登录
+   * @param {string} phone 手机号
+   * @param {string} password 密码
    * @returns {Promise} 登录结果
    */
-  login() {
+  loginWithPassword(phone, password) {
     return new Promise((resolve, reject) => {
-      wx.login({
-        success: (res) => {
-          if (res.code) {
-            console.log('[App] 获取微信code成功');
-            // 调用后端登录接口
-            request.post('/auth/login', {
-              code: res.code
-            }).then((result) => {
-              console.log('[App] 登录成功:', result);
-              this.globalData.token = result.token;
-              this.globalData.userInfo = result.userInfo;
-              this.globalData.openid = result.openid;
-              this.globalData.isLogin = true;
-              
-              wx.setStorageSync('token', result.token);
-              wx.setStorageSync('userInfo', result.userInfo);
-              wx.setStorageSync('openid', result.openid);
-              
-              resolve(result);
-            }).catch((err) => {
-              console.error('[App] 登录失败:', err);
-              reject(err);
-            });
-          } else {
-            console.error('[App] 获取微信code失败:', res);
-            reject(new Error('微信登录失败'));
-          }
-        },
-        fail: (err) => {
-          console.error('[App] wx.login调用失败:', err);
-          reject(err);
-        }
+      // 调用后端手机号密码登录接口
+      request.post('/auth/password-login', {
+        phone: phone,
+        password: password
+      }).then((result) => {
+        console.log('[App] 手机号密码登录成功:', result);
+        this.globalData.token = result.token;
+        this.globalData.userInfo = result.userInfo;
+        this.globalData.openid = result.openid;
+        this.globalData.isLogin = true;
+
+        wx.setStorageSync('token', result.token);
+        wx.setStorageSync('userInfo', result.userInfo);
+        wx.setStorageSync('openid', result.openid);
+
+        resolve(result);
+      }).catch((err) => {
+        console.error('[App] 手机号密码登录失败:', err);
+        reject(err);
+      });
+    });
+  },
+
+  /**
+   * 手机号密码注册
+   * @param {string} phone 手机号
+   * @param {string} password 密码
+   * @returns {Promise} 注册结果（注册成功即登录）
+   */
+  register(phone, password) {
+    return new Promise((resolve, reject) => {
+      // 调用后端注册接口
+      request.post('/auth/register', {
+        phone: phone,
+        password: password
+      }).then((result) => {
+        console.log('[App] 注册成功:', result);
+        this.globalData.token = result.token;
+        this.globalData.userInfo = result.userInfo;
+        this.globalData.openid = result.openid;
+        this.globalData.isLogin = true;
+
+        wx.setStorageSync('token', result.token);
+        wx.setStorageSync('userInfo', result.userInfo);
+        wx.setStorageSync('openid', result.openid);
+
+        resolve(result);
+      }).catch((err) => {
+        console.error('[App] 注册失败:', err);
+        reject(err);
       });
     });
   },
@@ -157,11 +177,11 @@ App({
           confirmText: '去登录',
           success: (res) => {
             if (res.confirm) {
-              this.login().then(() => {
-                resolve();
-              }).catch((err) => {
-                reject(err);
+              // 手机号验证码登录无法静默自动重登，跳转登录页
+              wx.reLaunch({
+                url: '/pages/login/index'
               });
+              reject(new Error('请先登录'));
             } else {
               reject(new Error('用户取消登录'));
             }

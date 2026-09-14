@@ -1,100 +1,101 @@
 <view class="container">
-  <view class="address-card card" bindtap="selectAddress">
-    <view class="address-content" wx:if="{{address}}">
-      <view class="address-icon icon-box icon-box-print">📍</view>
-      <view class="address-info">
-        <view class="address-top">
-          <text class="address-name">{{address.name}}</text>
-          <text class="address-phone">{{address.phone}}</text>
+  <!-- 收货地址 -->
+  <view class="card address-card" bindtap="selectAddress">
+    <block wx:if="{{address}}">
+      <view class="icon-tile tile-print addr-ico">
+        <icon name="location" size="{{36}}" color="#4F46E5" />
+      </view>
+      <view class="addr-info">
+        <view class="addr-top">
+          <text class="addr-name">{{address.name}}</text>
+          <text class="addr-phone">{{address.phone}}</text>
         </view>
-        <view class="address-detail">{{address.province}}{{address.city}}{{address.district}}{{address.detail}}</view>
+        <view class="addr-detail">{{address.province}}{{address.city}}{{address.district}}{{address.detail}}</view>
       </view>
-      <view class="address-arrow">›</view>
+    </block>
+    <view class="addr-empty" wx:else>
+      <view class="icon-tile tile-print addr-ico">
+        <icon name="location" size="{{36}}" color="#4F46E5" />
+      </view>
+      <view class="addr-empty-text">请选择收货地址</view>
     </view>
-    <view class="address-empty" wx:else>
-      <view class="empty-icon">📍</view>
-      <view class="empty-text">请选择收货地址</view>
-      <view class="address-arrow">›</view>
-    </view>
+    <icon class="addr-arrow" name="chevron-right" size="{{36}}" color="#94A3B8" />
   </view>
 
-  <view class="order-card card">
+  <!-- 订单文件清单 -->
+  <view class="card">
     <view class="card-header">
-      <view class="card-title">📋 订单预览</view>
-      <view class="edit-btn btn-text btn-text-print" bindtap="goBack">修改</view>
+      <view class="card-title">订单文件</view>
+      <view class="edit-link" bindtap="goBack">返回购物车</view>
     </view>
-    
-    <view class="file-list-section">
-      <view class="section-subtitle">打印文件</view>
-      <view class="file-item-list">
-        <view class="file-item-row" wx:for="{{fileList}}" wx:key="index">
-          <view class="file-icon-sm">📄</view>
-          <view class="file-name-sm">{{item.name}}</view>
+    <view class="file-item-list">
+      <view class="file-item-row" wx:for="{{items}}" wx:key="cartId">
+        <view class="icon-tile-sm tile-print row-ico">
+          <icon name="file" size="{{32}}" color="#4F46E5" />
+        </view>
+        <view class="row-main">
+          <view class="row-name">{{item.name}}</view>
+          <view class="row-tags">
+            <text class="tag tag-print">{{item.config.paperSize}}</text>
+            <text class="tag tag-print">{{item.config.colorType === 1 ? '黑白' : '彩色'}}</text>
+            <text class="tag tag-print">{{item.config.duplex === 1 ? '单面' : '双面'}}</text>
+            <text class="tag tag-print">{{item.config.copies}}份</text>
+            <text class="tag tag-print" wx:if="{{item.config.binding !== 'none'}}">{{item.bindingName}}</text>
+          </view>
+          <view class="row-price">¥{{item.config.totalPrice}}</view>
         </view>
       </view>
     </view>
+  </view>
 
-    <view class="config-tags-section">
-      <view class="section-subtitle">打印配置</view>
-      <view class="config-tags">
-        <view class="config-tag tag tag-print">{{config.paperSize}}</view>
-        <view class="config-tag tag tag-print">{{config.colorType === 1 ? '黑白' : '彩色'}}</view>
-        <view class="config-tag tag tag-print">{{config.duplex === 1 ? '单面' : '双面'}}</view>
-        <view class="config-tag tag tag-print">{{config.copies}}份</view>
-        <view class="config-tag tag tag-print" wx:if="{{config.binding !== 'none'}}">{{bindingName}}</view>
+  <!-- 优惠券 -->
+  <view class="card coupon-card" bindtap="selectCoupon">
+    <view class="coupon-left">
+      <view class="icon-tile-sm tile-print coupon-ico">
+        <icon name="coupon" size="{{32}}" color="#4F46E5" />
       </view>
+      <text class="coupon-label">优惠券</text>
+    </view>
+    <view class="coupon-right">
+      <text class="coupon-value" wx:if="{{coupon}}">-¥{{coupon.amount}}</text>
+      <text class="coupon-placeholder" wx:else>{{availableCoupons > 0 ? availableCoupons + '张可用' : '暂无可用'}}</text>
+      <icon name="chevron-right" size="{{32}}" color="#94A3B8" />
     </view>
   </view>
 
-  <view class="coupon-card card" bindtap="selectCoupon">
-    <view class="coupon-row">
-      <view class="coupon-left">
-        <view class="coupon-icon">🎫</view>
-        <text class="coupon-label">优惠券</text>
-      </view>
-      <view class="coupon-right">
-        <text class="coupon-value" wx:if="{{coupon}}">-¥{{coupon.amount}}</text>
-        <text class="coupon-placeholder" wx:else>{{availableCoupons > 0 ? availableCoupons + '张可用' : '暂无可用'}}</text>
-        <text class="coupon-arrow">›</text>
-      </view>
-    </view>
+  <!-- 订单备注 -->
+  <view class="card">
+    <view class="card-header"><view class="card-title">订单备注</view></view>
+    <textarea class="remark-input" placeholder="选填，如特定页打印、排版要求等" value="{{remark}}" bindinput="onRemarkInput" maxlength="200"></textarea>
   </view>
 
-  <view class="remark-card card">
-    <view class="card-header">
-      <view class="card-title">📝 订单备注</view>
-    </view>
-    <textarea class="remark-input" placeholder="选填，请输入特殊要求（如：特定页打印、排版要求等）" value="{{remark}}" bindinput="onRemarkInput" maxlength="200"></textarea>
-  </view>
-
-  <view class="price-card card">
-    <view class="card-header">
-      <view class="card-title">💰 价格明细</view>
-    </view>
+  <!-- 费用明细 -->
+  <view class="card">
+    <view class="card-header"><view class="card-title">费用明细</view></view>
     <view class="price-details">
-      <view class="price-item-row">
-        <text class="price-item-label">打印费用</text>
-        <text class="price-item-value">¥{{config.basePrice}}</text>
+      <view class="price-row">
+        <text class="price-label">打印费用</text>
+        <text class="price-value">¥{{totalBase}}</text>
       </view>
-      <view class="price-item-row" wx:if="{{config.colorType === 2}}">
-        <text class="price-item-label">彩色附加费</text>
-        <text class="price-item-value">¥{{config.colorPrice}}</text>
+      <view class="price-row" wx:if="{{totalColor > 0}}">
+        <text class="price-label">彩色附加费</text>
+        <text class="price-value">¥{{totalColor}}</text>
       </view>
-      <view class="price-item-row" wx:if="{{config.binding !== 'none'}}">
-        <text class="price-item-label">装订费用</text>
-        <text class="price-item-value">¥{{config.bindingPrice}}</text>
+      <view class="price-row" wx:if="{{totalBinding > 0}}">
+        <text class="price-label">装订费用</text>
+        <text class="price-value">¥{{totalBinding}}</text>
       </view>
-      <view class="price-item-row">
-        <text class="price-item-label">配送费</text>
-        <text class="price-item-value free">免运费</text>
+      <view class="price-row">
+        <text class="price-label">配送费</text>
+        <text class="price-value free">免运费</text>
       </view>
-      <view class="price-item-row" wx:if="{{coupon}}">
-        <text class="price-item-label">优惠券</text>
-        <text class="price-item-value discount">-¥{{coupon.amount}}</text>
+      <view class="price-row" wx:if="{{coupon}}">
+        <text class="price-label">优惠券</text>
+        <text class="price-value discount">-¥{{coupon.amount}}</text>
       </view>
     </view>
-    <view class="price-total-line"></view>
-    <view class="final-price-row">
+    <view class="price-divider"></view>
+    <view class="final-row">
       <text class="final-label">实付金额</text>
       <view class="final-price-wrap">
         <text class="final-symbol">¥</text>
@@ -103,28 +104,26 @@
     </view>
   </view>
 
-  <view class="agreement-section page-margin">
+  <!-- 协议 -->
+  <view class="agreement page-margin">
     <view class="agreement-check" bindtap="toggleAgreement">
-      <view class="checkbox {{agreed ? 'checked' : ''}}">
-        <text class="check-icon" wx:if="{{agreed}}">✓</text>
+      <view class="check-circle {{agreed ? 'on' : ''}}">
+        <icon wx:if="{{agreed}}" name="check" size="{{24}}" color="#FFFFFF" />
       </view>
       <text class="agreement-text">我已阅读并同意</text>
       <text class="agreement-link">《打印服务协议》</text>
     </view>
   </view>
 
-  <view class="bottom-bar-placeholder"></view>
-
+  <view class="bottom-bar-space"></view>
   <view class="bottom-bar">
     <view class="bottom-bar-left">
-      <view class="total-label-sm">合计</view>
-      <view class="total-price-sm">
-        <text class="total-symbol">¥</text>
-        <text class="total-number">{{finalPrice}}</text>
+      <view class="bottom-bar-label">实付金额</view>
+      <view class="bottom-bar-price">
+        <text class="final-symbol">¥</text>
+        <text class="bottom-bar-value">{{finalPrice}}</text>
       </view>
     </view>
-    <button class="btn-primary btn-print btn-pay" bindtap="createOrder" disabled="{{!canSubmit}}">
-      提交订单
-    </button>
+    <button class="btn-primary btn-print" bindtap="createOrder" disabled="{{!canSubmit}}">去支付</button>
   </view>
 </view>

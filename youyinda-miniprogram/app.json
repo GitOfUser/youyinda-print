@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/print/upload",
+    "pages/print/cart",
     "pages/print/config",
     "pages/print/confirm",
     "pages/express/sender",
@@ -23,25 +24,31 @@
     "navigationBarBackgroundColor": "#FFFFFF",
     "navigationBarTitleText": "优印达",
     "navigationBarTextStyle": "black",
-    "backgroundColor": "#F9F6F0"
+    "backgroundColor": "#F5F6FA"
   },
   "tabBar": {
-    "color": "#86909C",
-    "selectedColor": "#FF7D00",
+    "color": "#94A3B8",
+    "selectedColor": "#4F46E5",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页"
+        "text": "首页",
+        "iconPath": "assets/tabbar/home.png",
+        "selectedIconPath": "assets/tabbar/home-active.png"
       },
       {
         "pagePath": "pages/order/list",
-        "text": "订单"
+        "text": "订单",
+        "iconPath": "assets/tabbar/order.png",
+        "selectedIconPath": "assets/tabbar/order-active.png"
       },
       {
         "pagePath": "pages/user/index",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "assets/tabbar/user.png",
+        "selectedIconPath": "assets/tabbar/user-active.png"
       }
     ]
   },

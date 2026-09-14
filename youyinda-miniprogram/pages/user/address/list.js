@@ -95,5 +95,21 @@ Page({
     wx.navigateTo({
       url: '/pages/user/address/edit'
     });
+  },
+
+  setDefault(e) {
+    const id = e.currentTarget.dataset.id;
+    request.put(`/user/address/set-default/${id}`).then(() => {
+      wx.showToast({
+        title: '已设为默认地址',
+        icon: 'success'
+      });
+      this.loadAddressList();
+    }).catch(err => {
+      wx.showToast({
+        title: err.message || '设置失败',
+        icon: 'none'
+      });
+    });
   }
 });

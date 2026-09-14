@@ -68,7 +68,7 @@
 .status-tag.cancelled,
 .status-tag.default,
 .status-tag.gray {
-  background: #F3F4F6;
+  background: var(--line);
   color: var(--text-secondary);
 }
 
@@ -84,8 +84,8 @@
 }
 
 .status-tag.print {
-  background: var(--print-primary-light);
-  color: var(--print-primary);
+  background: var(--print-light);
+  color: var(--print);
 }
 
 .status-tag.plain {

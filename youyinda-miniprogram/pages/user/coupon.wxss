@@ -1,17 +1,17 @@
 .container {
   min-height: 100vh;
-  background-color: var(--bg-cream);
-  padding-bottom: var(--spacing-xl);
+  background-color: var(--bg);
+  padding-bottom: var(--s-xl);
 }
 
 .tab-bar {
   display: flex;
-  background: var(--white);
+  background: var(--card);
   padding: 0 var(--page-margin);
   position: sticky;
   top: 0;
   z-index: 10;
-  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.04);
+  box-shadow: 0 2rpx 8rpx rgba(15, 23, 42, 0.04);
 }
 
 .tab-item {
@@ -19,14 +19,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--spacing-lg) 0;
+  padding: var(--s-lg) 0;
   font-size: var(--fs-base);
-  color: var(--text-secondary);
+  color: var(--t3);
   position: relative;
 }
 
 .tab-item.active {
-  color: var(--primary);
+  color: var(--brand);
   font-weight: 600;
 }
 
@@ -35,37 +35,39 @@
   bottom: 0;
   width: 48rpx;
   height: 6rpx;
-  background: var(--primary-gradient);
+  background: var(--brand-gradient);
   border-radius: 3rpx;
 }
 
 .coupon-list {
-  padding: var(--spacing-lg) var(--page-margin);
+  padding: var(--s-lg) var(--page-margin);
 }
 
 .coupon-card {
   display: flex;
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  margin-bottom: var(--spacing-md);
+  background: var(--card);
+  border-radius: var(--r-lg);
+  margin-bottom: var(--s-md);
   overflow: hidden;
   box-shadow: var(--shadow-card);
   position: relative;
 }
 
-.coupon-card.used {
-  opacity: 0.6;
+.coupon-disabled {
+  filter: grayscale(1);
+  opacity: 0.65;
 }
 
 .coupon-left {
   width: 220rpx;
-  background: var(--primary-gradient);
+  background: var(--brand-gradient);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-lg) 0;
+  padding: var(--s-lg) 0;
   position: relative;
+  flex-shrink: 0;
 }
 
 .coupon-left::before,
@@ -75,7 +77,7 @@
   right: -12rpx;
   width: 24rpx;
   height: 24rpx;
-  background: var(--bg-cream);
+  background: var(--bg);
   border-radius: 50%;
 }
 
@@ -90,7 +92,7 @@
 .coupon-price {
   display: flex;
   align-items: baseline;
-  color: white;
+  color: var(--white);
 }
 
 .currency {
@@ -106,13 +108,13 @@
 
 .coupon-condition {
   font-size: var(--fs-xs);
-  color: rgba(255,255,255,0.9);
-  margin-top: var(--spacing-sm);
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: var(--s-sm);
 }
 
 .coupon-right {
   flex: 1;
-  padding: var(--spacing-lg);
+  padding: var(--s-lg);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -122,42 +124,34 @@
 
 .coupon-info {
   flex: 1;
-  padding-right: var(--spacing-md);
+  padding-right: var(--s-md);
+  min-width: 0;
 }
 
 .coupon-name {
   font-size: var(--fs-md);
   font-weight: 600;
-  color: var(--text-title);
+  color: var(--t1);
   margin-bottom: 8rpx;
 }
 
 .coupon-desc {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
+  color: var(--t2);
   margin-bottom: 8rpx;
 }
 
 .coupon-time {
   font-size: var(--fs-xs);
-  color: var(--text-hint);
+  color: var(--t3);
 }
 
-.coupon-btn {
+.coupon-btn-disabled {
   padding: 12rpx 28rpx;
-  background: var(--primary-gradient);
-  color: white;
+  background: var(--fill);
+  color: var(--t3);
   font-size: var(--fs-sm);
   font-weight: 500;
-  border-radius: var(--radius-full);
+  border-radius: var(--r-full);
   flex-shrink: 0;
-}
-
-.coupon-btn.disabled {
-  background: var(--bg-gray);
-  color: var(--text-hint);
-}
-
-.coupon-card.used .coupon-left {
-  background: linear-gradient(135deg, #C9CDD4 0%, #E5E6EB 100%);
 }

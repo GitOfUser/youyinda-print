@@ -4,127 +4,113 @@
     <view class="header-desc">请核对订单信息，确认无误后提交</view>
   </view>
 
-  <view class="address-card card">
-    <view class="address-section-row">
-      <view class="address-col">
-        <view class="address-label-row">
-          <view class="label-dot sender-dot"></view>
-          <text class="address-label">寄件人</text>
+  <!-- 路线 -->
+  <view class="card route-card">
+    <view class="route-row">
+      <view class="icon-tile-sm tile-express">
+        <icon name="location" size="{{40}}" color="#0D9488" />
+      </view>
+      <view class="route-body">
+        <view class="route-label">寄件人</view>
+        <view>
+          <text class="route-name">{{senderAddress.name}}</text>
+          <text class="route-phone">{{senderAddress.phone}}</text>
         </view>
-        <view class="address-name-row">
-          <text class="person-name">{{senderAddress.name}}</text>
-          <text class="person-phone">{{senderAddress.phone}}</text>
-        </view>
-        <view class="address-text">{{senderAddress.province}}{{senderAddress.city}}{{senderAddress.district}}{{senderAddress.detail}}</view>
+        <view class="route-addr">{{senderAddress.province}}{{senderAddress.city}}{{senderAddress.district}}{{senderAddress.detail}}</view>
       </view>
     </view>
-    <view class="address-line"></view>
-    <view class="address-section-row">
-      <view class="address-col">
-        <view class="address-label-row">
-          <view class="label-dot receiver-dot"></view>
-          <text class="address-label">收件人</text>
+    <view class="route-divider"></view>
+    <view class="route-row">
+      <view class="icon-tile-sm tile-brand">
+        <icon name="location" size="{{40}}" color="#4F46E5" />
+      </view>
+      <view class="route-body">
+        <view class="route-label">收件人</view>
+        <view>
+          <text class="route-name">{{receiverAddress.name}}</text>
+          <text class="route-phone">{{receiverAddress.phone}}</text>
         </view>
-        <view class="address-name-row">
-          <text class="person-name">{{receiverAddress.name}}</text>
-          <text class="person-phone">{{receiverAddress.phone}}</text>
-        </view>
-        <view class="address-text">{{receiverAddress.province}}{{receiverAddress.city}}{{receiverAddress.district}}{{receiverAddress.detail}}</view>
+        <view class="route-addr">{{receiverAddress.province}}{{receiverAddress.city}}{{receiverAddress.district}}{{receiverAddress.detail}}</view>
       </view>
-    </view>
-  </view>
-
-  <view class="card company-card">
-    <view class="company-row">
-      <view class="company-logo-small" style="background: {{selectedCompany.color}}">
-        <text class="logo-small-text">{{selectedCompany.logoText}}</text>
-      </view>
-      <view class="company-detail">
-        <text class="company-name">{{selectedCompany.name}}</text>
-        <text class="company-time">{{selectedCompany.estimatedTime}}</text>
-      </view>
-      <text class="company-price">¥{{selectedCompany.price}}</text>
     </view>
   </view>
 
-  <view class="card info-card">
+  <!-- 物品信息 -->
+  <view class="card">
     <view class="info-row">
       <text class="info-label">物品类型</text>
-      <text class="info-value">{{goodsTypeText}}</text>
+      <text class="info-value">{{packageInfo.itemType}}</text>
     </view>
     <view class="info-row">
       <text class="info-label">物品重量</text>
-      <text class="info-value">{{weight}}kg</text>
+      <text class="info-value">{{packageInfo.weight}}kg</text>
     </view>
-    <view class="info-row" wx:if="{{remark}}">
+    <view class="info-row" wx:if="{{packageInfo.remark}}">
       <text class="info-label">物品描述</text>
-      <text class="info-value">{{remark}}</text>
-    </view>
-    <view class="info-row" wx:if="{{insuranceEnabled}}">
-      <text class="info-label">保价金额</text>
-      <text class="info-value">¥{{insuranceAmount}}</text>
-    </view>
-    <view class="info-row">
-      <text class="info-label">取件时间</text>
-      <text class="info-value">{{selectedCompany.pickupTime}}</text>
+      <text class="info-value">{{packageInfo.remark}}</text>
     </view>
   </view>
 
+  <!-- 所选快递公司 -->
+  <view class="card">
+    <view class="co-row">
+      <view class="co-avatar">
+        <text class="co-avatar-text">{{selectedCompany.expressCode}}</text>
+      </view>
+      <view class="co-detail">
+        <text class="co-name">{{selectedCompany.name}}</text>
+        <text class="co-desc">{{selectedCompany.desc}}</text>
+      </view>
+      <text class="co-price">¥{{selectedCompany.price}}</text>
+    </view>
+  </view>
+
+  <!-- 优惠券 -->
   <view class="card coupon-card" bindtap="selectCoupon">
     <view class="coupon-row">
       <view class="coupon-left">
-        <text class="coupon-icon">🎫</text>
+        <view class="icon-tile-sm tile-orange">
+          <icon name="coupon" size="{{36}}" color="#F59E0B" />
+        </view>
         <text class="coupon-text">优惠券</text>
       </view>
       <view class="coupon-right">
-        <text wx:if="{{selectedCoupon}}" class="coupon-discount">-¥{{selectedCoupon.amount}}</text>
-        <text wx:else class="coupon-select">选择优惠券</text>
-        <text class="coupon-arrow">></text>
+        <text wx:if="{{coupon}}" class="coupon-val">-¥{{coupon.amount}}</text>
+        <text wx:else class="coupon-sel">选择优惠券</text>
+        <icon name="chevron-right" size="{{36}}" color="#94A3B8" />
       </view>
     </view>
   </view>
 
-  <view class="card price-card">
+  <!-- 费用明细 -->
+  <view class="card">
     <view class="price-title">费用明细</view>
     <view class="price-row">
       <text class="price-label">运费</text>
-      <text class="price-value">¥{{basePrice}}</text>
+      <text class="price-value">¥{{finalPrice}}</text>
     </view>
-    <view class="price-row" wx:if="{{insuranceFee > 0}}">
-      <text class="price-label">保价费</text>
-      <text class="price-value">¥{{insuranceFee}}</text>
-    </view>
-    <view class="price-row" wx:if="{{couponAmount > 0}}">
-      <text class="price-label">优惠券抵扣</text>
-      <text class="price-value discount">-¥{{couponAmount}}</text>
+    <view class="price-row" wx:if="{{coupon}}">
+      <text class="price-label">优惠</text>
+      <text class="price-value text-danger">-¥{{coupon.amount}}</text>
     </view>
     <view class="price-divider"></view>
     <view class="price-row total-row">
       <text class="total-label">实付金额</text>
       <view class="total-price-wrap">
         <text class="total-symbol">¥</text>
-        <text class="total-price">{{totalPrice}}</text>
+        <text class="total-price">{{finalPrice}}</text>
       </view>
     </view>
   </view>
 
-  <view class="agreement-row">
-    <view class="checkbox {{agreed ? 'checked' : ''}}" bindtap="toggleAgreement">
-      <text wx:if="{{agreed}}">✓</text>
-    </view>
-    <text class="agreement-text">我已阅读并同意</text>
-    <text class="agreement-link">《快递服务协议》</text>
-  </view>
-
-  <view class="bottom-bar-placeholder"></view>
-
+  <view class="bottom-bar-space"></view>
   <view class="bottom-bar">
     <view class="bottom-bar-left">
       <view class="bottom-bar-label">实付金额</view>
-      <view class="bottom-bar-value">¥{{totalPrice}}</view>
+      <view class="bottom-bar-value">¥{{finalPrice}}</view>
     </view>
-    <button class="btn-primary btn-pay {{!agreed ? 'btn-disabled' : ''}}" bindtap="submitOrder" disabled="{{!agreed}}">
-      提交订单
+    <button class="btn-primary btn-express" bindtap="createOrder">
+      去支付
     </button>
   </view>
 </view>

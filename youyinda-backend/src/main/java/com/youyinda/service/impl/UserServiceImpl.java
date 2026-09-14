@@ -28,6 +28,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     /**
+     * 根据手机号获取用户
+     * @param phone 手机号
+     * @return 用户信息
+     */
+    @Override
+    public User getByPhone(String phone) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("phone", phone);
+        return baseMapper.selectOne(queryWrapper);
+    }
+
+    /**
      * 更新用户最后登录时间
      * @param userId 用户ID
      */

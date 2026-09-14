@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Data
 public class ExpressPriceQueryRequest {
 
-    @NotBlank(message = "快递公司编码不能为空")
+    // 价格试算(比价)接口遍历所有启用快递公司，expressCode 仅在下单/物流等单家场景必填，此处不强制
     private String expressCode;
 
     @NotBlank(message = "寄件省份不能为空")

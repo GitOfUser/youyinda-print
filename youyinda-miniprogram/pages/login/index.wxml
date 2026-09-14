@@ -1,71 +1,74 @@
 <!--pages/login/index.wxml-->
 <view class="login-container">
   <view class="login-top-bg"></view>
-  
+
+  <!-- 品牌区 -->
   <view class="login-header">
     <view class="login-logo">
-      <text class="logo-text">优</text>
+      <icon name="printer" size="{{72}}" color="#FFFFFF" />
     </view>
     <view class="login-app-name">优印达</view>
-    <view class="login-app-desc">打印 · 快递 · 一站服务</view>
+    <view class="login-app-desc">云打印 · 低价寄快递</view>
   </view>
 
-  <view class="login-content">
-    <view class="login-slogan">
-      <text class="slogan-text">欢迎使用</text>
-      <text class="slogan-sub">一键登录，开启便捷服务</text>
+  <!-- 特性列表 -->
+  <view class="login-features">
+    <view class="feature-item">
+      <view class="icon-tile-sm tile-brand">
+        <icon name="printer" size="{{36}}" color="#4F46E5" />
+      </view>
+      <text class="feature-text">极速打印</text>
     </view>
-
-    <view class="login-features">
-      <view class="feature-item">
-        <view class="feature-icon-box icon-box-primary">
-          <text class="feature-icon">🖨️</text>
-        </view>
-        <text class="feature-text">在线打印</text>
+    <view class="feature-item">
+      <view class="icon-tile-sm tile-blue">
+        <icon name="refresh" size="{{36}}" color="#3B82F6" />
       </view>
-      <view class="feature-item">
-        <view class="feature-icon-box icon-box-primary">
-          <text class="feature-icon">📦</text>
-        </view>
-        <text class="feature-text">快递寄件</text>
+      <text class="feature-text">全网比价</text>
+    </view>
+    <view class="feature-item">
+      <view class="icon-tile-sm tile-express">
+        <icon name="truck" size="{{36}}" color="#0D9488" />
       </view>
-      <view class="feature-item">
-        <view class="feature-icon-box icon-box-primary">
-          <text class="feature-icon">📍</text>
-        </view>
-        <text class="feature-text">订单跟踪</text>
-      </view>
+      <text class="feature-text">上门取件</text>
     </view>
   </view>
 
+  <!-- 底部登录区 -->
   <view class="login-footer">
-    <button class="login-btn btn-block" open-type="getPhoneNumber" bindgetphonenumber="onGetPhoneNumber">
-      <text class="wechat-icon">💬</text>
-      <text>微信一键登录</text>
+    <view class="login-form">
+      <view class="login-input-group">
+        <icon name="phone" size="{{32}}" color="#94A3B8" class="login-input-icon" />
+        <input class="login-input" type="number" maxlength="11" placeholder="请输入手机号" placeholder-class="login-input-placeholder" value="{{phone}}" bindinput="onPhoneInput" />
+      </view>
+      <view class="login-input-group">
+        <icon name="shield" size="{{32}}" color="#94A3B8" class="login-input-icon" />
+        <input class="login-input" type="password" maxlength="20" placeholder="请输入密码" placeholder-class="login-input-placeholder" value="{{password}}" bindinput="onPasswordInput" />
+      </view>
+      <view class="login-input-group" wx:if="{{mode === 'register'}}">
+        <icon name="shield" size="{{32}}" color="#94A3B8" class="login-input-icon" />
+        <input class="login-input" type="password" maxlength="20" placeholder="请再次输入密码" placeholder-class="login-input-placeholder" value="{{confirmPassword}}" bindinput="onConfirmPasswordInput" />
+      </view>
+    </view>
+
+    <button class="btn-primary btn-block login-btn" bindtap="doSubmit" loading="{{loading}}">
+      <text>{{mode === 'login' ? '登录' : '注册'}}</text>
     </button>
-    
+
+    <view class="login-switch">
+      <text class="login-switch-text">{{mode === 'login' ? '没有账号？' : '已有账号？'}}</text>
+      <text class="login-switch-link" bindtap="switchMode">{{mode === 'login' ? '去注册' : '去登录'}}</text>
+    </view>
+
     <view class="login-agreement">
       <view class="checkbox-wrapper" bindtap="toggleAgree">
         <view class="login-checkbox {{agreed ? 'checked' : ''}}">
-          <text wx:if="{{agreed}}" class="checkbox-icon">✓</text>
+          <icon wx:if="{{agreed}}" name="check" size="{{20}}" color="#FFFFFF" />
         </view>
       </view>
       <text class="agreement-text">登录即代表同意</text>
       <text class="agreement-link" bindtap="viewUserAgreement">《用户协议》</text>
       <text class="agreement-text">和</text>
       <text class="agreement-link" bindtap="viewPrivacyPolicy">《隐私政策》</text>
-    </view>
-
-    <view class="login-other">
-      <view class="divider-line"></view>
-      <text class="other-text">其他登录方式</text>
-      <view class="divider-line"></view>
-    </view>
-
-    <view class="login-other-actions">
-      <view class="other-btn" bindtap="onPhoneLogin">
-        <text class="other-btn-icon">📱</text>
-      </view>
     </view>
   </view>
 </view>

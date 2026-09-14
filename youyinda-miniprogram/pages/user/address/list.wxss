@@ -1,21 +1,21 @@
 .container {
   min-height: 100vh;
-  background-color: var(--bg-cream);
+  background-color: var(--bg);
   padding-bottom: 0;
 }
 
 .address-list {
-  padding: var(--spacing-md) 0;
+  padding: var(--s-md) 0;
 }
 
 .address-card {
   display: flex;
   align-items: flex-start;
-  gap: var(--spacing-md);
+  gap: var(--s-md);
 }
 
 .select-radio {
-  padding-top: var(--spacing-sm);
+  padding-top: var(--s-sm);
 }
 
 .radio {
@@ -25,23 +25,14 @@
   border-radius: 50%;
   position: relative;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .radio.checked {
-  border-color: var(--primary);
-  background: var(--primary);
-}
-
-.radio.checked::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 16rpx;
-  height: 16rpx;
-  background: white;
-  border-radius: 50%;
+  border-color: var(--brand);
+  background: var(--brand);
 }
 
 .address-info {
@@ -53,56 +44,56 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-sm);
+  gap: var(--s-sm);
+  margin-bottom: var(--s-sm);
 }
 
 .contact-name {
   font-size: var(--fs-md);
   font-weight: 600;
-  color: var(--text-title);
+  color: var(--t1);
 }
 
 .contact-phone {
   font-size: var(--fs-base);
-  color: var(--text-body);
-}
-
-.default-tag {
-  font-size: var(--fs-xs);
-  color: var(--primary);
-  background: var(--primary-light);
-  padding: 4rpx 12rpx;
-  border-radius: var(--radius-xs);
-  font-weight: 500;
+  color: var(--t2);
 }
 
 .address-detail {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
+  color: var(--t2);
   line-height: 1.6;
 }
 
 .address-actions {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
-  padding-top: var(--spacing-md);
-  margin-top: var(--spacing-md);
-  border-top: 1rpx solid var(--divider);
+  gap: var(--s-lg);
+  padding-top: var(--s-md);
+  margin-top: var(--s-md);
+  border-top: 1rpx solid var(--line);
 }
 
 .action-item {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
-}
-
-.action-icon {
-  font-size: 28rpx;
+  gap: var(--s-xs);
 }
 
 .action-text {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
+  color: var(--t2);
+}
+
+.bottom-bar .btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-xs);
+}
+
+.btn-label {
+  color: var(--white);
+  font-size: 30rpx;
+  font-weight: 600;
 }

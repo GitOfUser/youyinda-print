@@ -1,107 +1,98 @@
 <view class="container">
-  <view class="header-section">
-    <view class="location-bar">
-      <view class="location">
-        <text class="location-icon">📍</text>
-        <text class="location-text">当前位置</text>
-        <text class="location-arrow">▼</text>
-      </view>
-      <view class="header-actions">
-        <text class="action-icon">🔔</text>
-      </view>
+  <!-- 顶部沉浸式头部 -->
+  <view class="home-header">
+    <view class="greeting">
+      <view class="greeting-title">你好，欢迎使用优印达</view>
+      <view class="greeting-sub">云打印 · 低价寄快递，一站式服务</view>
     </view>
-    <view class="search-bar">
-      <text class="search-icon">🔍</text>
-      <text class="search-placeholder">搜索打印店、快递服务</text>
+    <view class="bell-tile icon-tile-sm tile-gray">
+      <icon name="bell" size="{{36}}" color="#475569" />
     </view>
   </view>
 
-  <view class="banner-section">
-    <view class="banner-card">
-      <view class="banner-content">
-        <view class="banner-title">新用户专享</view>
-        <view class="banner-subtitle">首单立减5元</view>
+  <!-- 品牌渐变 Banner -->
+  <view class="banner-card">
+    <view class="banner-deco banner-deco-1"></view>
+    <view class="banner-deco banner-deco-2"></view>
+    <view class="banner-body">
+      <view class="banner-title">新用户专享</view>
+      <view class="banner-subtitle">首单立减5元</view>
+    </view>
+    <view class="banner-capsule">立即领取</view>
+  </view>
+
+  <!-- 双服务主入口 -->
+  <view class="entrance-row">
+    <view class="entrance-card" bindtap="goToPrint">
+      <view class="icon-tile icon-tile-grad-brand entrance-tile">
+        <icon name="printer" size="{{48}}" color="#FFFFFF" />
       </view>
-      <view class="banner-tag">立即领取</view>
+      <view class="entrance-title">文档打印</view>
+      <view class="entrance-desc">上传文件 极速送达</view>
+    </view>
+    <view class="entrance-card" bindtap="goToExpress">
+      <view class="icon-tile icon-tile-grad-express entrance-tile">
+        <icon name="truck" size="{{48}}" color="#FFFFFF" />
+      </view>
+      <view class="entrance-title">低价寄快递</view>
+      <view class="entrance-desc">全网比价 上门取件</view>
     </view>
   </view>
 
-  <view class="main-entrance">
-    <view class="entrance-card print-card" bindtap="goToPrint">
-      <view class="entrance-icon-wrap print-icon-wrap">
-        <text class="entrance-icon-text">🖨️</text>
-      </view>
-      <view class="entrance-info">
-        <view class="entrance-title">文档打印</view>
-        <view class="entrance-desc">上传文件 极速送达</view>
-      </view>
-      <view class="entrance-arrow">›</view>
-    </view>
-
-    <view class="entrance-card express-card" bindtap="goToExpress">
-      <view class="entrance-icon-wrap express-icon-wrap">
-        <text class="entrance-icon-text">📦</text>
-      </view>
-      <view class="entrance-info">
-        <view class="entrance-title">低价寄快递</view>
-        <view class="entrance-desc">全网比价 上门取件</view>
-      </view>
-      <view class="entrance-arrow">›</view>
-    </view>
-  </view>
-
+  <!-- 快捷服务 -->
   <view class="card">
-    <view class="section-header">
-      <view class="section-title">快捷服务</view>
+    <view class="card-header">
+      <view class="card-title">快捷服务</view>
     </view>
     <view class="service-grid">
       <view class="service-item" bindtap="goToOrderList">
-        <view class="service-icon-wrap orange-bg">
-          <text class="service-icon">📋</text>
+        <view class="icon-tile-sm tile-brand">
+          <icon name="order" size="{{36}}" color="#4F46E5" />
         </view>
         <view class="service-text">我的订单</view>
       </view>
       <view class="service-item" bindtap="goToAddress">
-        <view class="service-icon-wrap blue-bg">
-          <text class="service-icon">📍</text>
+        <view class="icon-tile-sm tile-blue">
+          <icon name="location" size="{{36}}" color="#3B82F6" />
         </view>
         <view class="service-text">地址簿</view>
       </view>
       <view class="service-item" bindtap="goToCoupon">
-        <view class="service-icon-wrap red-bg">
-          <text class="service-icon">🎫</text>
+        <view class="icon-tile-sm tile-orange">
+          <icon name="ticket" size="{{36}}" color="#F59E0B" />
         </view>
         <view class="service-text">优惠券</view>
       </view>
       <view class="service-item" bindtap="goToHelp">
-        <view class="service-icon-wrap gray-bg">
-          <text class="service-icon">❓</text>
+        <view class="icon-tile-sm tile-gray">
+          <icon name="help" size="{{36}}" color="#94A3B8" />
         </view>
         <view class="service-text">帮助中心</view>
       </view>
     </view>
   </view>
 
+  <!-- 限时活动 -->
   <view class="card">
-    <view class="section-header">
-      <view class="section-title">限时活动</view>
+    <view class="card-header">
+      <view class="card-title">限时活动</view>
     </view>
     <view class="promotion-list">
       <view class="promotion-item">
-        <view class="promotion-tag new-tag">新用户</view>
+        <view class="tag tag-primary promotion-tag">新用户</view>
         <view class="promotion-content">
           <view class="promotion-title">首单立减5元</view>
           <view class="promotion-desc">新用户专享，打印/快递通用</view>
         </view>
-        <view class="promotion-arrow">›</view>
+        <icon name="chevron-right" size="{{36}}" color="#94A3B8" class="promotion-arrow" />
       </view>
       <view class="promotion-item">
-        <view class="promotion-tag hot-tag">热门</view>
+        <view class="tag tag-warning promotion-tag">热门</view>
         <view class="promotion-content">
           <view class="promotion-title">邀请好友得现金</view>
           <view class="promotion-desc">每邀请1位好友，双方各得3元</view>
         </view>
-        <view class="promotion-arrow">›</view>
+        <icon name="chevron-right" size="{{36}}" color="#94A3B8" class="promotion-arrow" />
       </view>
     </view>
   </view>

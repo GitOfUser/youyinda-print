@@ -1,32 +1,36 @@
 .container {
   min-height: 100vh;
-  background-color: var(--bg-cream);
-  padding-bottom: var(--spacing-xl);
+  background-color: var(--bg);
+  padding-bottom: var(--s-xl);
 }
 
 .user-header {
-  background: var(--primary-gradient);
-  padding: 80rpx var(--page-margin) var(--spacing-xl);
+  background: var(--brand-gradient);
+  padding: 80rpx var(--page-margin) var(--s-xl);
   padding-top: calc(80rpx + env(safe-area-inset-top));
-  border-radius: 0 0 40rpx 40rpx;
-  margin-bottom: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--s-lg);
 }
 
 .user-info {
   display: flex;
   align-items: center;
+  flex: 1;
+  min-width: 0;
 }
 
 .avatar-lg {
   width: 140rpx;
   height: 140rpx;
   border-radius: 50%;
-  border: 6rpx solid rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.2);
+  border: 6rpx solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: var(--spacing-lg);
+  margin-right: var(--s-lg);
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -34,11 +38,6 @@
 .avatar-img {
   width: 100%;
   height: 100%;
-}
-
-.avatar-placeholder {
-  font-size: 64rpx;
-  color: white;
 }
 
 .user-detail {
@@ -49,24 +48,23 @@
 .user-name {
   font-size: var(--fs-xl);
   font-weight: 700;
-  color: white;
+  color: var(--white);
   margin-bottom: 8rpx;
 }
 
 .user-phone {
   font-size: var(--fs-sm);
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .setting-btn {
   width: 72rpx;
   height: 72rpx;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 36rpx;
   flex-shrink: 0;
 }
 
@@ -79,125 +77,47 @@
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  padding: var(--spacing-lg) 0;
+  padding: var(--s-lg) 0;
 }
 
 .stats-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: var(--s-xs);
 }
 
 .stats-num {
   font-size: var(--fs-xl);
   font-weight: 700;
-  color: var(--text-title);
-  margin-bottom: 8rpx;
+  color: var(--t1);
 }
 
 .stats-label {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
-}
-
-.order-card {
-  margin-top: var(--spacing-md);
-}
-
-.view-all {
-  display: flex;
-  align-items: center;
-  font-size: var(--fs-sm);
-  color: var(--text-secondary);
-}
-
-.view-all .arrow {
-  font-size: var(--fs-lg);
-  margin-left: 4rpx;
-}
-
-.order-tabs {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  padding-top: var(--spacing-md);
-}
-
-.order-tab {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.order-tab-icon {
-  width: 88rpx;
-  height: 88rpx;
-  background: var(--primary-light);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40rpx;
-  margin-bottom: var(--spacing-sm);
-}
-
-.order-tab-text {
-  font-size: var(--fs-xs);
-  color: var(--text-body);
+  color: var(--t2);
 }
 
 .menu-list {
-  padding: var(--spacing-sm) 0;
+  padding: var(--s-sm) 0;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
-  padding: var(--spacing-md) 0;
-}
-
-.menu-icon-wrap {
-  width: 80rpx;
-  height: 80rpx;
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: var(--spacing-md);
-  flex-shrink: 0;
-}
-
-.orange-bg {
-  background: var(--primary-light);
-}
-
-.red-bg {
-  background: var(--danger-light);
-}
-
-.blue-bg {
-  background: var(--print-primary-light);
-}
-
-.green-bg {
-  background: var(--success-light);
-}
-
-.gray-bg {
-  background: var(--bg-gray);
-}
-
-.menu-icon {
-  font-size: 36rpx;
+  padding: var(--s-md) 0;
 }
 
 .menu-text {
   flex: 1;
+  margin-left: var(--s-md);
   font-size: var(--fs-base);
-  color: var(--text-title);
+  color: var(--t1);
 }
 
-.menu-arrow {
-  font-size: var(--fs-lg);
-  color: var(--text-hint);
-  flex-shrink: 0;
+.version-text {
+  text-align: center;
+  font-size: var(--fs-xs);
+  color: var(--t3);
+  margin-top: var(--s-xl);
 }

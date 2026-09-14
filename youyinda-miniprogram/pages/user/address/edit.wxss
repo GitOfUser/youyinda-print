@@ -1,7 +1,7 @@
 .container {
   min-height: 100vh;
-  background-color: var(--bg-cream);
-  padding: var(--spacing-md) 0 0;
+  background-color: var(--bg);
+  padding: var(--s-md) 0 0;
 }
 
 .form-card {
@@ -11,20 +11,20 @@
 .form-item {
   display: flex;
   align-items: flex-start;
-  padding: var(--spacing-lg);
-  border-bottom: 1rpx solid var(--divider);
+  padding: var(--s-lg);
+  border-bottom: 1rpx solid var(--line);
 }
 
 .form-item:last-child {
   border-bottom: none;
 }
 
-.form-label {
+.input-label {
   width: 180rpx;
   font-size: var(--fs-base);
-  color: var(--text-title);
+  color: var(--t1);
   flex-shrink: 0;
-  padding-top: var(--spacing-sm);
+  padding-top: var(--s-sm);
 }
 
 .required {
@@ -32,11 +32,22 @@
   margin-right: 4rpx;
 }
 
-.form-input {
+.input {
   flex: 1;
+  min-width: 0;
   font-size: var(--fs-base);
-  color: var(--text-title);
-  padding-top: var(--spacing-sm);
+  color: var(--t1);
+  padding-top: var(--s-sm);
+}
+
+.ph {
+  color: var(--t3);
+}
+
+.textarea {
+  min-height: 140rpx;
+  line-height: 1.6;
+  padding: var(--s-sm) var(--s-md);
 }
 
 .form-picker {
@@ -44,54 +55,43 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: var(--spacing-sm);
+  padding-top: var(--s-sm);
 }
 
 .form-picker text {
   font-size: var(--fs-base);
-  color: var(--text-title);
+  color: var(--t1);
 }
 
-.form-picker .placeholder {
-  color: var(--text-hint);
-}
-
-.picker-arrow {
-  font-size: var(--fs-lg);
-  color: var(--text-hint);
-}
-
-.form-textarea {
-  flex: 1;
-  font-size: var(--fs-base);
-  color: var(--text-title);
-  min-height: 120rpx;
-  padding-top: var(--spacing-sm);
-  line-height: 1.6;
+.form-picker .ph {
+  color: var(--t3);
 }
 
 .switch-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--spacing-lg);
+  padding: var(--s-lg);
 }
 
 .switch-label {
   font-size: var(--fs-base);
-  color: var(--text-title);
+  color: var(--t1);
 }
 
 .tip-text {
-  padding: var(--spacing-lg) var(--page-margin);
+  display: flex;
+  align-items: center;
+  gap: var(--s-xs);
+  padding: var(--s-lg) var(--page-margin);
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
+  color: var(--t2);
   line-height: 1.6;
 }
 
 .bottom-bar {
   display: flex;
-  gap: var(--spacing-md);
+  gap: var(--s-md);
 }
 
 .bottom-bar button {

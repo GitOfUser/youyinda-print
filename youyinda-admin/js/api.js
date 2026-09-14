@@ -1,4 +1,5 @@
-const API_BASE = 'http://localhost:8080/api';
+// 同源反代：nginx 将 /api 转发到后端 8080
+const API_BASE = '/api';
 
 function request(url, options = {}) {
     const token = localStorage.getItem('admin_token');

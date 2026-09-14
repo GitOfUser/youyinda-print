@@ -1,22 +1,31 @@
 <view class="container">
   <view class="tab-bar">
-    <view class="tab-item {{currentTab === index ? 'active' : ''}}" wx:for="{{tabs}}" wx:key="index" bindtap="switchTab" data-index="{{index}}">
-      <text>{{item}}</text>
-      <view class="tab-line" wx:if="{{currentTab === index}}"></view>
+    <view class="tab-item {{currentStatus === tab.status ? 'active' : ''}}"
+          wx:for="{{[{label:'全部',status:-1},{label:'待支付',status:1},{label:'处理中',status:2},{label:'已完成',status:6}]}}"
+          wx:key="status" wx:for-item="tab"
+          bindtap="switchStatus" data-status="{{tab.status}}">
+      <text>{{tab.label}}</text>
+      <view class="tab-line" wx:if="{{currentStatus === tab.status}}"></view>
     </view>
   </view>
 
   <view class="order-list">
     <view class="order-card card" wx:for="{{orderList}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
       <view class="order-header">
-        <view class="order-no">订单号：{{item.orderNo}}</view>
-        <view class="order-status status-{{item.statusType}}">{{item.statusText}}</view>
+        <view class="order-meta">
+          <view class="tag {{item.orderType === 1 ? 'tag-print' : 'tag-express'}}">
+            <icon name="{{item.orderType === 1 ? 'printer' : 'package'}}" size="{{24}}" color="{{item.orderType === 1 ? '#4F46E5' : '#0D9488'}}" />
+            <text class="tag-text">{{item.orderType === 1 ? '打印' : '快递'}}</text>
+          </view>
+          <text class="order-no">订单号：{{item.orderNo}}</text>
+        </view>
+        <view class="st {{item.statusClass === 'pending' ? 'st-warning' : item.statusClass === 'processing' ? 'st-info' : item.statusClass === 'success' ? 'st-success' : 'st-gray'}}">{{item.statusText}}</view>
       </view>
 
-      <view class="order-goods">
+      <view class="order-goods" wx:if="{{item.goods && item.goods.length}}">
         <view class="goods-item" wx:for="{{item.goods}}" wx:key="id" wx:for-item="goods">
           <view class="goods-icon-wrap">
-            <text class="goods-icon">{{goods.type === 'print' ? '🖨️' : '📦'}}</text>
+            <icon name="{{goods.type === 'print' ? 'printer' : 'package'}}" size="{{44}}" color="{{goods.type === 'print' ? '#4F46E5' : '#0D9488'}}" />
           </view>
           <view class="goods-info">
             <view class="goods-name">{{goods.name}}</view>
@@ -27,25 +36,26 @@
       </view>
 
       <view class="order-footer">
-        <view class="order-time">{{item.createTime}}</view>
+        <text class="order-time">{{item.createTime}}</text>
         <view class="order-price-wrap">
-          <text class="order-price-label">共{{item.totalCount}}件商品 合计：</text>
+          <text class="order-price-label">共{{item.totalCount}}件 合计</text>
           <text class="order-price">¥{{item.totalPrice}}</text>
         </view>
       </view>
 
-      <view class="order-actions" wx:if="{{item.actions.length > 0}}">
-        <view class="action-btn btn-secondary" wx:for="{{item.actions}}" wx:key="type" wx:for-item="action" bindtap="handleAction" data-type="{{action.type}}" data-id="{{item.id}}" catchtap>
-          {{action.text}}
-        </view>
+      <view class="order-actions" wx:if="{{item.canCancel || item.canTrack || item.statusNum === 6 || item.canPay}}">
+        <view class="btn-ghost btn-sm" wx:if="{{item.canCancel}}" catchtap="cancelOrder" data-id="{{item.id}}">取消订单</view>
+        <view class="btn-ghost btn-sm" wx:if="{{item.canTrack}}" catchtap="goToTrack" data-id="{{item.id}}">查看物流</view>
+        <view class="btn-ghost btn-sm" wx:if="{{item.statusNum === 6}}" catchtap="goToHome" data-id="{{item.id}}">再来一单</view>
+        <view class="btn-primary btn-sm" wx:if="{{item.canPay}}" catchtap="payOrder" data-id="{{item.id}}">去支付</view>
       </view>
     </view>
   </view>
 
   <view class="empty-state" wx:if="{{orderList.length === 0}}">
-    <text class="empty-icon">📋</text>
-    <text class="empty-text">暂无订单</text>
-    <text class="empty-desc">快去下单享受服务吧</text>
-    <view class="empty-btn" bindtap="goToHome">去下单</view>
+    <icon name="order" size="{{120}}" color="#CBD5E1" />
+    <view class="empty-text">暂无订单</view>
+    <view class="empty-desc">快去下单享受服务吧</view>
+    <view class="empty-btn" bindtap="goToHome">去逛逛</view>
   </view>
 </view>

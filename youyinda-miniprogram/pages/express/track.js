@@ -26,6 +26,17 @@ Page({
     }
   },
 
+  copyTrackingNo() {
+    const no = this.data.trackingNo;
+    if (!no) return;
+    wx.setClipboardData({
+      data: no,
+      success: () => {
+        wx.showToast({ title: '运单号已复制', icon: 'none' });
+      }
+    });
+  },
+
   loadTrackInfo() {
     request.get('/express/track', {
       orderId: this.data.orderId

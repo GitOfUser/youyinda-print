@@ -2,17 +2,17 @@
 <view class="custom-navbar {{transparent ? 'navbar-transparent' : ''}}" style="padding-top: {{statusBarHeight}}px; background: {{bgColor}};">
   <view class="navbar-content" style="height: {{navBarHeight}}px;">
     <view wx:if="{{showBack}}" class="back-btn {{backType === 'capsule' ? 'back-capsule' : ''}}" bindtap="onBack" style="background: {{backBg}};">
-      <text class="back-icon" style="color: {{textColor}};">←</text>
+      <icon name="chevron-left" size="{{36}}" color="{{textColor}}" strokeWidth="{{2.4}}" />
     </view>
-    
+
     <view wx:if="{{showHome && !showBack}}" class="back-btn back-capsule" bindtap="onHome" style="background: {{backBg}};">
-      <text class="back-icon" style="color: {{textColor}};">⌂</text>
+      <icon name="home" size="{{32}}" color="{{textColor}}" />
     </view>
-    
+
     <view class="title-wrapper">
       <text class="title" style="color: {{textColor}};">{{title}}</text>
     </view>
-    
+
     <view class="right-slot">
       <slot name="right"></slot>
     </view>

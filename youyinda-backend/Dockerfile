@@ -1,5 +1,5 @@
-# 第一阶段：构建
-FROM maven:3.8.6-jdk-8-slim AS builder
+# 第一阶段：构建（JDK 21，与 pom.xml java.version 匹配）
+FROM maven:3.9.9-eclipse-temurin-21 AS builder
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # 第二阶段：运行
-FROM openjdk:8-jre-slim
+FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 

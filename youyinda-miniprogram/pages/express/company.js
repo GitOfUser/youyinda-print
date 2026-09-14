@@ -8,6 +8,12 @@ Page({
   },
 
   onLoad() {
+    const app = getApp();
+    const flowState = app.globalData.flowState || {};
+    const senderAddress = flowState.senderAddress || wx.getStorageSync('senderAddress') || {};
+    const receiverAddress = flowState.receiverAddress || wx.getStorageSync('receiverAddress') || {};
+    const packageInfo = flowState.packageInfo || wx.getStorageSync('packageInfo') || {};
+    this.setData({ senderAddress, receiverAddress, packageInfo });
     this.loadCompanyList();
   },
 
