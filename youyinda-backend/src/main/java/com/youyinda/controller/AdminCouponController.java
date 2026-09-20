@@ -44,13 +44,20 @@ public class AdminCouponController {
     }
 
     @PostMapping
-    public R<Void> saveCoupon(@RequestBody CouponInfo coupon) {
+    public R<Long> saveCoupon(@RequestBody CouponInfo coupon) {
         couponMapper.insert(coupon);
-        return R.ok();
+        return R.ok(coupon.getId());
     }
 
     @PutMapping
     public R<Void> updateCoupon(@RequestBody CouponInfo coupon) {
+        couponMapper.updateById(coupon);
+        return R.ok();
+    }
+
+    @PutMapping("/{id}")
+    public R<Void> updateCouponById(@PathVariable Long id, @RequestBody CouponInfo coupon) {
+        coupon.setId(id);
         couponMapper.updateById(coupon);
         return R.ok();
     }

@@ -15,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -40,7 +42,12 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
             throw new BusinessException("账号已被禁用");
         }
 
-        String token = jwtUtil.generateToken(adminUser.getId(), "admin");
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("sub", String.valueOf(adminUser.getId()));
+        claims.put("userId", adminUser.getId());
+        claims.put("userType", "admin");
+        claims.put("username", adminUser.getUsername());
+        String token = jwtUtil.generateToken(claims);
 
         AdminLoginVO vo = new AdminLoginVO();
         BeanUtils.copyProperties(adminUser, vo);

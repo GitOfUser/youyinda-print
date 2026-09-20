@@ -55,6 +55,13 @@ public class ThirdApiController {
         return R.ok();
     }
 
+    @PutMapping("/{id}")
+    public R<Void> updateConfigById(@PathVariable Long id, @RequestBody ThirdApiConfig config) {
+        config.setId(id);
+        thirdApiConfigMapper.updateById(config);
+        return R.ok();
+    }
+
     @DeleteMapping("/{id}")
     public R<Void> deleteConfig(@PathVariable Long id) {
         thirdApiConfigMapper.deleteById(id);

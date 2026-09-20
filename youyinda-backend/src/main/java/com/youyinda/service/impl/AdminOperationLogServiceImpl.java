@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.youyinda.entity.*;
 import com.youyinda.enums.OrderStatusEnum;
 import com.youyinda.mapper.AdminOperationLogMapper;
+import com.youyinda.mapper.SysConfigMapper;
 import com.youyinda.service.AdminOperationLogService;
 import com.youyinda.service.OrderMainService;
 import com.youyinda.service.UserInfoService;
@@ -29,6 +30,9 @@ public class AdminOperationLogServiceImpl extends ServiceImpl<AdminOperationLogM
 
     @Autowired
     private UserInfoService userInfoService;
+
+    @Autowired
+    private SysConfigMapper sysConfigMapper;
 
     @Override
     public IPage<AdminOperationLog> listLogs(Integer pageNum, Integer pageSize, String module, String adminName) {
@@ -55,88 +59,158 @@ public class AdminOperationLogServiceImpl extends ServiceImpl<AdminOperationLogM
     @Override
     public DashboardVO getDashboardData() {
         DashboardVO dashboard = new DashboardVO();
-        
+
         dashboard.setOrderStats(calculateOrderStats());
         dashboard.setRevenueStats(calculateRevenueStats());
         dashboard.setUserStats(calculateUserStats());
         dashboard.setBusinessRatio(calculateBusinessRatio());
-        dashboard.setTrendData(calculateTrendData());
-        
+        dashboard.setTrendData(getTrendData(7));
+
         return dashboard;
+    }
+
+    @Override
+    public DashboardVO.TrendData getTrendData(int days) {
+        DashboardVO.TrendData trendData = new DashboardVO.TrendData();
+        SimpleDateFormat daySdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat labelSdf = new SimpleDateFormat("MM-dd");
+        int size = Math.max(1, Math.min(days, 30));
+        String[] dates = new String[size];
+        Long[] orderCounts = new Long[size];
+        BigDecimal[] revenues = new BigDecimal[size];
+
+        Calendar start = Calendar.getInstance();
+        start.add(Calendar.DAY_OF_MONTH, -(size - 1));
+        start.set(Calendar.HOUR_OF_DAY, 0);
+        start.set(Calendar.MINUTE, 0);
+        start.set(Calendar.SECOND, 0);
+        start.set(Calendar.MILLISECOND, 0);
+
+        for (int i = 0; i < size; i++) {
+            Calendar dayStart = (Calendar) start.clone();
+            dayStart.add(Calendar.DAY_OF_MONTH, i);
+            Calendar dayEnd = (Calendar) dayStart.clone();
+            dayEnd.add(Calendar.DAY_OF_MONTH, 1);
+            dates[i] = labelSdf.format(dayStart.getTime());
+
+            List<OrderMain> dayOrders = orderMainService.lambdaQuery()
+                    .eq(OrderMain::getIsDelete, 0)
+                    .ge(OrderMain::getCreateTime, daySdf.format(dayStart.getTime()) + " 00:00:00")
+                    .lt(OrderMain::getCreateTime, daySdf.format(dayEnd.getTime()) + " 00:00:00")
+                    .list();
+            orderCounts[i] = (long) dayOrders.size();
+            BigDecimal rev = BigDecimal.ZERO;
+            for (OrderMain o : dayOrders) {
+                if (o.getActualPrice() != null && o.getStatus() != null && o.getStatus() != 6) {
+                    rev = rev.add(BigDecimal.valueOf(o.getActualPrice()));
+                }
+            }
+            revenues[i] = rev;
+        }
+
+        trendData.setDates(dates);
+        trendData.setOrderCounts(orderCounts);
+        trendData.setRevenues(revenues);
+        return trendData;
     }
 
     private DashboardVO.OrderStats calculateOrderStats() {
         DashboardVO.OrderStats stats = new DashboardVO.OrderStats();
-        
+
         LambdaQueryWrapper<OrderMain> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(OrderMain::getIsDelete, 0);
-        
-        Long total = orderMainService.count(wrapper);
-        stats.setTotalOrders(total);
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        stats.setTotalOrders(orderMainService.count(wrapper));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd 00:00:00");
         String today = sdf.format(new Date());
-        
-        stats.setTodayOrders(0L);
-        stats.setPendingOrders(0L);
-        stats.setCompletedOrders(0L);
-        
+        LambdaQueryWrapper<OrderMain> todayWrapper = new LambdaQueryWrapper<>();
+        todayWrapper.eq(OrderMain::getIsDelete, 0).ge(OrderMain::getCreateTime, today);
+        stats.setTodayOrders(orderMainService.count(todayWrapper));
+
+        LambdaQueryWrapper<OrderMain> pendingWrapper = new LambdaQueryWrapper<>();
+        pendingWrapper.eq(OrderMain::getIsDelete, 0).in(OrderMain::getStatus, Arrays.asList(1, 2, 3, 4));
+        stats.setPendingOrders(orderMainService.count(pendingWrapper));
+
+        LambdaQueryWrapper<OrderMain> completedWrapper = new LambdaQueryWrapper<>();
+        completedWrapper.eq(OrderMain::getIsDelete, 0).eq(OrderMain::getStatus, 5);
+        stats.setCompletedOrders(orderMainService.count(completedWrapper));
+
         return stats;
     }
 
     private DashboardVO.RevenueStats calculateRevenueStats() {
         DashboardVO.RevenueStats stats = new DashboardVO.RevenueStats();
-        
-        stats.setTotalRevenue(BigDecimal.ZERO);
-        stats.setTodayRevenue(BigDecimal.ZERO);
-        stats.setTotalProfit(BigDecimal.ZERO);
-        stats.setTodayProfit(BigDecimal.ZERO);
-        
+        BigDecimal total = sumRevenue(null);
+        BigDecimal today = sumRevenue(new Date());
+        stats.setTotalRevenue(total);
+        stats.setTodayRevenue(today);
+        BigDecimal profitRatio = getProfitRatio();
+        stats.setTotalProfit(total.multiply(profitRatio).setScale(2, RoundingMode.HALF_UP));
+        stats.setTodayProfit(today.multiply(profitRatio).setScale(2, RoundingMode.HALF_UP));
         return stats;
+    }
+
+    private BigDecimal sumRevenue(Date from) {
+        List<OrderMain> list = orderMainService.lambdaQuery()
+                .eq(OrderMain::getIsDelete, 0)
+                .notIn(OrderMain::getStatus, Collections.singletonList(6))
+                .ge(from != null, OrderMain::getCreateTime,
+                        from == null ? null : new SimpleDateFormat("yyyy-MM-dd 00:00:00").format(from))
+                .list();
+        BigDecimal sum = BigDecimal.ZERO;
+        for (OrderMain o : list) {
+            if (o.getActualPrice() != null) {
+                sum = sum.add(BigDecimal.valueOf(o.getActualPrice()));
+            }
+        }
+        return sum;
+    }
+
+    private BigDecimal getProfitRatio() {
+        SysConfig config = sysConfigMapper.selectOne(new LambdaQueryWrapper<SysConfig>()
+                .eq(SysConfig::getConfigKey, "profit_ratio").last("LIMIT 1"));
+        if (config != null && config.getConfigValue() != null) {
+            try {
+                return new BigDecimal(config.getConfigValue()).divide(BigDecimal.valueOf(100), 4, RoundingMode.HALF_UP);
+            } catch (Exception ignored) {
+                // ignore
+            }
+        }
+        return new BigDecimal("0.10");
     }
 
     private DashboardVO.UserStats calculateUserStats() {
         DashboardVO.UserStats stats = new DashboardVO.UserStats();
-        
-        Long totalUsers = userInfoService.count();
-        stats.setTotalUsers(totalUsers);
-        stats.setTodayNewUsers(0L);
-        stats.setWeekNewUsers(0L);
-        stats.setMonthNewUsers(0L);
-        
+        stats.setTotalUsers(userInfoService.count());
+        stats.setTodayNewUsers(countUsersSinceDays(0));
+        stats.setWeekNewUsers(countUsersSinceDays(7));
+        stats.setMonthNewUsers(countUsersSinceDays(30));
         return stats;
+    }
+
+    private Long countUsersSinceDays(int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, -days);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return userInfoService.lambdaQuery().ge(UserInfo::getCreateTime, cal.getTime()).count();
     }
 
     private DashboardVO.BusinessRatio calculateBusinessRatio() {
         DashboardVO.BusinessRatio ratio = new DashboardVO.BusinessRatio();
-        
-        ratio.setPrintRatio(BigDecimal.valueOf(50.00));
-        ratio.setExpressRatio(BigDecimal.valueOf(50.00));
-        
-        return ratio;
-    }
-
-    private DashboardVO.TrendData calculateTrendData() {
-        DashboardVO.TrendData trendData = new DashboardVO.TrendData();
-        
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd");
-        Calendar calendar = Calendar.getInstance();
-        
-        String[] dates = new String[7];
-        Long[] orderCounts = new Long[7];
-        BigDecimal[] revenues = new BigDecimal[7];
-        
-        for (int i = 6; i >= 0; i--) {
-            calendar.add(Calendar.DAY_OF_MONTH, -1);
-            dates[6 - i] = sdf.format(calendar.getTime());
-            orderCounts[6 - i] = 0L;
-            revenues[6 - i] = BigDecimal.ZERO;
+        List<OrderMain> orders = orderMainService.lambdaQuery().eq(OrderMain::getIsDelete, 0).list();
+        long print = orders.stream().filter(o -> o.getOrderType() != null && o.getOrderType() == 1).count();
+        long express = orders.stream().filter(o -> o.getOrderType() != null && o.getOrderType() == 2).count();
+        long total = print + express;
+        if (total == 0) {
+            ratio.setPrintRatio(BigDecimal.valueOf(50.00));
+            ratio.setExpressRatio(BigDecimal.valueOf(50.00));
+        } else {
+            ratio.setPrintRatio(BigDecimal.valueOf(print * 100.0 / total).setScale(2, RoundingMode.HALF_UP));
+            ratio.setExpressRatio(BigDecimal.valueOf(express * 100.0 / total).setScale(2, RoundingMode.HALF_UP));
         }
-        
-        trendData.setDates(dates);
-        trendData.setOrderCounts(orderCounts);
-        trendData.setRevenues(revenues);
-        
-        return trendData;
+        return ratio;
     }
 }

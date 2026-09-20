@@ -10,7 +10,7 @@ import java.util.Date;
  * 管理员用户表
  */
 @Data
-@TableName("admin_user")
+@TableName("admin")
 public class AdminUser implements Serializable {
 
     private static final long serialVersionUID = 1L;

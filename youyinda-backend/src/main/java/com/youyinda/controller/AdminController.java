@@ -9,6 +9,7 @@ import com.youyinda.entity.AdminUser;
 import com.youyinda.service.AdminPermissionService;
 import com.youyinda.service.AdminRoleService;
 import com.youyinda.service.AdminUserService;
+import com.youyinda.util.JwtUtil;
 import com.youyinda.vo.AdminLoginVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,10 @@ public class AdminController {
 
     @GetMapping("/info")
     public R<AdminUser> getInfo() {
-        Long adminId = 1L;
+        Long adminId = JwtUtil.getUserIdFromToken();
+        if (adminId == null) {
+            adminId = 1L;
+        }
         AdminUser admin = adminUserService.getById(adminId);
         admin.setPassword(null);
         return R.ok(admin);

@@ -7,9 +7,9 @@ server {
     root /usr/share/nginx/html;
     index index.html;
 
-    # 后端 API 反代（后端 context-path=/api；本地验证时指向宿主机 8081 本地后端）
+    # 后端 API 反代（后端 context-path=/api）
     location /api/ {
-        proxy_pass http://host.docker.internal:8081/api/;
+        proxy_pass http://backend:8080/api/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -20,13 +20,13 @@ server {
 
     # 上传文件访问反代
     location /uploads/ {
-        proxy_pass http://host.docker.internal:8081/uploads/;
+        proxy_pass http://backend:8080/uploads/;
         proxy_set_header Host $host;
     }
 
     # Druid 监控（可选）
     location /druid/ {
-        proxy_pass http://host.docker.internal:8081/druid/;
+        proxy_pass http://backend:8080/druid/;
         proxy_set_header Host $host;
     }
 

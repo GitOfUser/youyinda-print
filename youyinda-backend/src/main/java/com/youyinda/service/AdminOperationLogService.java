@@ -12,4 +12,6 @@ public interface AdminOperationLogService extends IService<AdminOperationLog> {
     void logOperation(AdminOperationLog log);
 
     DashboardVO getDashboardData();
+
+    DashboardVO.TrendData getTrendData(int days);
 }

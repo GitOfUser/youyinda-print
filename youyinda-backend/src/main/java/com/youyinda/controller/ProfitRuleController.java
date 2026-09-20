@@ -59,6 +59,13 @@ public class ProfitRuleController {
         return R.ok();
     }
 
+    @PutMapping("/{id}")
+    public R<Void> updateRuleById(@PathVariable Long id, @RequestBody ProfitRule rule) {
+        rule.setId(id);
+        profitRuleMapper.updateById(rule);
+        return R.ok();
+    }
+
     @DeleteMapping("/{id}")
     public R<Void> deleteRule(@PathVariable Long id) {
         profitRuleMapper.deleteById(id);

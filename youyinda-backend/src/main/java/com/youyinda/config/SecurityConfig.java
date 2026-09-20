@@ -55,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/actuator/**",                  // Actuator监控端点
                         "/druid/**",                     // Druid监控
                         "/static/**",                    // 静态资源
-                        "/uploads/**"                    // 上传文件
+                        "/uploads/**",                   // 上传文件
+                        "/admin/v1/login"                // 后台管理登录
                 ).permitAll()
                 // 其他接口需要认证
                 .anyRequest().authenticated()

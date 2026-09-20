@@ -1,149 +1,239 @@
-﻿AdminApp.component('sys-config', {
-    template: `
-        <div>
-            <div class="page-header">
-                <h2 class="page-title">系统配置</h2>
-            </div>
-
-            <el-tabs v-model="activeTab">
-                <el-tab-pane label="第三方API配置" name="api">
-                    <div class="card">
-                        <el-form :model="apiConfig" label-width="140px" style="max-width: 700px;">
-                            <el-divider content-position="left">微信小程序配置</el-divider>
-                            <el-form-item label="AppID">
-                                <el-input v-model="apiConfig.wxAppId" />
-                            </el-form-item>
-                            <el-form-item label="AppSecret">
-                                <el-input v-model="apiConfig.wxAppSecret" type="password" show-password />
-                            </el-form-item>
-                            <el-form-item label="商户号">
-                                <el-input v-model="apiConfig.wxMchId" />
-                            </el-form-item>
-
-                            <el-divider content-position="left">打印服务商配置</el-divider>
-                            <el-form-item label="服务商名称">
-                                <el-select v-model="apiConfig.printProvider" style="width: 100%;">
-                                    <el-option label="易联云" value="yilianyun" />
-                                    <el-option label="飞鹅云打印" value="feie" />
-                                    <el-option label="自定义API" value="custom" />
-                                </el-select>
-                            </el-form-item>
-                            <el-form-item label="API地址">
-                                <el-input v-model="apiConfig.printApiUrl" placeholder="https://" />
-                            </el-form-item>
-                            <el-form-item label="API Key">
-                                <el-input v-model="apiConfig.printApiKey" type="password" show-password />
-                            </el-form-item>
-
-                            <el-divider content-position="left">快递服务商配置</el-divider>
-                            <el-form-item label="快递100 Key">
-                                <el-input v-model="apiConfig.kuaidi100Key" />
-                            </el-form-item>
-                            <el-form-item label="快递鸟ID">
-                                <el-input v-model="apiConfig.kdniaoId" />
-                            </el-form-item>
-
-                            <el-form-item>
-                                <el-button type="primary" @click="saveConfig('api')">保存配置</el-button>
-                                <el-button @click="testConnection">测试连接</el-button>
-                            </el-form-item>
-                        </el-form>
-                    </div>
-                </el-tab-pane>
-
-                <el-tab-pane label="基础设置" name="basic">
-                    <div class="card">
-                        <el-form :model="basicConfig" label-width="140px" style="max-width: 700px;">
-                            <el-form-item label="平台名称">
-                                <el-input v-model="basicConfig.siteName" />
-                            </el-form-item>
-                            <el-form-item label="客服电话">
-                                <el-input v-model="basicConfig.servicePhone" />
-                            </el-form-item>
-                            <el-form-item label="客服微信">
-                                <el-input v-model="basicConfig.serviceWechat" />
-                            </el-form-item>
-                            <el-form-item label="营业时间">
-                                <el-time-picker v-model="basicConfig.businessHoursStart" format="HH:mm" value-format="HH:mm" placeholder="开始" style="width: 180px;" />
-                                <span style="margin: 0 12px;">-</span>
-                                <el-time-picker v-model="basicConfig.businessHoursEnd" format="HH:mm" value-format="HH:mm" placeholder="结束" style="width: 180px;" />
-                            </el-form-item>
-                            <el-form-item label="订单自动确认">
-                                <el-switch v-model="basicConfig.autoConfirm" active-text="开启" inactive-text="关闭" />
-                            </el-form-item>
-                            <el-form-item label="订单通知">
-                                <el-switch v-model="basicConfig.orderNotify" active-text="开启" inactive-text="关闭" />
-                            </el-form-item>
-
-                            <el-form-item>
-                                <el-button type="primary" @click="saveConfig('basic')">保存配置</el-button>
-                            </el-form-item>
-                        </el-form>
-                    </div>
-                </el-tab-pane>
-
-                <el-tab-pane label="公告管理" name="notice">
-                    <div class="card">
-                        <div style="margin-bottom: 16px; text-align: right;">
-                            <el-button type="primary" @click="addNotice">发布公告</el-button>
-                        </div>
-                        <el-table :data="noticeList" style="width: 100%">
-                            <el-table-column prop="title" label="公告标题" />
-                            <el-table-column prop="createTime" label="发布时间" width="180" />
-                            <el-table-column prop="status" label="状态" width="100">
-                                <template #default="{row}">
-                                    <el-tag :type="row.status==='已发布'?'success':'info'" size="small">{{ row.status }}</el-tag>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作" width="180">
-                                <template #default="{row}">
-                                    <el-button type="primary" link size="small">编辑</el-button>
-                                    <el-button type="danger" link size="small">删除</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </div>
-                </el-tab-pane>
-            </el-tabs>
-        </div>
-    `,
+window.SysConfigPage = {
+    name: 'sysconfig',
     data() {
         return {
-            activeTab: 'api',
-            apiConfig: {
-                wxAppId: 'wx1234567890abcdef',
-                wxAppSecret: '',
-                wxMchId: '',
-                printProvider: 'yilianyun',
-                printApiUrl: 'https://open-api.yilianyun.net',
-                printApiKey: '',
-                kuaidi100Key: '',
-                kdniaoId: ''
-            },
-            basicConfig: {
-                siteName: '优印达',
-                servicePhone: '400-888-8888',
-                serviceWechat: 'youyinda-service',
-                businessHoursStart: '08:00',
-                businessHoursEnd: '22:00',
-                autoConfirm: true,
-                orderNotify: true
-            },
-            noticeList: [
-                { id: 1, title: '系统维护通知：7月25日凌晨2点-4点系统升级', createTime: '2026-07-20 10:00', status: '已发布' },
-                { id: 2, title: '新用户首单立减5元活动进行中', createTime: '2026-07-15 14:30', status: '已发布' }
-            ]
+            activeTab: 'third',
+            // ===== 第三方API =====
+            thirdLoading: false,
+            thirdList: [],
+            thirdTotal: 0,
+            thirdQuery: { pageNum: 1, pageSize: 10, apiType: '' },
+            thirdDialogVisible: false,
+            thirdForm: { providerCode: '', providerName: '', apiType: '', apiUrl: '', appId: '', appSecret: '', timeout: 10, status: 1 },
+            // ===== 基础设置 =====
+            baseLoading: false,
+            baseSaving: false,
+            baseConfigs: [],
+            // ===== 公告管理 =====
+            noticeList: []
         };
     },
+    mounted() {
+        this.loadThirdConfigs();
+        this.loadBaseConfigs();
+    },
     methods: {
-        saveConfig(type) {
-            ElementPlus.ElMessage.success('配置保存成功');
+        formatDate(v) {
+            if (!v) return '-';
+            return String(v).replace('T', ' ').slice(0, 19);
         },
-        testConnection() {
-            ElementPlus.ElMessage.success('连接测试成功');
+        // ==================== 第三方API ====================
+        async loadThirdConfigs() {
+            this.thirdLoading = true;
+            try {
+                const res = await AdminAPI.getThirdApiList({
+                    pageNum: this.thirdQuery.pageNum,
+                    pageSize: this.thirdQuery.pageSize,
+                    apiType: this.thirdQuery.apiType || undefined
+                });
+                this.thirdList = res.records || [];
+                this.thirdTotal = res.total || 0;
+            } catch (e) {
+                console.error('load third api failed:', e);
+            } finally {
+                this.thirdLoading = false;
+            }
         },
-        addNotice() {
-            ElementPlus.ElMessage.info('公告编辑功能开发中');
+        thirdSearch() {
+            this.thirdQuery.pageNum = 1;
+            this.loadThirdConfigs();
+        },
+        thirdPageChange(page) {
+            this.thirdQuery.pageNum = page;
+            this.loadThirdConfigs();
+        },
+        openThirdDialog(row) {
+            this.thirdForm = row ? { ...row } : { providerCode: '', providerName: '', apiType: '', apiUrl: '', appId: '', appSecret: '', timeout: 10, status: 1 };
+            this.thirdDialogVisible = true;
+        },
+        async saveThird() {
+            try {
+                if (this.thirdForm.id) {
+                    await AdminAPI.updateThirdApi(this.thirdForm);
+                } else {
+                    await AdminAPI.createThirdApi(this.thirdForm);
+                }
+                ElMessage.success('保存成功');
+                this.thirdDialogVisible = false;
+                this.loadThirdConfigs();
+            } catch (e) {
+                console.error('save third api failed:', e);
+            }
+        },
+        async deleteThird(row) {
+            try {
+                await ElMessageBox.confirm(`确定删除第三方配置「${row.providerName}」吗？`, '删除确认', { type: 'warning' });
+            } catch (e) {
+                return;
+            }
+            try {
+                await AdminAPI.deleteThirdApi(row.id);
+                ElMessage.success('删除成功');
+                this.loadThirdConfigs();
+            } catch (e) {
+                console.error('delete third api failed:', e);
+            }
+        },
+        async syncThird(row) {
+            try {
+                await AdminAPI.syncThirdApi(row.id);
+                ElMessage.success(`已触发「${row.providerName}」价格同步`);
+            } catch (e) {
+                console.error('sync third api failed:', e);
+            }
+        },
+        // ==================== 基础设置 ====================
+        async loadBaseConfigs() {
+            this.baseLoading = true;
+            try {
+                const list = await AdminAPI.getAllSysConfig();
+                this.baseConfigs = (list || []).map(c => ({
+                    id: c.id,
+                    configKey: c.configKey,
+                    configValue: c.configValue,
+                    configType: c.configType,
+                    description: c.description,
+                    isActive: c.isActive
+                }));
+            } catch (e) {
+                console.error('load base configs failed:', e);
+            } finally {
+                this.baseLoading = false;
+            }
+        },
+        async saveBaseConfig() {
+            this.baseSaving = true;
+            try {
+                for (const cfg of this.baseConfigs) {
+                    await AdminAPI.saveSysConfig({ id: cfg.id, configKey: cfg.configKey, configValue: cfg.configValue, configType: cfg.configType, description: cfg.description, isActive: cfg.isActive });
+                }
+                ElMessage.success('基础设置已保存');
+                this.loadBaseConfigs();
+            } catch (e) {
+                console.error('save base config failed:', e);
+            } finally {
+                this.baseSaving = false;
+            }
         }
-    }
-});
+    },
+    template: `
+    <div class="page-container">
+        <div class="page-header">
+            <h2>系统配置</h2>
+        </div>
+        <el-tabs v-model="activeTab">
+            <el-tab-pane label="第三方API配置" name="third">
+                <div class="filter-bar">
+                    <el-input v-model="thirdQuery.apiType" placeholder="API类型" clearable style="width: 180px;" @keyup.enter="thirdSearch" />
+                    <el-button type="primary" @click="thirdSearch">查询</el-button>
+                    <el-button type="primary" plain style="float: right;" @click="openThirdDialog()">新增配置</el-button>
+                </div>
+                <div class="table-card">
+                    <el-table v-loading="thirdLoading" :data="thirdList" stripe>
+                        <el-table-column prop="providerCode" label="服务商编码" min-width="130" />
+                        <el-table-column prop="providerName" label="服务商名称" min-width="140" />
+                        <el-table-column prop="apiType" label="API类型" width="110" />
+                        <el-table-column prop="apiUrl" label="接口地址" min-width="180" show-overflow-tooltip />
+                        <el-table-column prop="appId" label="AppId" min-width="140" show-overflow-tooltip />
+                        <el-table-column label="超时(秒)" width="90">
+                            <template #default="{ row }">{{ row.timeout }}</template>
+                        </el-table-column>
+                        <el-table-column label="状态" width="90">
+                            <template #default="{ row }">
+                                <el-tag size="small" :type="Number(row.status) === 1 ? 'success' : 'info'">{{ Number(row.status) === 1 ? '启用' : '停用' }}</el-tag>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="操作" width="200" fixed="right">
+                            <template #default="{ row }">
+                                <el-button link type="primary" size="small" @click="openThirdDialog(row)">编辑</el-button>
+                                <el-button link type="warning" size="small" @click="syncThird(row)">同步价格</el-button>
+                                <el-button link type="danger" size="small" @click="deleteThird(row)">删除</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div class="pagination-wrap">
+                        <el-pagination background layout="total, prev, pager, next" :total="thirdTotal" :current-page="thirdQuery.pageNum" :page-size="thirdQuery.pageSize" @current-change="thirdPageChange" />
+                    </div>
+                </div>
+            </el-tab-pane>
+
+            <el-tab-pane label="基础设置" name="base">
+                <div v-loading="baseLoading" class="table-card" style="max-width: 720px;">
+                    <div class="card-title">系统基础参数</div>
+                    <el-table :data="baseConfigs" stripe>
+                        <el-table-column prop="description" label="配置项" min-width="150" />
+                        <el-table-column prop="configKey" label="Key" min-width="150" />
+                        <el-table-column label="值" min-width="200">
+                            <template #default="{ row }">
+                                <el-input v-model="row.configValue" size="small" />
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div style="margin-top: 16px; text-align: right;">
+                        <el-button type="primary" :loading="baseSaving" @click="saveBaseConfig">保存设置</el-button>
+                    </div>
+                </div>
+            </el-tab-pane>
+
+            <el-tab-pane label="公告管理" name="notice">
+                <el-alert type="info" :closable="false" show-icon title="公告管理暂未提供后端接口（youyinda-backend 无公告相关 Controller），该模块当前展示占位数据，可后续接入内容管理模块。" />
+                <div class="table-card" style="margin-top: 16px;">
+                    <el-table :data="noticeList" empty-text="暂无公告数据">
+                        <el-table-column prop="title" label="标题" min-width="200" />
+                        <el-table-column prop="createTime" label="发布时间" width="180" />
+                        <el-table-column prop="status" label="状态" width="100" />
+                    </el-table>
+                </div>
+            </el-tab-pane>
+        </el-tabs>
+
+        <el-dialog v-model="thirdDialogVisible" title="第三方API配置" width="560px">
+            <el-form label-width="100px">
+                <el-form-item label="服务商编码">
+                    <el-input v-model="thirdForm.providerCode" placeholder="如：yilianyun / kuaidi100" />
+                </el-form-item>
+                <el-form-item label="服务商名称">
+                    <el-input v-model="thirdForm.providerName" placeholder="如：易联云" />
+                </el-form-item>
+                <el-form-item label="API类型">
+                    <el-select v-model="thirdForm.apiType" style="width: 100%;">
+                        <el-option label="打印" value="print" />
+                        <el-option label="快递" value="express" />
+                        <el-option label="OCR" value="ocr" />
+                        <el-option label="支付" value="pay" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="接口地址">
+                    <el-input v-model="thirdForm.apiUrl" placeholder="https://..." />
+                </el-form-item>
+                <el-form-item label="AppId">
+                    <el-input v-model="thirdForm.appId" />
+                </el-form-item>
+                <el-form-item label="AppSecret">
+                    <el-input v-model="thirdForm.appSecret" show-password />
+                </el-form-item>
+                <el-form-item label="超时(秒)">
+                    <el-input-number v-model="thirdForm.timeout" :min="1" :step="1" style="width: 100%;" />
+                </el-form-item>
+                <el-form-item label="是否启用">
+                    <el-switch v-model="thirdForm.status" :active-value="1" :inactive-value="0" />
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <el-button @click="thirdDialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="saveThird">保存</el-button>
+            </template>
+        </el-dialog>
+    </div>
+    `
+};

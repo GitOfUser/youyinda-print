@@ -7,6 +7,8 @@ import com.youyinda.common.R;
 import com.youyinda.entity.SysConfig;
 import com.youyinda.mapper.SysConfigMapper;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +39,12 @@ public class SysConfigController {
         return R.ok(result);
     }
 
+    @GetMapping("/all")
+    public R<List<SysConfig>> listAllConfigs() {
+        return R.ok(sysConfigMapper.selectList(
+                new LambdaQueryWrapper<SysConfig>().orderByAsc(SysConfig::getId)));
+    }
+
     @GetMapping("/{id}")
     public R<SysConfig> getConfig(@PathVariable Long id) {
         SysConfig config = sysConfigMapper.selectById(id);
@@ -51,6 +59,13 @@ public class SysConfigController {
 
     @PutMapping
     public R<Void> updateConfig(@RequestBody SysConfig config) {
+        sysConfigMapper.updateById(config);
+        return R.ok();
+    }
+
+    @PutMapping("/{id}")
+    public R<Void> updateConfigById(@PathVariable Long id, @RequestBody SysConfig config) {
+        config.setId(id);
         sysConfigMapper.updateById(config);
         return R.ok();
     }
